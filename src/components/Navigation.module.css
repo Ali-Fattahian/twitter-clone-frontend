@@ -22,7 +22,7 @@
 }
 
 .nav__item:hover {
-    background-color: rgb(234, 234, 234);
+    background-color: #eaeaea;
 }
 
 .nav__item i {
