@@ -1,0 +1,128 @@
+.add-tweet__form {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 1.2rem;
+    padding: 1rem;
+}
+
+.add-tweet__upper {
+    display: flex;
+    gap: .8rem;
+}
+
+.add-tweet__lower {
+    width: 100%;
+}
+
+.add-tweet__image {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+}
+
+.add-tweet__input {
+    border: none;
+    padding: .5rem 0;
+}
+
+.add-tweet__input:focus {
+    outline: none;
+}
+
+.btn-container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.tweet-list > div {
+    border-bottom: 1px solid var(--gray);
+}
+
+.tweet {
+    padding: 1rem;
+    display: flex;
+    align-items: flex-start;
+    gap: .5rem;
+    background-color: var(--dark-theme-background);
+    color: var(--dark-them-color);
+}
+
+.tweet-left img {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+}
+
+.tweet-right {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 100%;
+    gap: .5rem;
+}
+
+.tweet-right__top {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.user-info {
+    display: flex;
+    gap: 5px;
+}
+
+.user-info a {
+    color: var(--gray);
+}
+
+.user-info a:hover {
+    text-decoration: underline;
+}
+
+#username:hover {
+    text-decoration: none;
+}
+
+#tweet-dot {
+    text-decoration: none;
+}
+
+#user-name {
+    color: #fff;
+}
+
+.more {
+    display: flex;
+    gap: 2px;
+    align-items: center;
+}
+
+.more div {
+    width: 5px;
+    height: 5px;
+    background-color: var(--gray);
+    border-radius: 50%;
+}
+
+.tweet-content {
+    line-height: 1.2;
+  }
+  
+.tweet-right__bottom {
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--gray);
+}
+
+.tweet-right__bottom div {
+    display: flex;
+    gap: .5rem;
+    align-items: center;
+}
