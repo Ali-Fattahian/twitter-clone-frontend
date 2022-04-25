@@ -1,15 +1,19 @@
-import React from 'react'
-import './App.css';
-import AddTweet from './components/Tweet/AddTweet';
-import TweetList from './components/Tweet/TweetList';
+import React from "react";
+import "./App.css";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Navigation from "./components/Navigation";
+import AddTweet from "./components/Tweet/AddTweet";
+import TweetList from "./components/Tweet/TweetList";
+import Profile from "./components/Profile";
 
 function App() {
   return (
-    <React.Fragment>
+    <Router>
+      <Navigation />
       <AddTweet />
       <TweetList />
-    </React.Fragment>
-
+      <Profile />
+    </Router>
   );
 }
 
