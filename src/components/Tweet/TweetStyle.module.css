@@ -5,11 +5,13 @@
     align-items: flex-start;
     gap: 1.2rem;
     padding: 1rem;
+    border: 1px solid var(--light-theme-border);
 }
 
 .add-tweet__upper {
     display: flex;
     gap: .8rem;
+    width: 100%;
 }
 
 .add-tweet__lower {
@@ -25,6 +27,7 @@
 .add-tweet__input {
     border: none;
     padding: .5rem 0;
+    width: 100%;
 }
 
 .add-tweet__input:focus {
@@ -37,17 +40,27 @@
     align-items: center;
 }
 
-.tweet-list > div {
-    border-bottom: 1px solid var(--gray);
+.tweet-list {
+    border: 1px solid var(--light-theme-border);
+    border-top: none;
+    border-bottom: none;
 }
+
+.tweet-list > div {
+    border-bottom: 1px solid var(--light-theme-border);
+}
+
+/* .tweet-list > div:last-child {
+    border-bottom: none;
+} */
 
 .tweet {
     padding: 1rem;
     display: flex;
     align-items: flex-start;
     gap: .5rem;
-    background-color: var(--dark-theme-background);
-    color: var(--dark-them-color);
+    background-color: var(--light-theme-background);
+    color: var(--light-theme-color);
 }
 
 .tweet-left img {
@@ -100,6 +113,7 @@
     display: flex;
     gap: 2px;
     align-items: center;
+    cursor: pointer;
 }
 
 .more div {
@@ -125,4 +139,5 @@
     display: flex;
     gap: .5rem;
     align-items: center;
+    cursor: pointer;
 }

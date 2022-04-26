@@ -1,8 +1,11 @@
 :root {
   --blue-primary: #1D9bf0;
-  --gray: #71767b;
   --dark-theme-background: #000;
+  --gray: #71767b;
   --dark-them-color: #fff;
+  --light-theme-background: #fff;
+  --light-theme-color: #000;
+  --light-theme-border: #eff3f4;
 }
 
 * {
