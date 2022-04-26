@@ -2,7 +2,7 @@ import Navigation from "../components/Navigation";
 import Searchbar from "../components/Searchbar";
 import AddTweet from "../components/Tweet/AddTweet";
 import TweetList from "../components/Tweet/TweetList";
-import classes from "./HomePage.module.css";
+import classes from "./Pages.module.css";
 
 const HomePage = () => {
   return (
@@ -14,7 +14,7 @@ const HomePage = () => {
         <AddTweet />
         <TweetList />
       </div>
-      <div>
+      <div className={classes['main__right-side']}>
         <Searchbar />
       </div>
     </section>

@@ -1,6 +1,6 @@
 .main {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 2fr 1fr;
     width: 100%;
     max-width: 1200px;
     margin: auto;
@@ -8,6 +8,7 @@
 
 .main__left-side {
     display: flex;
+    border-right: 1px solid var(--light-theme-border);
 }
 
 .main__middle-side {
@@ -24,8 +25,12 @@
 }
 
 .main__right-side {
-    padding-top: 1rem;
-    padding-left: 2rem;
+    padding-top: .5rem;
+    padding-left: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    border-left: 1px solid var(--light-theme-border);
 }
 
 .extra-links {

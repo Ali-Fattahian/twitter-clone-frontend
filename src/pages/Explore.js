@@ -1,5 +1,5 @@
 import YouMightLike from "../components/YouMightLike";
-import classes from "./HomePage.module.css";
+import classes from "./Pages.module.css";
 import Navigation from "../components/Navigation";
 import Searchbar from "../components/Searchbar";
 import TweetList from "../components/Tweet/TweetList";

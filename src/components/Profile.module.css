@@ -3,13 +3,15 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-    padding: 1rem;
     gap: .2rem;
+    border-bottom: 1px solid var(--light-theme-border);
 }
 
 .profile__top {
     display: flex;
     width: 100%;
+    padding: .5rem;
+    padding-bottom: 0;
 }
 
 .profile > img {
@@ -55,6 +57,7 @@
 
 .profile__bottom-middle {
     display: flex;
+    padding: 0 .5rem;
     align-items: flex-start;
     justify-content: space-between;
     width: 100%;
@@ -80,6 +83,7 @@
     justify-content: flex-start;
     align-items: flex-start;
     gap: .7rem;
+    padding: 0 1rem;
 }
 
 .user-info {

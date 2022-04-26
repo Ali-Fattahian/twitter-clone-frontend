@@ -56,5 +56,6 @@ const Profile = () => {
 // Follow button is Following turns into Unfollow (red) (244, 33, 46) on hover. at least in dark mode.
 // For not followings, it is a Follow text (black color) and (#eff3f4) background and gets a little darker on hover.
 // Following and Follower number at the bottom show real peaple
+// Follow button text turns into 'Edit profile' for the users profile 
 
 export default Profile;

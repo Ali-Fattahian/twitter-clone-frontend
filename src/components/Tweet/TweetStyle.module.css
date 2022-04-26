@@ -41,7 +41,6 @@
 }
 
 .tweet-list {
-    border: 1px solid var(--light-theme-border);
     border-top: none;
     border-bottom: none;
 }
