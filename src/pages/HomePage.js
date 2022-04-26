@@ -6,11 +6,11 @@ import classes from "./HomePage.module.css";
 
 const HomePage = () => {
   return (
-    <section className={classes.home}>
-      <div className={classes["home__left-side"]}>
+    <section className={classes.main}>
+      <div className={classes["main__left-side"]}>
         <Navigation />
       </div>
-      <div className={classes["home__right-side"]}>
+      <div className={classes["main__middle-side"]}>
         <AddTweet />
         <TweetList />
       </div>

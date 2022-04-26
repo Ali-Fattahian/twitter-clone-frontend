@@ -1,4 +1,4 @@
-.home {
+.main {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     width: 100%;
@@ -6,11 +6,46 @@
     margin: auto;
 }
 
-.home__left-side {
+.main__left-side {
     display: flex;
 }
 
-.home__right-side {
+.main__middle-side {
     display: flex;
     flex-direction: column;
+}
+.search-bar__container {
+    border: 1px solid var(--light-theme-border);
+    padding: .5rem 1rem;
+}
+
+.search-bar__container form {
+    margin: auto;
+}
+
+.main__right-side {
+    padding-top: 1rem;
+    padding-left: 2rem;
+}
+
+.extra-links {
+    margin-left: .5rem;
+    line-height: 1.6rem;
+}
+
+.extra-links > * {
+    color: var(--gray);
+    margin: 4px;
+}
+
+.extra-links a:hover {
+    text-decoration: underline;
+}
+
+.extra-links > *:first-child {
+    margin-left: 0;
+}
+
+.extra-links > *:last-child {
+    margin-left: 0;
 }

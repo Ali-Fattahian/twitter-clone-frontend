@@ -1,0 +1,61 @@
+.you-might-like {
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem 0;
+    background-color: #f7f9f9;
+    gap: 2rem;
+    border-radius: 2rem;
+}
+
+.you-might-like > p {
+    color: #0f1419;
+    font-weight: bolder;
+    font-size: 1.25rem;
+    transform: translateX(1rem);
+}
+
+.you-might-like button {
+    background-color: #0f1419;
+    color: #fff;
+}
+
+.you-might-like button:hover {
+    opacity: .9;
+}
+
+.suggested-users {
+    display: flex;
+    flex-direction: column;
+}
+
+.suggested-user {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+    cursor: pointer;
+}
+
+.suggested-user:hover {
+    background-color: #eff0f0;
+}
+
+.suggested-user__left {
+    display: flex;
+    gap: 8px;
+}
+
+.suggested-user img {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    transform: translateY(-8px);
+}
+
+#fullname {
+    color: #000;
+    font-weight: bolder;
+}
+
+#username {
+    color: var(--gray);
+}
