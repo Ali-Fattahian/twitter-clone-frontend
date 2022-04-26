@@ -1,4 +1,5 @@
 import Navigation from "../components/Navigation";
+import Searchbar from "../components/Searchbar";
 import AddTweet from "../components/Tweet/AddTweet";
 import TweetList from "../components/Tweet/TweetList";
 import classes from "./HomePage.module.css";
@@ -13,7 +14,9 @@ const HomePage = () => {
         <AddTweet />
         <TweetList />
       </div>
-      <div></div>
+      <div>
+        <Searchbar />
+      </div>
     </section>
   );
 };

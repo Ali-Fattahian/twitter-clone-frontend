@@ -106,7 +106,7 @@
 }
 
 #user-name {
-    color: #fff;
+    color: var(--light-theme-color);
 }
 
 .more {

@@ -1,0 +1,25 @@
+.search-bar {
+    display: flex;
+    padding: 1rem;
+    margin-top: 4px;
+    margin-left: 2rem;
+    background-color: var(--light-theme-border  );
+    gap: 1rem;
+    border-radius: 10rem;
+}
+
+.search-bar:focus-within {
+    border: 1px solid var(--blue-primary);
+}
+
+.search-bar input {
+    outline: none;
+    border: none;
+    background-color: transparent;
+    width: 100%;
+}
+
+.search-bar i {
+    color: #536471;
+}
+
