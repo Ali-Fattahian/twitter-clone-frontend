@@ -3,9 +3,9 @@ import classes from "./Navigation.module.css";
 
 const Navigation = () => {
   return (
-    <section className={classes["nav-container"]}>
+    <section className={`${classes["nav-container"]} main__left-side`}>
       <nav className={classes.nav}>
-        <NavLink to="/" className={classes["nav__item"]}>
+        <NavLink to="/" className={classes["nav__item"]} id={classes['twitter-icon']}>
           <i class="fa fa-twitter"></i>
         </NavLink>
         <NavLink

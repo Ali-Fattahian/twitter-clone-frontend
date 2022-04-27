@@ -10,12 +10,14 @@ import HomePage from "./pages/HomePage";
 import Explore from "./pages/Explore";
 import Profile from "./pages/ProfilePage";
 import Bookmarks from "./pages/Bookmarks";
+import Navigation from "./components/Navigation";
 
 function App() {
   const shouldRedirect = true;
 
   return (
     <Router>
+      <Navigation />
       <Routes>
         <Route path="home" element={<HomePage />} />
         <Route

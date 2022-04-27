@@ -1,5 +1,5 @@
 :root {
-  --blue-primary: #1D9bf0;
+  --blue-primary: #1d9bf0;
   --dark-theme-background: #000;
   --gray: #71767b;
   --dark-them-color: #fff;
@@ -12,7 +12,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Archivo', sans-serif;
+  font-family: "Archivo", sans-serif;
 }
 
 a {
@@ -22,7 +22,7 @@ a {
 .btn {
   background-color: var(--blue-primary);
   color: #fff;
-  border: transparent .1px solid;
+  border: transparent 0.1px solid;
   padding: 12px 18px;
   border-radius: 2rem;
   cursor: pointer;
@@ -31,4 +31,33 @@ a {
 .btn--disabled {
   background-color: #2f80bb;
   color: #eee;
+}
+
+#root {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  width: 100%;
+  max-width: 1200px;
+  height: 100vh;
+  margin: auto;
+}
+
+.main__left-side {
+  display: flex;
+  border-right: 1px solid var(--light-theme-border);
+}
+
+.main__middle-side {
+  display: flex;
+  flex-direction: column;
+}
+
+.main__right-side {
+  padding-top: 0.5rem;
+  padding-left: 1rem;
+  border-left: 1px solid var(--light-theme-border);
+}
+
+.main__right-side form {
+  margin-bottom: 1rem;
 }
