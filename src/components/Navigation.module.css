@@ -1,65 +1,66 @@
 .nav-container {
-    display: flex;
-    justify-content: flex-start;
-    padding-top: 12px;
+  display: flex;
+  justify-content: flex-start;
+  padding-top: 12px;
 }
 
 .nav {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    padding-right: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding-right: 1rem;
 }
 
 .nav__item {
-    display: flex;
-    font-size: 20px;
-    gap: 20px;
-    /* word-spacing: 10%; */
-    padding: 12px;
-    border-radius: 2rem;
-    transition: background-color 250ms ease-in-out;
-    text-align: center;
-    cursor: pointer;
+  display: flex;
+  font-size: 20px;
+  gap: 20px;
+  /* word-spacing: 10%; */
+  color: var(--dark-theme-color);
+  padding: 12px;
+  border-radius: 2rem;
+  transition: background-color 250ms ease-in-out;
+  text-align: center;
+  cursor: pointer;
 }
 
 .nav__item:hover {
-    background-color: #eaeaea;
+  background-color: #eaeaea;
 }
 
 .nav__item i {
-    font-size: 26px;
+  font-size: 26px;
 }
 
 #twitter-icon {
-    color: var(--blue-primary);
-    padding: 0;
-    width: fit-content;
+  color: var(--blue-primary);
+  padding: 0;
+  width: fit-content;
 }
 
 #twitter-icon:hover {
-    background-color: #c3e7ff;
+  background-color: #c3e7ff;
 }
 
 #twitter-icon i {
-    font-size: 28px;
-    padding: 8px;
+  font-size: 28px;
+  padding: 8px;
 }
 
 #nav__tweet {
-    display: block;
+  display: block;
 }
 
 #nav__tweet:hover {
-    background: none;
+  background: none;
 }
 
 #nav__tweet button {
-    width: 100%;
-    cursor: pointer;
-    transition: background-color ease-in 450ms;
+  width: 100%;
+  cursor: pointer;
+  transition: background-color ease-in 450ms;
 }
 
 #nav__tweet button:hover {
-    background-color: #1a83c9;
+  background-color: #1a83c9;
 }
