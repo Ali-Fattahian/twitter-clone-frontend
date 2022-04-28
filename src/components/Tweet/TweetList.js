@@ -49,7 +49,7 @@ const DUMMY_TWEETS = [
 ];
 
 const TweetList = (props) => {
-  return <section className={classes["tweet-list"]}>
+  return <section id='tweet-list' className={classes["tweet-list"]}>
     {DUMMY_TWEETS.map(tweet => <Tweet fullname={tweet.userFullname} username={tweet.userUsername} picture={tweet.userPicture} timeCreated={tweet.tweetTimeCreated} content={tweet.tweetContent} reply={tweet.tweetReply} retweet={tweet.tweetRetweets} like={tweet.tweetLikes}  />)}
   </section>;
 };

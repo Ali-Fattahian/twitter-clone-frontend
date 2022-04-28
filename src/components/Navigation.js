@@ -5,7 +5,7 @@ const Navigation = () => {
   return (
     <section className={`${classes["nav-container"]} main__left-side`}>
       <nav className={classes.nav}>
-        <NavLink to="/" className={classes["nav__item"]} id={classes['twitter-icon']}>
+        <NavLink to="/home" className={classes["nav__item"]} id={classes['twitter-icon']}>
           <i class="fa fa-twitter"></i>
         </NavLink>
         <NavLink
@@ -41,6 +41,7 @@ const Navigation = () => {
         </NavLink>
         <div className={classes["nav__item"]} id={classes["nav__tweet"]}>
           <button className="btn">Tweet</button>
+          <i id={classes['add-tweet-icon']} class="fas fa-plus"></i> 
         </div>
       </nav>
     </section>

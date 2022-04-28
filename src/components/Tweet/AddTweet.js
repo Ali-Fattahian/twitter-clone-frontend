@@ -3,9 +3,9 @@ import Profile from './default_profile.png';
 
 const AddTweet = (props) => {
   return (
-    <form className={classes["add-tweet__form"]}>
+    <form id='add-tweet' className={classes["add-tweet__form"]}>
       <div className={classes["add-tweet__upper"]}>
-        <img className={classes["add-tweet__image"]} src={Profile} alt='Default profile picture' />
+        <img className={classes["add-tweet__image"]} src={Profile} alt='Default profile' />
         <textarea
           className={classes["add-tweet__input"]}
           placeholder="What's happening?"

@@ -50,14 +50,81 @@ a {
 .main__middle-side {
   display: flex;
   flex-direction: column;
+  border-right: 1px solid var(--light-theme-border);
 }
 
 .main__right-side {
   padding-top: 0.5rem;
   padding-left: 1rem;
-  border-left: 1px solid var(--light-theme-border);
 }
 
 .main__right-side form {
   margin-bottom: 1rem;
+}
+
+#root #modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  transform: translateX(-100%);
+}
+
+.menu-btn__section {
+  display: none;
+  justify-content: flex-start;
+  padding: 1rem;
+  align-items: center;
+  gap: 2rem;
+  border-bottom: 1px solid var(--light-theme-border);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  background-color: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  width: 100%;
+}
+
+.menu-btn__section img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.menu-btn__section p {
+  font-weight: bold;
+}
+
+@media screen and (max-width: 987px) {
+  .main__right-side {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 499px) {
+  #root {
+    grid-template-columns: 1fr;
+  }
+
+  #root .main__left-side {
+    display: none;
+  }
+
+  #homepage-middle #tweet-list {
+    transform: translateY(64px);
+  }
+
+  #root .main__middle-side #add-tweet {
+    display: none;
+  }
+
+  .menu-btn__section {
+    display: flex;
+  }
+
+  .main__right-side {
+    display: none;
+  }
 }

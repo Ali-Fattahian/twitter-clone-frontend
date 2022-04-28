@@ -3,12 +3,14 @@ import classes from "./Pages.module.css";
 import Searchbar from "../components/Searchbar";
 import TweetList from "../components/Tweet/TweetList";
 import React from "react";
+import ProfilePicture from '../components/Tweet/default_profile.png'
 
-const Explore = () => {
+const Explore = props => {
   return (
     <React.Fragment>
-      <div className="main__middle-side">
+      <div className="main__middle-side" id='explore-middle'>
         <div className={classes["search-bar__container"]}>
+          <img src={ProfilePicture} alt='Profile' onClick={props.onMenuClick} />
           <Searchbar />
         </div>
         <TweetList />
