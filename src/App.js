@@ -16,6 +16,13 @@ import ProfilePicture from "./components/Tweet/default_profile.png";
 import Overlay from "./components/Modal/Overlay";
 
 function App() {
+  const DUMMY_SEARCH_RESULTS = [
+    {id: '1', fullName: 'Jeff Atwood', username: 'codingHorror', profileImage: ProfilePicture, bio: 'Indoor enthusiast. Co-founder of https://tIndoor enthusiast. Co-founder of https://t', profileLink:'https://something.com'},
+    {id: '2', fullName: 'Atri Tripathi', username: 'AtriTripathi', profileImage: ProfilePicture, bio: 'Android Developer @ SuperShare (httpAndroid Developer @ SuperShare (http', profileLink:'https://something.com'},
+    {id: '3', fullName: 'Stephan Colbert', username: 'StephanAtHome', profileImage: ProfilePicture, bio: 'Evie’s husband', profileLink:'https://something.com'},
+    {id: '4', fullName: 'Amy Schulbert', username: 'amyschulbert', profileImage: ProfilePicture, bio: '2022 tour dates on sale now! Get tickets2022 tour dates on sale now! Get tickets', profileLink:'https://something.com'},
+  ]
+
   const shouldRedirect = true;
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isAddTweetVisible, setIsAddTweetVisible] = useState(false);
@@ -59,7 +66,7 @@ function App() {
       <Routes>
         <Route
           path="home"
-          element={<HomePage pageName="Home" onMenuClick={clickMenuHandler} />}
+          element={<HomePage searchResults={DUMMY_SEARCH_RESULTS} pageName="Home" onMenuClick={clickMenuHandler} />}
         />
         <Route
           path="/"
@@ -70,7 +77,7 @@ function App() {
         <Route
           path="explore"
           element={
-            <Explore pageName="Explore" onMenuClick={clickMenuHandler} />
+            <Explore pageName="Explore" onMenuClick={clickMenuHandler} searchResults={DUMMY_SEARCH_RESULTS} />
           }
         />
         <Route path="bookmarks" element={<Bookmarks pageName="Bookmarks" />} />

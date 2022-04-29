@@ -17,7 +17,7 @@ const HomePage = props => {
         <TweetList />
       </div>
       <div className="main__right-side">
-        <Searchbar />
+        <Searchbar searchResults={props.searchResults} />
       </div>
     </React.Fragment>
   );
