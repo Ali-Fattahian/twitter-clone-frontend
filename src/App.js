@@ -13,9 +13,9 @@ import Bookmarks from "./pages/Bookmarks";
 import Navigation from "./components/Navigation";
 import SmallScreenNav from "./components/Modal/SmallScreenNav";
 import ProfilePicture from "./components/Tweet/default_profile.png";
+import Overlay from "./components/Modal/Overlay";
 
 function App() {
-
   const shouldRedirect = true;
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isAddTweetVisible, setIsAddTweetVisible] = useState(false);
@@ -30,25 +30,31 @@ function App() {
   const closeMenuHandler = () => setIsMenuOpen(false);
   return (
     <Router>
+      <Overlay
+        isVisible={isAddTweetVisible}
+        onOverlayClick={closeAddTweetHandler}
+      />
       <Navigation onAddTweetFormClick={showAddTweetHandler} />
       {isAddTweetVisible && (
-        <form className="add-tweet">
-          <div className="add-tweet__section">
-            <i onClick={closeAddTweetHandler} className="fa fa-close"></i>
-          </div>
-          <div className="add-tweet__section" id="add-tweet__input">
-            <img src={ProfilePicture} alt="Default Profile" />
-            <textarea
-              name="tweet-content"
-              placeholder="What's happening?"
-            />{" "}
-          </div>
-          <div className="add-tweet__section" id="add-tweet__btn">
-            <button type="submit" className="btn">
-              Tweet
-            </button>
-          </div>
-        </form>
+        <div className="add-tweet__container">
+          <form className="add-tweet">
+            <div className="add-tweet__section">
+              <i onClick={closeAddTweetHandler} className="fa fa-close"></i>
+            </div>
+            <div className="add-tweet__section" id="add-tweet__input">
+              <img src={ProfilePicture} alt="Default Profile" />
+              <textarea
+                name="tweet-content"
+                placeholder="What's happening?"
+              />{" "}
+            </div>
+            <div className="add-tweet__section" id="add-tweet__btn">
+              <button type="submit" className="btn">
+                Tweet
+              </button>
+            </div>
+          </form>
+        </div>
       )}
       <Routes>
         <Route
