@@ -1,7 +1,7 @@
 import classes from "./TweetStyle.module.css";
 import Profile from './default_profile.png';
 
-const AddTweet = (props) => {
+const AddTweet = () => {
   return (
     <form id='add-tweet' className={classes["add-tweet__form"]}>
       <div className={classes["add-tweet__upper"]}>

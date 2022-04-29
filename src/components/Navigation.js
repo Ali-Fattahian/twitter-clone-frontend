@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
 import classes from "./Navigation.module.css";
 
-const Navigation = () => {
+const Navigation = props => {
   return (
     <section className={`${classes["nav-container"]} main__left-side`}>
       <nav className={classes.nav}>
@@ -39,7 +39,7 @@ const Navigation = () => {
           <i class="far fa-user-circle"></i>
           <p>Profile</p>
         </NavLink>
-        <div className={classes["nav__item"]} id={classes["nav__tweet"]}>
+        <div className={classes["nav__item"]} id={classes["nav__tweet"]} onClick={props.onAddTweetFormClick}>
           <button className="btn">Tweet</button>
           <i id={classes['add-tweet-icon']} class="fas fa-plus"></i> 
         </div>

@@ -7,7 +7,7 @@
     gap: 1.5rem;
     background-color: #fff;
     width: 55%;
-    z-index: 2;
+    z-index: 3;
     transition: transform ease-in 350ms;
 }
 
