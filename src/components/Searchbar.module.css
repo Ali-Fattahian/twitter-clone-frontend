@@ -33,6 +33,7 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
+    background-color: var(--light-theme-background);
 }
 
 .profiles {
@@ -75,4 +76,8 @@
 #full-name {
     font-weight: bold;
     color: var(--light-theme-color);
+}
+
+.hidden {
+    display: none;
 }

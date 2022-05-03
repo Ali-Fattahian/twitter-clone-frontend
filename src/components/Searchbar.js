@@ -16,7 +16,7 @@ const Searchbar = (props) => {
       <i className="fa fa-search"></i>
       <input type="search" placeholder="Search..." name="search" />
 
-      <div className={classes["search-results"]}>
+      <div className={`${classes["search-results"]} ${classes['hidden']}`}>
         {props.searchResults ? (
           <div className={classes["profiles"]}>
             {props.searchResults.map((searchResult) => (
