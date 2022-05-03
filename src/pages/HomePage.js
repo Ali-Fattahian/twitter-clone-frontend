@@ -3,13 +3,14 @@ import Searchbar from "../components/Searchbar";
 import AddTweet from "../components/Tweet/AddTweet";
 import TweetList from "../components/Tweet/TweetList";
 import ProfilePicture from "../components/Tweet/default_profile.png";
-import axios from "axios";
+import axiosInstance from "../axios";
+
 
 const HomePage = (props) => {
   const [tweetList, setTweetList] = useState([]);
 
   const getTweets = async () => {
-    const response = await axios.get("http://127.0.0.1:8000/api/home");
+    const response = await axiosInstance.get("http://127.0.0.1:8000/api/home");
 
     if (response.status === 200) setTweetList(response.data);
   };

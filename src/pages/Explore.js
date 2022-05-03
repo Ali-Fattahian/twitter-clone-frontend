@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import classes from "./Pages.module.css";
 
 import YouMightLike from "../components/YouMightLike";
 import Searchbar from "../components/Searchbar";
 import TweetList from "../components/Tweet/TweetList";
 import ProfilePicture from "../components/Tweet/default_profile.png";
+import axiosInstance from "../axios";
 
 const Explore = (props) => {
   const [tweetList, setTweetList] = useState([]);
 
   const getTweets = async () => {
-    const response = await axios.get("http://127.0.0.1:8000/api/explore");
+    const response = await axiosInstance.get("http://127.0.0.1:8000/api/explore");
 
     if (response.status === 200) setTweetList(response.data);
   };
