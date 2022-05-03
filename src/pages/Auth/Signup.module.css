@@ -1,0 +1,53 @@
+.message-container {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    padding: 2rem 1rem;
+    z-index: 4;
+    display: flex;
+    justify-content: center;
+}
+
+.message {
+    padding: 2rem;
+    background-color: #ccc;
+}
+
+.form {
+  padding: 3rem;
+  border: var(--light-theme-border);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 2rem;
+  background-color: #ccc;
+  border-radius: 12px;
+}
+
+.form-section {
+    width: 100%;
+}
+
+#user-name {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: .5rem;
+}
+
+.form input {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid var(--light-theme-border);
+  height: 40px;
+}
+
+.form input:focus {
+  outline-color: transparent;
+}
+
+.form button {
+  width: 100%;
+}

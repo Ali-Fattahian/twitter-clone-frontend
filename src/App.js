@@ -15,6 +15,7 @@ import SmallScreenNav from "./components/Modal/SmallScreenNav";
 import ProfilePicture from "./components/Tweet/default_profile.png";
 import Overlay from "./components/Modal/Overlay";
 import Login from "./pages/Auth/Login";
+import Signup from "./pages/Auth/Signup";
 
 function App() {
   const DUMMY_SEARCH_RESULTS = [
@@ -83,6 +84,7 @@ function App() {
         />
         <Route path="bookmarks" element={<Bookmarks pageName="Bookmarks" />} />
         <Route path="login" element={<Login />} />
+        <Route path="signup" element={<Signup />} />
         <Route path=":username" element={<Profile pageName="Profile" />} />
       </Routes>
       <SmallScreenNav
