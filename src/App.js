@@ -28,6 +28,8 @@ function App() {
   const shouldRedirect = true;
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isAddTweetVisible, setIsAddTweetVisible] = useState(false);
+  const [isAuth, setIsAuth] = useState(false)
+
 
   const clickMenuHandler = () => {
     setIsMenuOpen((prevState) => !prevState);
@@ -37,6 +39,7 @@ function App() {
   const closeAddTweetHandler = () => setIsAddTweetVisible(false);
 
   const closeMenuHandler = () => setIsMenuOpen(false);
+
   return (
     <Router>
       <Overlay
@@ -68,7 +71,7 @@ function App() {
       <Routes>
         <Route
           path="home"
-          element={<HomePage searchResults={DUMMY_SEARCH_RESULTS} pageName="Home" onMenuClick={clickMenuHandler} />}
+          element={<HomePage isAuth={isAuth} searchResults={DUMMY_SEARCH_RESULTS} pageName="Home" onMenuClick={clickMenuHandler} />}
         />
         <Route
           path="/"
@@ -83,7 +86,7 @@ function App() {
           }
         />
         <Route path="bookmarks" element={<Bookmarks pageName="Bookmarks" />} />
-        <Route path="login" element={<Login />} />
+        <Route path="login" element={<Login isAuth={setIsAuth} />} />
         <Route path="signup" element={<Signup />} />
         <Route path=":username" element={<Profile pageName="Profile" />} />
       </Routes>

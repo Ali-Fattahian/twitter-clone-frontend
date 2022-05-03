@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axiosInstance from "../../axios";
 import classes from "./Login.module.css";
 
-const Login = () => {
+const Login = props => {
   const email = useRef('');
   const password = useRef('');
   const navigate = useNavigate();
@@ -26,6 +26,7 @@ const Login = () => {
         localStorage.setItem("access_token", res.data.access);
         axiosInstance.defaults.headers["Authorization"] =
           "JWT " + localStorage.getItem("access_token");
+        props.isAuth(true)
         navigate("/", { replace: true });
       });
   };

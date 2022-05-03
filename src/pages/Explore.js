@@ -1,19 +1,33 @@
-import YouMightLike from "../components/YouMightLike";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import classes from "./Pages.module.css";
+
+import YouMightLike from "../components/YouMightLike";
 import Searchbar from "../components/Searchbar";
 import TweetList from "../components/Tweet/TweetList";
-import React from "react";
-import ProfilePicture from '../components/Tweet/default_profile.png'
+import ProfilePicture from "../components/Tweet/default_profile.png";
 
-const Explore = props => {
+const Explore = (props) => {
+  const [tweetList, setTweetList] = useState([]);
+
+  const getTweets = async () => {
+    const response = await axios.get("http://127.0.0.1:8000/api/explore");
+
+    if (response.status === 200) setTweetList(response.data);
+  };
+
+  useEffect(() => {
+    getTweets();
+  }, []);
+
   return (
     <React.Fragment>
-      <div className="main__middle-side" id='explore-middle'>
+      <div className="main__middle-side" id="explore-middle">
         <div className={classes["search-bar__container"]}>
-          <img src={ProfilePicture} alt='Profile' onClick={props.onMenuClick} />
+          <img src={ProfilePicture} alt="Profile" onClick={props.onMenuClick} />
           <Searchbar searchResults={props.searchResults} />
         </div>
-        <TweetList />
+        <TweetList tweetList={tweetList} />
       </div>
       <div className="main__right-side">
         <YouMightLike />
