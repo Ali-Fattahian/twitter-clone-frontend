@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import "./App.css";
 import {
   BrowserRouter as Router,
@@ -16,20 +16,49 @@ import ProfilePicture from "./components/Tweet/default_profile.png";
 import Overlay from "./components/Modal/Overlay";
 import Login from "./pages/Auth/Login";
 import Signup from "./pages/Auth/Signup";
+import axiosInstance from "./axios";
 
 function App() {
   const DUMMY_SEARCH_RESULTS = [
-    {id: '1', fullName: 'Jeff Atwood', username: 'codingHorror', profileImage: ProfilePicture, bio: 'Indoor enthusiast. Co-founder of https://tIndoor enthusiast. Co-founder of https://t', profileLink:'https://something.com'},
-    {id: '2', fullName: 'Atri Tripathi', username: 'AtriTripathi', profileImage: ProfilePicture, bio: 'Android Developer @ SuperShare (httpAndroid Developer @ SuperShare (http', profileLink:'https://something.com'},
-    {id: '3', fullName: 'Stephan Colbert', username: 'StephanAtHome', profileImage: ProfilePicture, bio: 'Evie’s husband', profileLink:'https://something.com'},
-    {id: '4', fullName: 'Amy Schulbert', username: 'amyschulbert', profileImage: ProfilePicture, bio: '2022 tour dates on sale now! Get tickets2022 tour dates on sale now! Get tickets', profileLink:'https://something.com'},
-  ]
+    {
+      id: "1",
+      fullName: "Jeff Atwood",
+      username: "codingHorror",
+      profileImage: ProfilePicture,
+      bio: "Indoor enthusiast. Co-founder of https://tIndoor enthusiast. Co-founder of https://t",
+      profileLink: "https://something.com",
+    },
+    {
+      id: "2",
+      fullName: "Atri Tripathi",
+      username: "AtriTripathi",
+      profileImage: ProfilePicture,
+      bio: "Android Developer @ SuperShare (httpAndroid Developer @ SuperShare (http",
+      profileLink: "https://something.com",
+    },
+    {
+      id: "3",
+      fullName: "Stephan Colbert",
+      username: "StephanAtHome",
+      profileImage: ProfilePicture,
+      bio: "Evie’s husband",
+      profileLink: "https://something.com",
+    },
+    {
+      id: "4",
+      fullName: "Amy Schulbert",
+      username: "amyschulbert",
+      profileImage: ProfilePicture,
+      bio: "2022 tour dates on sale now! Get tickets2022 tour dates on sale now! Get tickets",
+      profileLink: "https://something.com",
+    },
+  ];
 
   const shouldRedirect = true;
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isAddTweetVisible, setIsAddTweetVisible] = useState(false);
-  const [isAuth, setIsAuth] = useState(false)
-
+  const [isAuth, setIsAuth] = useState(false);
+  const tweetContent = useRef("");
 
   const clickMenuHandler = () => {
     setIsMenuOpen((prevState) => !prevState);
@@ -40,6 +69,44 @@ function App() {
 
   const closeMenuHandler = () => setIsMenuOpen(false);
 
+  const authStatusChangeHandler = (bool) => {
+    setIsAuth(bool);
+
+    if (localStorage.getItem("access_token")) {
+      setIsAuth(true);
+    }
+  };
+
+  useEffect(() => {
+    authStatusChangeHandler();
+  }, []);
+
+  const addTweetHandler = (e) => {
+    e.preventDefault();
+
+    if (isAuth) {
+      if (tweetContent.current.value.trim().length > 0) {
+        sendData();
+      }
+    }
+  };
+
+  async function sendData() {
+    const response = await axiosInstance.post(
+      "http://127.0.0.1:8000/api/compose/tweet",
+      {
+        content: tweetContent.current.value,
+      }
+    );
+
+    if (response.status === 201) {
+      console.log("success");
+      tweetContent.current.value = "";
+      return;
+    }
+    console.log(response);
+  }
+
   return (
     <Router>
       <Overlay
@@ -49,7 +116,7 @@ function App() {
       <Navigation onAddTweetFormClick={showAddTweetHandler} />
       {isAddTweetVisible && (
         <div className="add-tweet__container">
-          <form className="add-tweet">
+          <form className="add-tweet" onSubmit={addTweetHandler}>
             <div className="add-tweet__section">
               <i onClick={closeAddTweetHandler} className="fa fa-close"></i>
             </div>
@@ -58,7 +125,8 @@ function App() {
               <textarea
                 name="tweet-content"
                 placeholder="What's happening?"
-              />{" "}
+                ref={tweetContent}
+              />
             </div>
             <div className="add-tweet__section" id="add-tweet__btn">
               <button type="submit" className="btn">
@@ -71,7 +139,14 @@ function App() {
       <Routes>
         <Route
           path="home"
-          element={<HomePage isAuth={isAuth} searchResults={DUMMY_SEARCH_RESULTS} pageName="Home" onMenuClick={clickMenuHandler} />}
+          element={
+            <HomePage
+              isAuth={isAuth}
+              searchResults={DUMMY_SEARCH_RESULTS}
+              pageName="Home"
+              onMenuClick={clickMenuHandler}
+            />
+          }
         />
         <Route
           path="/"
@@ -82,11 +157,18 @@ function App() {
         <Route
           path="explore"
           element={
-            <Explore pageName="Explore" onMenuClick={clickMenuHandler} searchResults={DUMMY_SEARCH_RESULTS} />
+            <Explore
+              pageName="Explore"
+              onMenuClick={clickMenuHandler}
+              searchResults={DUMMY_SEARCH_RESULTS}
+            />
           }
         />
         <Route path="bookmarks" element={<Bookmarks pageName="Bookmarks" />} />
-        <Route path="login" element={<Login isAuth={setIsAuth} />} />
+        <Route
+          path="login"
+          element={<Login authStatus={authStatusChangeHandler} />}
+        />
         <Route path="signup" element={<Signup />} />
         <Route path=":username" element={<Profile pageName="Profile" />} />
       </Routes>

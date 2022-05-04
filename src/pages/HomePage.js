@@ -26,7 +26,7 @@ const HomePage = (props) => {
           <img src={ProfilePicture} alt="Profile" onClick={props.onMenuClick} />
           <p>{props.pageName}</p>
         </section>
-        <AddTweet />
+        <AddTweet isAuth={props.isAuth} />
         <TweetList tweetList={tweetList} />
       </div>
       <div className="main__right-side">

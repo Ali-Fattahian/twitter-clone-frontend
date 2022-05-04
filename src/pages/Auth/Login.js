@@ -26,8 +26,8 @@ const Login = props => {
         localStorage.setItem("access_token", res.data.access);
         axiosInstance.defaults.headers["Authorization"] =
           "JWT " + localStorage.getItem("access_token");
-        props.isAuth(true)
         navigate("/", { replace: true });
+        props.authStatus(true)
       });
   };
 
