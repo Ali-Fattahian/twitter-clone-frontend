@@ -25,15 +25,21 @@
 
 .search-results {
     position: absolute;
+    z-index: 2;
     left: 0;
     top: 49px;
+    width: 100%;
+    min-width: fit-content;
     padding: 2rem 1rem;
     border-radius: 5px;
     border: 1px solid var(--light-theme-border);
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
     background-color: var(--light-theme-background);
+}
+
+.search-results p {
+    color: var(--gray);
+    font-size: 15px;
+    font-weight: lighter;
 }
 
 .profiles {
@@ -45,6 +51,7 @@
 
 .profile {
     display: flex;
+    width: 100%;
     gap: 10px;
     color: var(--gray);
     align-items: center;
