@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useState, useRef } from "react";
 import "./App.css";
 import {
   BrowserRouter as Router,
@@ -17,12 +17,13 @@ import Overlay from "./components/Modal/Overlay";
 import Login from "./pages/Auth/Login";
 import Signup from "./pages/Auth/Signup";
 import axiosInstance from "./axios";
+import { AuthContextProvider } from "./store/auth-context";
 
 function App() {
   const shouldRedirect = true;
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isAddTweetVisible, setIsAddTweetVisible] = useState(false);
-  const [isAuth, setIsAuth] = useState(false);
+  const isLoggedIn = !!localStorage.getItem('access_token');
   const tweetContent = useRef("");
 
   const clickMenuHandler = () => {
@@ -34,22 +35,10 @@ function App() {
 
   const closeMenuHandler = () => setIsMenuOpen(false);
 
-  const authStatusChangeHandler = (bool) => {
-    setIsAuth(bool);
-
-    if (localStorage.getItem("access_token")) {
-      setIsAuth(true);
-    }
-  };
-
-  useEffect(() => {
-    authStatusChangeHandler();
-  }, []);
-
   const addTweetHandler = (e) => {
     e.preventDefault();
 
-    if (isAuth) {
+    if (isLoggedIn) {
       if (tweetContent.current.value.trim().length > 0) {
         sendData();
       }
@@ -73,73 +62,75 @@ function App() {
   }
 
   return (
-    <Router>
-      <Overlay
-        isVisible={isAddTweetVisible}
-        onOverlayClick={closeAddTweetHandler}
-      />
-      <Navigation onAddTweetFormClick={showAddTweetHandler} />
-      {isAddTweetVisible && (
-        <div className="add-tweet__container">
-          <form className="add-tweet" onSubmit={addTweetHandler}>
-            <div className="add-tweet__section">
-              <i onClick={closeAddTweetHandler} className="fa fa-close"></i>
-            </div>
-            <div className="add-tweet__section" id="add-tweet__input">
-              <img src={ProfilePicture} alt="Default Profile" />
-              <textarea
-                name="tweet-content"
-                placeholder="What's happening?"
-                ref={tweetContent}
+    <AuthContextProvider>
+      <Router>
+        <Overlay
+          isVisible={isAddTweetVisible}
+          onOverlayClick={closeAddTweetHandler}
+        />
+        <Navigation onAddTweetFormClick={showAddTweetHandler} />
+        {isAddTweetVisible && (
+          <div className="add-tweet__container">
+            <form className="add-tweet" onSubmit={addTweetHandler}>
+              <div className="add-tweet__section">
+                <i onClick={closeAddTweetHandler} className="fa fa-close"></i>
+              </div>
+              <div className="add-tweet__section" id="add-tweet__input">
+                <img src={ProfilePicture} alt="Default Profile" />
+                <textarea
+                  name="tweet-content"
+                  placeholder="What's happening?"
+                  ref={tweetContent}
+                />
+              </div>
+              <div className="add-tweet__section" id="add-tweet__btn">
+                <button type="submit" className="btn">
+                  Tweet
+                </button>
+              </div>
+            </form>
+          </div>
+        )}
+        <Routes>
+          <Route
+            path="home"
+            element={
+              <HomePage
+                pageName="Home"
+                onMenuClick={clickMenuHandler}
               />
-            </div>
-            <div className="add-tweet__section" id="add-tweet__btn">
-              <button type="submit" className="btn">
-                Tweet
-              </button>
-            </div>
-          </form>
-        </div>
-      )}
-      <Routes>
-        <Route
-          path="home"
-          element={
-            <HomePage
-              isAuth={isAuth}
-              pageName="Home"
-              onMenuClick={clickMenuHandler}
-            />
-          }
+            }
+          />
+          <Route
+            path="/"
+            element={
+              shouldRedirect ? <Navigate replace to="/home" /> : <HomePage />
+            }
+          />
+          <Route
+            path="explore"
+            element={
+              <Explore pageName="Explore" onMenuClick={clickMenuHandler} />
+            }
+          />
+          <Route
+            path="bookmarks"
+            element={<Bookmarks pageName="Bookmarks" />}
+          />
+          {
+          <Route
+            path="login"
+            element={!isLoggedIn ? <Login /> : <Navigate replace to="/home" />}
+          />}
+          <Route path="signup" element={<Signup />} />
+          <Route path=":username" element={<Profile pageName="Profile" />} />
+        </Routes>
+        <SmallScreenNav
+          isMenuOpen={isMenuOpen}
+          onCloseBtnClick={closeMenuHandler}
         />
-        <Route
-          path="/"
-          element={
-            shouldRedirect ? <Navigate replace to="/home" /> : <HomePage />
-          }
-        />
-        <Route
-          path="explore"
-          element={
-            <Explore
-              pageName="Explore"
-              onMenuClick={clickMenuHandler}
-            />
-          }
-        />
-        <Route path="bookmarks" element={<Bookmarks pageName="Bookmarks" />} />
-        <Route
-          path="login"
-          element={<Login authStatus={authStatusChangeHandler} />}
-        />
-        <Route path="signup" element={<Signup />} />
-        <Route path=":username" element={<Profile pageName="Profile" />} />
-      </Routes>
-      <SmallScreenNav
-        isMenuOpen={isMenuOpen}
-        onCloseBtnClick={closeMenuHandler}
-      />
-    </Router>
+      </Router>
+    </AuthContextProvider>
   );
 }
 

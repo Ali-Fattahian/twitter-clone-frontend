@@ -1,3 +1,4 @@
+import FollowButton from "./FollowButton";
 import classes from "./Profile.module.css";
 import ProfilePicture from "./Tweet/default_profile.png";
 
@@ -20,7 +21,7 @@ const Profile = () => {
       <div className={classes["profile__bottom"]}>
         <div className={classes["profile__bottom-middle"]}>
           <img src={ProfilePicture} alt="profile" />
-          <button className="btn">Follow</button>
+          <FollowButton />
         </div>
         <div className={classes["profile__bottom-bottom"]}>
           <div className={classes["user-info"]}>

@@ -1,5 +1,6 @@
 import classes from "./YouMightLike.module.css";
 import ProfilePicture from "./Tweet/default_profile.png";
+import FollowButton from "./FollowButton";
 
 const YouMightLike = () => {
   return (
@@ -15,7 +16,7 @@ const YouMightLike = () => {
             </div>
           </div>
           <div className={classes["suggested-user__right"]}>
-            <button className="btn">Follow</button>
+            <FollowButton color='#fff' backgroundColor='#000' />
           </div>
         </div>
         <div className={classes["suggested-user"]}>
@@ -27,7 +28,7 @@ const YouMightLike = () => {
             </div>
           </div>
           <div className={classes["suggested-user__right"]}>
-            <button className="btn">Follow</button>
+            <FollowButton color='#fff' backgroundColor='#000' />
           </div>
         </div>
         <div className={classes["suggested-user"]}>
@@ -39,7 +40,7 @@ const YouMightLike = () => {
             </div>
           </div>
           <div className={classes["suggested-user__right"]}>
-            <button className="btn">Follow</button>
+            <FollowButton color='#fff' backgroundColor='#000' />
           </div>
         </div>
       </div>

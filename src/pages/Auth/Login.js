@@ -1,12 +1,14 @@
-import { useRef } from "react";
+import { useContext, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import axiosInstance from "../../axios";
+import { AuthContext } from "../../store/auth-context";
+
 import classes from "./Login.module.css";
 
-const Login = props => {
+const Login = () => {
   const email = useRef('');
   const password = useRef('');
-  const navigate = useNavigate();
+  const navigate = useNavigate()
+  const {login} = useContext(AuthContext)
 
   const formSubmitHandler = (e) => {
     e.preventDefault();
@@ -16,21 +18,10 @@ const Login = props => {
     if (!emailCurrentValue.includes("@")) return;
     if (emailCurrentValue.trim().length === 0 || passwordCurrentValue.trim().length === 0) return;
 
-    axiosInstance
-      .post("token/", {
-        email: emailCurrentValue,
-        password: passwordCurrentValue,
-      })
-      .then((res) => {
-        localStorage.setItem("refresh_token", res.data.refresh);
-        localStorage.setItem("access_token", res.data.access);
-        axiosInstance.defaults.headers["Authorization"] =
-          "JWT " + localStorage.getItem("access_token");
-        navigate("/", { replace: true });
-        props.authStatus(true)
-      });
-  };
+    login(emailCurrentValue, passwordCurrentValue)
 
+    navigate("/", { replace: true });
+  };
   return (
     <div className={classes["page-container"]}>
       <div className={classes["form-container"]} onSubmit={formSubmitHandler}>
