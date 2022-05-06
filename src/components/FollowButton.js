@@ -1,22 +1,28 @@
-import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../store/auth-context";
-
+import axiosInstance from "../axios";
 
 const FollowButton = (props) => {
-  const authCtx = useContext(AuthContext)
-  const navigate = useNavigate()
-  const followHandler = e => {
-    if (!authCtx.isLoggedIn){ 
-      navigate('/login')
+  const navigate = useNavigate();
+  const isLoggedIn = !!localStorage.getItem("access_token");
+
+  const followHandler = async () => {
+    if (!isLoggedIn) {
+      navigate("/login");
     } else {
-      console.log('you followed this guy')
+      const response = await axiosInstance.post(
+        "follow-request/",
+        {
+          user: props.user.id
+        }
+      );
+      console.log(response);
+      if (response.status === 201) console.log("successfull");
     }
-  }
+  };
 
   return (
     <button
-      className='btn'
+      className="btn"
       type="submit"
       style={{ backgroundColor: props.backgroundColor, color: props.color }}
       onClick={followHandler}

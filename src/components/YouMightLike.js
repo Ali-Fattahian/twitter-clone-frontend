@@ -1,9 +1,8 @@
 import { useEffect, useState, useCallback } from "react";
 import classes from "./YouMightLike.module.css";
-import ProfilePicture from "./Tweet/default_profile.png";
-import FollowButton from "./FollowButton";
 import axiosInstance from "../axios";
 import axios from "axios";
+import SuggestedUser from "./SuggestedUser";
 
 const YouMightLike = () => {
   const [suggestedUsers, setSuggestedUsers] = useState([]);
@@ -30,20 +29,7 @@ const YouMightLike = () => {
       <p>Who to follow</p>
       <div className={classes["suggested-users"]}>
         {suggestedUsers.map((user) => (
-          <div className={classes["suggested-user"]}>
-            <div className={classes["suggested-user__left"]}>
-              <img src={ProfilePicture} alt="profile" />
-              <div className={classes["user-info"]}>
-                <p
-                  id={classes["fullname"]}
-                >{`${user.firstname} ${user.lastname}`}</p>
-                <p id={classes["username"]}>@{user.username}</p>
-              </div>
-            </div>
-            <div className={classes["suggested-user__right"]}>
-              <FollowButton color="#fff" backgroundColor="#000" />
-            </div>
-          </div>
+          <SuggestedUser user={user} key={user.id} />
         ))}
       </div>
     </section>
