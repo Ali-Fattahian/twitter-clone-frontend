@@ -196,6 +196,18 @@ a {
   }
 }
 
+.profile-not-found {
+  padding: 1rem;
+  border-bottom: 1px solid var(--light-theme-border);
+  width: 100%;
+}
+
+.profile-not-found p {
+  color: var(--gray);
+  text-align: center;
+  font-weight: bold;
+}
+
 @media screen and (max-width: 499px) {
   #root {
     grid-template-columns: 1fr;

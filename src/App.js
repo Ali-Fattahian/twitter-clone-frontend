@@ -124,6 +124,7 @@ function App() {
           />}
           <Route path="signup" element={<Signup />} />
           <Route path=":username" element={<Profile pageName="Profile" />} />
+          {/* <Route path='*' element={<NoMatch />} /> */}
         </Routes>
         <SmallScreenNav
           isMenuOpen={isMenuOpen}

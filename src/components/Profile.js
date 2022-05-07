@@ -2,7 +2,7 @@ import FollowButton from "./FollowButton";
 import classes from "./Profile.module.css";
 import ProfilePicture from "./Tweet/default_profile.png";
 
-const Profile = () => {
+const Profile = (props) => {
   return (
     <section className={classes.profile}>
       <div className={classes["profile__top"]}>
@@ -11,7 +11,7 @@ const Profile = () => {
             <i className="fa fa-chevron-left"></i>
           </div>
           <div>
-            <h3>Full Name</h3>
+            <h3>{`${props.user.firstname} ${props.user.lastname}`}</h3>
             <p>1200 Tweets</p>
           </div>
         </div>
@@ -21,21 +21,19 @@ const Profile = () => {
       <div className={classes["profile__bottom"]}>
         <div className={classes["profile__bottom-middle"]}>
           <img src={ProfilePicture} alt="profile" />
-          <FollowButton />
+          <FollowButton user={props.user} />
         </div>
         <div className={classes["profile__bottom-bottom"]}>
           <div className={classes["user-info"]}>
-            <h3>Some Guy Fullname</h3>
-            <p>@some_guy_username</p>
+            <h3>{`${props.user.firstname} ${props.user.lastname}`}</h3>
+            <p>@{props.user.username}</p>
           </div>
           <div className={classes["user-bio"]}>
-            <p>
-              Managing Partner,Master Ventures Institutional Inv. Mgmt.(MVIM),
-              Advisor, Former Sell-Side Analyst, Dot-com CEO MBA Grad #Bitcoin
-              #Binance #Polkadot #Solana🇺🇸
-            </p>
+            <p>{props.user.bio}</p>
           </div>
-          <p className={classes["user-date-joined"]}>Joined November 2017</p>
+          <p className={classes["user-date-joined"]}>
+            Joined {props.user.join_date}
+          </p>
           <div className={classes.follow}>
             <div className={classes["user-follow"]}>
               <span>193</span>
@@ -57,6 +55,6 @@ const Profile = () => {
 // Follow button is Following turns into Unfollow (red) (244, 33, 46) on hover. at least in dark mode.
 // For not followings, it is a Follow text (black color) and (#eff3f4) background and gets a little darker on hover.
 // Following and Follower number at the bottom show real peaple
-// Follow button text turns into 'Edit profile' for the users profile 
+// Follow button text turns into 'Edit profile' for the users profile
 
 export default Profile;
