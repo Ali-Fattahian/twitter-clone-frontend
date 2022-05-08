@@ -1,18 +1,21 @@
 import FollowButton from "./FollowButton";
 import classes from "./Profile.module.css";
 import ProfilePicture from "./Tweet/default_profile.png";
+import dateTimeGenerator from "../utils";
+import { useNavigate } from "react-router-dom";
 
 const Profile = (props) => {
+  const navigate = useNavigate()
   return (
     <section className={classes.profile}>
       <div className={classes["profile__top"]}>
         <div className={classes["profile__top-left"]}>
           <div id={classes.icon}>
-            <i className="fa fa-chevron-left"></i>
+            <i className="fa fa-chevron-left" onClick={() => navigate(-1)}></i>
           </div>
           <div>
             <h3>{`${props.user.firstname} ${props.user.lastname}`}</h3>
-            <p>1200 Tweets</p>
+            <p>{props.user.tweet_number} Tweets</p>
           </div>
         </div>
         <div></div>
@@ -32,15 +35,15 @@ const Profile = (props) => {
             <p>{props.user.bio}</p>
           </div>
           <p className={classes["user-date-joined"]}>
-            Joined {props.user.join_date}
+            Joined {dateTimeGenerator(props.user.date_joined.date_joined_ago, props.user.date_joined.date_joined)}
           </p>
           <div className={classes.follow}>
             <div className={classes["user-follow"]}>
-              <span>193</span>
+              <span>{props.user.follows.followings_count}</span>
               <p id={classes["user-follow__text"]}>Following</p>
             </div>
             <div className={classes["user-follow"]}>
-              <span>842</span>
+              <span>{props.user.follows.followers_count}</span>
               <p id={classes["user-follow__text"]}>Followers</p>
             </div>
           </div>

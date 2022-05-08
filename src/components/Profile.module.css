@@ -25,6 +25,7 @@
 .profile__bottom {
     display: flex;
     flex-direction: column;
+    width: 100%;
 }
 
 .profile__top-left {
