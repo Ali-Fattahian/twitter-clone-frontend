@@ -1,6 +1,8 @@
 import classes from "./TweetStyle.module.css";
 
 const Tweet = (props) => {
+  const userLink = `/${props.username}`
+
   return (
     <div className={classes.tweet}>
       <div className={classes["tweet-left"]}>
@@ -9,10 +11,10 @@ const Tweet = (props) => {
       <div className={classes["tweet-right"]}>
         <div className={classes["tweet-right__top"]}>
           <div className={classes["user-info"]}>
-            <a id={classes["user-name"]} href="\">
+            <a id={classes["user-name"]} href={userLink}>
               {props.fullname}
             </a>
-            <a id={classes["username"]} href="\">
+            <a id={classes["username"]} href={userLink}>
               {props.username}
             </a>
             <a id={classes["tweet-dot"]} href="\">

@@ -2,10 +2,15 @@ import ProfilePicture from "./Tweet/default_profile.png";
 import FollowButton from './FollowButton';
 
 import classes from './YouMightLike.module.css';
+import { useNavigate } from "react-router-dom";
 
 const SuggestedUser = props => {
+  const navigate = useNavigate()
+
+  const profileClickHandler = () => navigate(`/${props.user.username}`)
+
   return (
-    <div className={classes["suggested-user"]}>
+    <div className={classes["suggested-user"]} onClick={profileClickHandler}>
       <div className={classes["suggested-user__left"]}>
         <img src={ProfilePicture} alt="profile" />
         <div className={classes["user-info"]}>

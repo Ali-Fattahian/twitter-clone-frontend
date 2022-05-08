@@ -14,8 +14,9 @@ const Searchbar = () => {
       .classList.remove(classes["hidden"]);
   };
 
-  const searchFormBlurHandler = () => {
+  const searchFormBlurHandler = e => {
     document.querySelector(".fa-search").style.color = "#71767b";
+    if (e.target.value.trim().length === 0) // Fix
     document
       .querySelector(`.${classes["search-results"]}`)
       .classList.add(classes["hidden"]);
@@ -72,7 +73,9 @@ const Searchbar = () => {
             ))
           ) : (
             <p style={{ textAlign: "center" }}>
-              {input.length > 0 && users.length === 0 ? `No results for '${input}'` : 'Try searching for people, topics, or keywords'}
+              {input.length > 0 && users.length === 0
+                ? `No results for '${input}'`
+                : "Try searching for people, topics, or keywords"}
             </p>
           )}
         </div>

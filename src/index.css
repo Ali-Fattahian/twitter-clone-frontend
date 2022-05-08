@@ -53,6 +53,42 @@ a {
   background-color: rgba(0, 0, 0, 0.4);
 }
 
+.error_message__container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 5;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.error-message__modal {
+  margin: auto;
+  background-color: var(--light-theme-background);
+  margin-top: 2rem;
+  padding: 2rem;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  border-radius: 8px;
+  gap: 1.5rem;
+}
+
+.error-message__modal p {
+  color: var(--gray);
+  text-align: center;
+  font-weight: bold;
+  width: 100%;
+}
+
+.error-message__modal div {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+}
+
 .add-tweet__container {
   width: 100%;
   margin: 1rem;
