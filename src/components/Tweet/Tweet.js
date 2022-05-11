@@ -1,7 +1,55 @@
+import { useState, useEffect, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
+import axiosInstance from "../../axios";
+
+import LikeButton from "../LikeButton";
+import UnlikeButton from "../UnlikeButton";
 import classes from "./TweetStyle.module.css";
 
 const Tweet = (props) => {
-  const userLink = `/${props.username}`
+  const userLink = `/${props.username}`;
+  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
+  const [hasStarted, setHasStarted] = useState(false);
+  const [likeOrDislike, setLikeOrDislike] = useState(null);
+  const [likeClicked, setLikeClicked] = useState(null)
+  const isLoggedIn = !!localStorage.getItem("access_token");
+
+  const checkForLikeButton = useCallback(async () => {
+    setHasStarted(true);
+    setIsLoading(true);
+    if (isLoggedIn) {
+      await axiosInstance
+        .get(`like/${props.tweetId}/check`)
+        .then((res) => {
+          if (res.status === 200) {
+            setLikeOrDislike(<UnlikeButton likeId={res.data[0].id} likes={props.likes} setLikeClicked={setLikeClicked} />);
+          } else {
+            throw res.status;
+          }
+        })
+        .catch(() => {
+          setLikeOrDislike(<LikeButton tweetId={props.tweetId} likes={props.likes} setLikeClicked={setLikeClicked} />);
+        });
+    } 
+    setIsLoading(false);
+  }, [isLoggedIn, props.tweetId, props.likes]);
+
+  useEffect(() => {
+    checkForLikeButton();
+  }, [checkForLikeButton, likeClicked]);
+
+  let likeButton;
+  if (isLoggedIn) {
+    likeButton = <div>{!isLoading && hasStarted && likeOrDislike}</div>;
+  } else {
+    likeButton = (
+      <div>
+        <i className="fa fa-heart-o" onClick={() => navigate('/login')} />
+        <p>{props.likes}</p>
+      </div>
+    );
+  }
 
   return (
     <div className={classes.tweet}>
@@ -32,9 +80,7 @@ const Tweet = (props) => {
             <div></div>
           </div>
         </div>
-        <div className={classes["tweet-content"]}>
-            {props.content}
-        </div>
+        <div className={classes["tweet-content"]}>{props.content}</div>
         <div className={classes["tweet-right__bottom"]}>
           <div>
             <i className="fa fa-reply" />
@@ -44,10 +90,7 @@ const Tweet = (props) => {
             <i className="fa fa-retweet" />
             <p>{props.retweet}</p>
           </div>
-          <div>
-            <i className="fa fa-heart-o" />
-            <p>{props.like}</p>
-          </div>
+            {likeButton}
           <div>
             <i className="fa fa-upload" />
           </div>

@@ -13,6 +13,7 @@ const TweetList = (props) => {
     <section id="tweet-list" className={classes["tweet-list"]}>
       {props.tweetList.map((tweet) => (
         <Tweet
+          tweetId={tweet.id}
           key={tweet.id}
           fullname={`${tweet.firstname} ${tweet.lastname}`}
           username={tweet.user}
@@ -24,7 +25,7 @@ const TweetList = (props) => {
           content={tweet.content}
           reply={tweet.tweetReply}
           retweet={tweet.tweetRetweets}
-          like={tweet.likes.length}
+          likes={tweet.likes.length}
         />
       ))}
     </section>
