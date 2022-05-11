@@ -4,7 +4,7 @@ import Searchbar from "../components/Searchbar";
 import TweetList from "../components/Tweet/TweetList";
 import axiosInstance from "../axios";
 
-const Bookmarks = (props) => {
+const Bookmarks = () => {
   const [tweetList, setTweetList] = useState([]);
 
   const getTweets = async () => {
@@ -22,7 +22,8 @@ const Bookmarks = (props) => {
   return (
     <React.Fragment>
       <div className="main__middle-side">
-        <TweetList tweetList={tweetList} />
+        {!!localStorage.getItem('access_token') ? <TweetList tweetList={tweetList} /> : <p style={{textAlign: 'center', color: '#71767b', marginTop: '1.5rem'}}>To see your bookmarks, Please <a style={{color: '#1d9bf0'}} href='/login'>login</a>.</p>}
+        
       </div>
       <div className="main__right-side">
         <Searchbar />
