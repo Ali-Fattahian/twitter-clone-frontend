@@ -15,6 +15,7 @@ const ProfilePage = () => {
   const [hasStarted, setHasStarted] = useState(false);
   const [error, setError] = useState(null);
   const { username } = useParams();
+  const [follow, setFollow] = useState(null)
 
   const getProfile = useCallback(async () => {
     setHasStarted(true);
@@ -37,12 +38,12 @@ const ProfilePage = () => {
 
   useEffect(() => {
     getProfile();
-  }, [getProfile]);
+  }, [getProfile, follow]);
 
   return (
     <React.Fragment>
       <div className="main__middle-side">
-        {!error && !isLoading && hasStarted && <Profile user={user} />}
+        {!error && !isLoading && hasStarted && <Profile user={user} setFollow={setFollow} />}
         {hasStarted && error && (
           <section className="profile-not-found">
             <p>Sorry this profile doesn't exist.</p>

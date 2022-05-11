@@ -1,11 +1,49 @@
+import { useCallback, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import FollowButton from "./FollowButton";
 import classes from "./Profile.module.css";
 import ProfilePicture from "./Tweet/default_profile.png";
 import dateTimeGenerator from "../utils";
-import { useNavigate } from "react-router-dom";
+import { parseJwt } from "../utils";
+import axiosInstance from "../axios";
+import UnfollowButton from "./UnfollowButton";
 
 const Profile = (props) => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
+  const [hasStarted, setHasStarted] = useState(false);
+  const [followOrEdit, setFollowOrEdit] = useState(null);
+
+  const checkForButton = useCallback(async () => {
+    setHasStarted(true);
+    setIsLoading(true);
+    if (!!localStorage.getItem("access_token")) {
+      const token = localStorage.getItem("access_token");
+      const username = parseJwt(token).username;
+      if (username === props.user.username) {
+        setFollowOrEdit(<button className="btn">Edit profile</button>);
+      } else {
+        await axiosInstance
+          .get(`follow/${props.user.username}/check`)
+          .then((res) => {
+            if (res.status === 200) {
+              setFollowOrEdit(<UnfollowButton unfollowId={res.data.id} setFollow={props.setFollow} />)
+            } else {
+              throw res.status
+            }}
+          ).catch(() => {
+            setFollowOrEdit(<FollowButton user={props.user} setFollow={props.setFollow} />)
+          });
+      }
+    }
+    setIsLoading(false);
+  }, [props.user, props.setFollow]);
+
+  useEffect(() => {
+    checkForButton();
+  }, [checkForButton]);
+
   return (
     <section className={classes.profile}>
       <div className={classes["profile__top"]}>
@@ -24,7 +62,7 @@ const Profile = (props) => {
       <div className={classes["profile__bottom"]}>
         <div className={classes["profile__bottom-middle"]}>
           <img src={ProfilePicture} alt="profile" />
-          <FollowButton user={props.user} />
+          {!isLoading && hasStarted && followOrEdit}
         </div>
         <div className={classes["profile__bottom-bottom"]}>
           <div className={classes["user-info"]}>
@@ -35,7 +73,11 @@ const Profile = (props) => {
             <p>{props.user.bio}</p>
           </div>
           <p className={classes["user-date-joined"]}>
-            Joined {dateTimeGenerator(props.user.date_joined.date_joined_ago, props.user.date_joined.date_joined)}
+            Joined{" "}
+            {dateTimeGenerator(
+              props.user.date_joined.date_joined_ago,
+              props.user.date_joined.date_joined
+            )}
           </p>
           <div className={classes.follow}>
             <div className={classes["user-follow"]}>

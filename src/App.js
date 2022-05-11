@@ -18,6 +18,8 @@ import Login from "./pages/Auth/Login";
 import Signup from "./pages/Auth/Signup";
 import axiosInstance from "./axios";
 import { AuthContextProvider } from "./store/auth-context";
+import UserFollowers from "./pages/UserFollowings";
+import UserFollowings from "./pages/UserFollowings";
 
 function App() {
   const shouldRedirect = true;
@@ -124,6 +126,8 @@ function App() {
           />}
           <Route path="signup" element={<Signup />} />
           <Route path=":username" element={<Profile pageName="Profile" />} />
+          <Route path=":username/followers" element={<UserFollowers />} />
+          <Route path=":username/following" element={<UserFollowings />} />
           {/* <Route path='*' element={<NoMatch />} /> */}
         </Routes>
         <SmallScreenNav

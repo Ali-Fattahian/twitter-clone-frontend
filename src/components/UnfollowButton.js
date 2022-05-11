@@ -1,21 +1,18 @@
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../axios";
 
-const FollowButton = (props) => {
+const UnfollowButton = (props) => {
   const navigate = useNavigate();
   const isLoggedIn = !!localStorage.getItem("access_token");
 
-  const followHandler = async () => {
+  const unfollowHandler = async () => {
     if (!isLoggedIn) {
       navigate("/login");
     } else {
-      const response = await axiosInstance.post(
-        "follow-request/",
-        {
-          user: props.user.id
-        }
+      const response = await axiosInstance.delete(
+        `profiles/${props.unfollowId}/follow/delete`
       );
-      if (response.status === 201) props.setFollow(true);
+      if (response.status === 204) props.setFollow(false);
     }
   };
 
@@ -24,11 +21,11 @@ const FollowButton = (props) => {
       className="btn"
       type="submit"
       style={{ backgroundColor: props.backgroundColor, color: props.color }}
-      onClick={followHandler}
+      onClick={unfollowHandler}
     >
-      Follow
+      Unfollow
     </button>
   );
 };
 
-export default FollowButton;
+export default UnfollowButton;

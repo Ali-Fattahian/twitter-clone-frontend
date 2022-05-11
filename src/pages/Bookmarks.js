@@ -25,7 +25,7 @@ const Bookmarks = (props) => {
         <TweetList tweetList={tweetList} />
       </div>
       <div className="main__right-side">
-        <Searchbar searchResults={props.searchResults} />
+        <Searchbar />
       </div>
     </React.Fragment>
   );

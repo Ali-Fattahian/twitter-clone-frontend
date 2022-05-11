@@ -25,7 +25,7 @@ const Explore = (props) => {
       <div className="main__middle-side" id="explore-middle">
         <div className={classes["search-bar__container"]}>
           <img src={ProfilePicture} alt="Profile" onClick={props.onMenuClick} />
-          <Searchbar searchResults={props.searchResults} />
+          <Searchbar />
         </div>
         <TweetList tweetList={tweetList} />
       </div>
