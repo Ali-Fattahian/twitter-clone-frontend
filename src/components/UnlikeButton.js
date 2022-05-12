@@ -11,7 +11,10 @@ const UnlikeButton = (props) => {
       navigate("/login");
     } else {
       const response = await axiosInstance.delete(`remove-like/${props.likeId}`);
-      if (response.status === 204) props.setLikeClicked(false)
+      if (response.status === 204) {
+        props.setFakeLikeNumber(prevNum => prevNum -1)
+        props.setLikeClicked(false)
+      }
     }
   };
   return (

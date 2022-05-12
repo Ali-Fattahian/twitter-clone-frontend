@@ -11,7 +11,10 @@ const LikeButton = (props) => {
       navigate("/login");
     } else {
       const response = await axiosInstance.post(`like-tweet/${props.tweetId}`);
-      if (response.status === 201) props.setLikeClicked(true)
+      if (response.status === 201) {
+        props.setFakeLikeNumber(prevNum => prevNum +1)
+        props.setLikeClicked(true)
+      }
     }
   };
   return (

@@ -13,6 +13,7 @@ const Tweet = (props) => {
   const [hasStarted, setHasStarted] = useState(false);
   const [likeOrDislike, setLikeOrDislike] = useState(null);
   const [likeClicked, setLikeClicked] = useState(null)
+  const [fakeLikeNumber, setFakeLikeNumber] = useState(props.likes) // This is a fake number, when a user adds a like to a post, it is going to be in db, but instead refreshing the data from db, i set this fake number for number of likes, which is the same as the real one.
   const isLoggedIn = !!localStorage.getItem("access_token");
 
   const checkForLikeButton = useCallback(async () => {
@@ -23,17 +24,17 @@ const Tweet = (props) => {
         .get(`like/${props.tweetId}/check`)
         .then((res) => {
           if (res.status === 200) {
-            setLikeOrDislike(<UnlikeButton likeId={res.data[0].id} likes={props.likes} setLikeClicked={setLikeClicked} />);
+            setLikeOrDislike(<UnlikeButton likeId={res.data[0].id} likes={fakeLikeNumber} setFakeLikeNumber={setFakeLikeNumber} setLikeClicked={setLikeClicked} />);
           } else {
             throw res.status;
           }
         })
         .catch(() => {
-          setLikeOrDislike(<LikeButton tweetId={props.tweetId} likes={props.likes} setLikeClicked={setLikeClicked} />);
+          setLikeOrDislike(<LikeButton tweetId={props.tweetId} likes={fakeLikeNumber} setFakeLikeNumber={setFakeLikeNumber} setLikeClicked={setLikeClicked} />);
         });
     } 
     setIsLoading(false);
-  }, [isLoggedIn, props.tweetId, props.likes]);
+  }, [isLoggedIn, props.tweetId, fakeLikeNumber]);
 
   useEffect(() => {
     checkForLikeButton();
