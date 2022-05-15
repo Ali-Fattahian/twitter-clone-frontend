@@ -93,7 +93,7 @@ const TweetDetail = (props) => {
       </div>
       <div className={classes["tweet-detail__bottom"]}>
         <div className={classes["tweet-detail__interactive-btn"]}>
-          <i className="fa fa-reply" />
+          <i className="fa fa-reply" onClick={props.showReply} />
           <p>{props.reply}</p>
         </div>
         <div className={classes["tweet-detail__interactive-btn"]}>
