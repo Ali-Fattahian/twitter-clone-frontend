@@ -89,3 +89,40 @@
 .hidden {
     display: none;
 }
+
+.reply-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.reply {
+    display: flex;
+    gap: 12px;
+    padding: 1rem;
+    justify-content: space-between;
+    border-top: 1px solid var(--light-theme-border);
+    border-bottom: 1px solid var(--light-theme-border);
+}
+
+.reply-left {
+    transform: translateY(-2px);
+}
+
+.reply-left img {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+}
+
+.reply-right {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    flex: 2;
+}
+
+@media screen and (max-width: 499px) {
+    .reply-list {
+        margin-top: 60px;
+    }
+}

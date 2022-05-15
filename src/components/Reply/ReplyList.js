@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useCallback, useEffect, useState } from "react";
 import Reply from "./Reply";
 import classes from "./Reply.module.css";
+import dateTimeGenerator from '../../utils'
 
 const ReplyList = (props) => {
   const [replyList, setReplyList] = useState([]);
@@ -15,12 +16,12 @@ const ReplyList = (props) => {
     await axios
       .get(`http://127.0.0.1:8000/api/tweets/${props.tweetId}/reply`)
       .then((res) => {
-          if (res.status === 200) {
-              setReplyList(res.data)
-          } else {
-              setHasError(true)
-          }
-      })
+        if (res.status === 200) {
+          setReplyList(res.data);
+        } else {
+          setHasError(true);
+        }
+      });
     setIsLoading(false);
   }, [props.tweetId]);
 
@@ -45,7 +46,19 @@ const ReplyList = (props) => {
       {!isLoading &&
         hasStarted &&
         !hasError &&
-        replyList.map((reply) => <Reply key={reply.id} text={reply.text} />)}
+        replyList.map((reply) => (
+          <Reply
+            key={reply.id}
+            text={reply.text}
+            fullname={`${reply.user.firstname} ${reply.user.lastname}`}
+            username={reply.user.username}
+            profilePicture={reply.user.picture}
+            timeCreated={dateTimeGenerator(
+              reply.date_created.created_ago,
+              reply.date_created.created
+            )}
+          />
+        ))}
       {!hasError && !isLoading && hasStarted && replyList.length === 0 && (
         <p
           style={{
