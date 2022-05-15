@@ -1,8 +1,8 @@
 import React, { useRef } from "react";
 import { Link } from "react-router-dom";
-import classes from "./AddReply.module.css";
-import Profile from "../components/Tweet/default_profile.png";
-import axiosInstance from "../axios";
+import classes from "./Reply.module.css";
+import Profile from '../Tweet/default_profile.png'
+import axiosInstance from "../../axios";
 
 const AddReply = (props) => {
   const replyContent = useRef("");
@@ -32,6 +32,7 @@ const AddReply = (props) => {
     });
 
     if (response.status === 201) {
+      props.setNewReply(response.data.id)
       console.log("success");
       replyContent.current.value = "";
       return;

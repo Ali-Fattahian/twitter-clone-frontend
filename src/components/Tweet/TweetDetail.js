@@ -91,6 +91,7 @@ const TweetDetail = (props) => {
 
     if (response.status === 201) {
       console.log("success");
+      props.setNewReply(response.data.id)
       replyContent.current.value = "";
       return;
     }

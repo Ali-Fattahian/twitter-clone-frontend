@@ -6,9 +6,10 @@ import { useParams } from "react-router-dom";
 import TweetDetail from "../components/Tweet/TweetDetail";
 import dateTimeGenerator from "../utils";
 import Picture from "../components/Tweet/default_profile.png";
-import AddReply from "../components/AddReply";
+import AddReply from "../components/Reply/AddReply";
 import ErrorMessage from "../components/Modal/ErrorMessage";
 import Overlay from "../components/Modal/Overlay";
+import ReplyList from "../components/Reply/ReplyList";
 
 const TweetDetailPage = (props) => {
   const [tweetDetail, setTweetDetail] = useState(null);
@@ -16,6 +17,7 @@ const TweetDetailPage = (props) => {
   const [hasError, setHasError] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
   const [isReplyVisible, setIsReplyVisible] = useState(false);
+  const [newReply, setNewReply] = useState(null)
 
   const getTweets = useCallback(async () => {
     const response = await axios.get(
@@ -77,6 +79,7 @@ const TweetDetailPage = (props) => {
               tweetDetail.date_created.created
             )}
             showReply={showReply}
+            setNewReply={setNewReply}
           />
         ) : (
           <p
@@ -107,9 +110,11 @@ const TweetDetailPage = (props) => {
               picture={Picture}
               content={tweetDetail.content}
               hideReply={hideReply}
+              setNewReply={setNewReply}
             />
           </div>
         )}
+        <ReplyList newReply={newReply} tweetId={tweetId} />
       </div>
       <div className="main__right-side">
         <Searchbar />
