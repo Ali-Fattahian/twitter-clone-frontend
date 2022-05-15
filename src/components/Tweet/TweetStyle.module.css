@@ -149,3 +149,84 @@
     align-items: center;
     cursor: pointer;
 }
+
+.tweet-detail {
+    padding: 1rem .5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+}
+
+.tweet-detail__top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
+}
+
+.tweet-detail__middle {
+    width: 100%;
+}
+
+.tweet-detail__middle p {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.tweet-detail__bottom {
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--gray);
+}
+
+.tweet-detail__user-picture img {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+}
+
+.tweet-detail__user-names {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transform: translateY(-4px) translateX(4px);
+}
+
+.tweet-detail__more-btn {
+    display: flex;
+    gap: 2px;
+    transform: translateY(14px);
+    cursor: pointer;
+}
+
+.tweet-detail__more-btn > div {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background-color: var(--gray);
+}
+
+.tweet-detail__interactive-btn {
+    display: flex;
+    gap: 8px;
+}
+
+.tweet-detail__interactive-btn div {
+    display: flex;
+    gap: 8px;
+}
+
+.tweet-detail__interactive-btn i {
+    cursor: pointer;
+}
+
+@media screen and (max-width: 499px) {
+    .tweet-detail {
+        transform: translateY(62px);
+    }
+}

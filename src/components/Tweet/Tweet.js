@@ -24,7 +24,7 @@ const Tweet = (props) => {
         .get(`like/${props.tweetId}/check`)
         .then((res) => {
           if (res.status === 200) {
-            setLikeOrDislike(<UnlikeButton likeId={res.data[0].id} likes={fakeLikeNumber} setFakeLikeNumber={setFakeLikeNumber} setLikeClicked={setLikeClicked} />);
+            setLikeOrDislike(<UnlikeButton likeId={res.data.id} likes={fakeLikeNumber} setFakeLikeNumber={setFakeLikeNumber} setLikeClicked={setLikeClicked} />);
           } else {
             throw res.status;
           }
@@ -52,8 +52,12 @@ const Tweet = (props) => {
     );
   }
 
+  const tweetDetailNavigateHandler = e => {
+    if (e.target===e.currentTarget) navigate(`/tweets/${props.tweetId}`)
+  }
+
   return (
-    <div className={classes.tweet}>
+    <div className={classes.tweet} onClick={tweetDetailNavigateHandler}>
       <div className={classes["tweet-left"]}>
         <img src={props.picture} alt="Profile" />
       </div>

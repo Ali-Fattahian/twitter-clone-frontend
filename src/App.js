@@ -20,6 +20,7 @@ import axiosInstance from "./axios";
 import { AuthContextProvider } from "./store/auth-context";
 import UserFollowers from "./pages/UserFollowings";
 import UserFollowings from "./pages/UserFollowings";
+import TweetDetailPage from "./pages/TweetDetailPage";
 
 function App() {
   const shouldRedirect = true;
@@ -125,6 +126,7 @@ function App() {
             element={!isLoggedIn ? <Login /> : <Navigate replace to="/home" />}
           />}
           <Route path="signup" element={<Signup />} />
+          <Route path="tweets/:tweetId" element={<TweetDetailPage pageName="Tweet" />} />
           <Route path=":username" element={<Profile pageName="Profile" />} />
           <Route path=":username/followers" element={<UserFollowers />} />
           <Route path=":username/following" element={<UserFollowings />} />
