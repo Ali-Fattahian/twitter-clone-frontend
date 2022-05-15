@@ -6,7 +6,8 @@ const LikeButton = (props) => {
   const navigate = useNavigate()  
   const isLoggedIn = !!localStorage.getItem("access_token");
 
-  const likeHandler = async () => {
+  const likeHandler = async (e) => {
+    e.stopPropagation()
     if (!isLoggedIn) {
       navigate("/login");
     } else {

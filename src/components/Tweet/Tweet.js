@@ -52,8 +52,8 @@ const Tweet = (props) => {
     );
   }
 
-  const tweetDetailNavigateHandler = e => {
-    if (e.target===e.currentTarget) navigate(`/tweets/${props.tweetId}`)
+  const tweetDetailNavigateHandler = () => {
+    navigate(`/tweets/${props.tweetId}`)
   }
 
   return (
