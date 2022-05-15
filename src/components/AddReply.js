@@ -24,9 +24,11 @@ const AddReply = (props) => {
     }
   };
 
+
+
   async function sendData() {
     const response = await axiosInstance.post(`tweets/${props.tweetId}/reply`, {
-      content: replyContent.current.value,
+      text: replyContent.current.value,
     });
 
     if (response.status === 201) {

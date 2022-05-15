@@ -57,7 +57,7 @@ a {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 5;
+  z-index: 100;
   width: 100vw;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.4);
@@ -81,6 +81,10 @@ a {
   text-align: center;
   font-weight: bold;
   width: 100%;
+}
+
+.error-message__modal a {
+  color: var(--blue-primary);
 }
 
 .error-message__modal div {
