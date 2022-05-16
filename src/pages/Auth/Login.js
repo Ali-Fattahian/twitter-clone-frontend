@@ -1,5 +1,5 @@
 import { useContext, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../store/auth-context";
 
 import classes from "./Login.module.css";
@@ -33,6 +33,7 @@ const Login = () => {
             placeholder="Your password..."
             ref={password}
           />
+          <p id={classes['not-have-account']}>Don't have an account? <Link to='/signup'>Sign up</Link></p>
           <button type="submit" className="btn">
             Next
           </button>

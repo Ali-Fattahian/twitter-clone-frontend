@@ -1,6 +1,7 @@
+import { useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import classes from "./Signup.module.css";
 import loginClasses from "./Login.module.css";
-import { useRef, useState } from "react";
 import axios from "axios";
 
 const Signup = () => {
@@ -236,6 +237,9 @@ const Signup = () => {
             <button type="submit" className="btn">
               Next
             </button>
+          </div>
+          <div className={classes["form-section"]}>
+            <p id={classes['already-have-account']}>Already have an account? <Link to='/login'>Sign in</Link></p>
           </div>
         </form>
       </div>

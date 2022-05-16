@@ -12,6 +12,7 @@ import ProfilePicture from "./components/Tweet/default_profile.png";
 import Overlay from "./components/Modal/Overlay";
 import axiosInstance from "./axios";
 import { AuthContextProvider } from "./store/auth-context";
+import Spinner from "./components/Spinner";
 
 const HomePage = React.lazy(() => import("./pages/HomePage"))
 const Explore = React.lazy(() => import("./pages/Explore"))
@@ -95,7 +96,7 @@ function App() {
             </form>
           </div>
         )}
-        <Suspense>
+        <Suspense fallback={<Spinner />}>
           <Routes>
             <Route
               path="home"

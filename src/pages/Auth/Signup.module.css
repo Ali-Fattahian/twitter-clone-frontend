@@ -1,17 +1,17 @@
 .message-container {
-    position: fixed;
-    width: 100%;
-    top: 0;
-    left: 0;
-    padding: 2rem 1rem;
-    z-index: 4;
-    display: flex;
-    justify-content: center;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  padding: 2rem 1rem;
+  z-index: 4;
+  display: flex;
+  justify-content: center;
 }
 
 .message {
-    padding: 2rem;
-    background-color: #ccc;
+  padding: 2rem;
+  background-color: #ccc;
 }
 
 .form {
@@ -22,19 +22,19 @@
   justify-content: flex-start;
   align-items: flex-start;
   gap: 2rem;
-  background-color: #ccc;
+  background-color: #f1f1f1;
   border-radius: 12px;
 }
 
 .form-section {
-    width: 100%;
+  width: 100%;
 }
 
 #user-name {
-    display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
-    gap: .5rem;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 0.5rem;
 }
 
 .form input {
@@ -45,9 +45,42 @@
 }
 
 .form input:focus {
-  outline-color: transparent;
+  outline-color: var(--blue-primary);
+}
+
+.form input:focus::placeholder {
+  color: var(--blue-primary);
 }
 
 .form button {
   width: 100%;
+}
+
+#already-have-account {
+  color: var(--gray);
+  font-weight: lighter;
+}
+
+#already-have-account a {
+  color: var(--blue-primary);
+}
+
+@media screen and (max-width: 499px) {
+  .form-container {
+    width: 100vw;
+    height: 100vh;
+    background-color: #f1f1f1;
+  }
+
+  .form {
+    width: 100%;
+    height: 50%;
+    border-radius: 0;
+    transform: translateY(-60px);
+  }
+
+  #user-name {
+    flex-direction: column;
+    gap: 2rem;
+  }
 }
