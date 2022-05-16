@@ -80,11 +80,11 @@ const Profile = (props) => {
             )}
           </p>
           <div className={classes.follow}>
-            <div className={classes["user-follow"]}>
+            <div className={classes["user-follow"]} onClick={() => navigate(`/${props.user.username}/following`)}>
               <span>{props.user.follows.followings_count}</span>
               <p id={classes["user-follow__text"]}>Following</p>
             </div>
-            <div className={classes["user-follow"]}>
+            <div className={classes["user-follow"]} onClick={() => navigate(`/${props.user.username}/followers`)}>
               <span>{props.user.follows.followers_count}</span>
               <p id={classes["user-follow__text"]}>Followers</p>
             </div>

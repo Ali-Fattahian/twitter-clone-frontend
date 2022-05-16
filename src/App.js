@@ -23,6 +23,7 @@ const Signup = React.lazy(() => import("./pages/Auth/Signup"))
 const TweetDetailPage = React.lazy(() => import("./pages/TweetDetailPage"))
 const UserFollowers = React.lazy(() => import("./pages/UserFollowers"))
 const UserFollowings = React.lazy(() => import("./pages/UserFollowings"))
+const NoMatch = React.lazy(() => import("./pages/NoMatch"))
 
 function App() {
   const shouldRedirect = true;
@@ -136,7 +137,7 @@ function App() {
             <Route path=":username" element={<Profile pageName="Profile" />} />
             <Route path=":username/followers" element={<UserFollowers />} />
             <Route path=":username/following" element={<UserFollowings />} />
-            {/* <Route path='*' element={<NoMatch />} /> */}
+            <Route path='*' element={<NoMatch />} />
           </Routes>
         </Suspense>
         <SmallScreenNav

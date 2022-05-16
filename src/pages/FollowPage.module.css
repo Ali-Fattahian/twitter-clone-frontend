@@ -65,3 +65,7 @@
 .switch-follow:hover {
     background-color: #eee;
 }
+
+.switch-follow--active {
+    color: var(--light-theme-color);
+}

@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import classes from "./Signup.module.css";
 import loginClasses from "./Login.module.css";
 import axios from "axios";
@@ -131,6 +131,7 @@ const Signup = () => {
   const lastname = useRef("");
   const password = useRef("");
   const [message, setMessage] = useState("");
+  const navigate = useNavigate()
 
   const formSubmitHandler = (e) => {
     e.preventDefault();
@@ -190,6 +191,9 @@ const Signup = () => {
               <p className={classes.message}>{message}</p>
             </div>
           )}
+          <div className={classes["form-section"]}>
+            <i style={{cursor:'pointer'}} className="fa fa-chevron-left" onClick={() => navigate(-1)}></i>
+          </div>
           <div className={classes["form-section"]} id={classes["user-name"]}>
             <input
               type="text"

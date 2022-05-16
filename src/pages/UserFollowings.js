@@ -13,7 +13,7 @@ const UserFollowings = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [hasStarted, setHasStarted] = useState(false);
   const [error, setError] = useState(null);
-  const [profiles, setProfiles] = useState([])
+  const [profiles, setProfiles] = useState([]);
 
   const isLoggedIn = !!localStorage.getItem("access_token");
   const navigate = useNavigate();
@@ -62,14 +62,16 @@ const UserFollowings = () => {
           </div>
           <div className={classes["switch-follows__section"]}>
             <NavLink
-              className={`${classes["switch-follow"]} ${classes["switch-follow--active"]}`}
+              className={classes['switch-follow']}
               to={`/${username}/followers`}
+              style={({ isActive }) => isActive ? {color: '#000'} :{color: "#536471"}}
             >
               Followers
             </NavLink>
             <NavLink
-              className={`${classes["switch-follow"]}`}
+              className={classes['switch-follow']}
               to={`/${username}/following`}
+              style={({ isActive }) => isActive ? {color: '#000'} : {color: "#536471"}}
             >
               Following
             </NavLink>
@@ -80,12 +82,26 @@ const UserFollowings = () => {
         )}
         {hasStarted && !error && !isLoading && profiles.length === 0 && (
           <section className={classes["has-error"]}>
-            <p>This user doesn't have any followers.</p>
+            <p
+              style={{
+                textAlign: "center",
+                color: "#71767b",
+              }}
+            >
+              No following users yet!
+            </p>
           </section>
         )}
         {hasStarted && error && (
           <section className={classes["has-error"]}>
-            <p>Sorry this profile doesn't exist.</p>
+            <p
+              style={{
+                textAlign: "center",
+                color: "#71767b",
+              }}
+            >
+              Sorry this profile doesn't exist.
+            </p>
           </section>
         )}
       </div>

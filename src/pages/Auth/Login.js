@@ -26,6 +26,7 @@ const Login = () => {
     <div className={classes["page-container"]}>
       <div className={classes["form-container"]} onSubmit={formSubmitHandler}>
         <form className={classes.form}>
+        <i style={{cursor:'pointer'}} className="fa fa-chevron-left" onClick={() => navigate(-1)}></i>
           <h1>Sign in to Twitter clone</h1>
           <input type="email" placeholder="Your email..." ref={email} />
           <input
