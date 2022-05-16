@@ -1,10 +1,13 @@
 import classes from './Profile.module.css';
 import FollowButton from './FollowButton';
 import ProfilePicture from './Tweet/default_profile.png'
+import { useNavigate } from 'react-router-dom';
 
 const SmallProfile = props => {
+  const navigate = useNavigate()
+
   return (
-    <div className={classes['small-profile__section']}>
+    <div className={classes['small-profile__section']} onClick={() => {navigate(`/${props.username}`)}}>
         <div className={classes['small-profile__left-part']}>
             <img src={ProfilePicture} alt='Profile' />
         </div>

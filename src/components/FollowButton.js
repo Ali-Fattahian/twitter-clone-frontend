@@ -5,7 +5,8 @@ const FollowButton = (props) => {
   const navigate = useNavigate();
   const isLoggedIn = !!localStorage.getItem("access_token");
 
-  const followHandler = async () => {
+  const followHandler = async (e) => {
+    e.stopPropagation()
     if (!isLoggedIn) {
       navigate("/login");
     } else {
