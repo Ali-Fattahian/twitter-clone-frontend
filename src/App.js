@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, Suspense } from "react";
 import "./App.css";
 import {
   BrowserRouter as Router,
@@ -6,27 +6,28 @@ import {
   Routes,
   Navigate,
 } from "react-router-dom";
-import HomePage from "./pages/HomePage";
-import Explore from "./pages/Explore";
-import Profile from "./pages/ProfilePage";
-import Bookmarks from "./pages/Bookmarks";
 import Navigation from "./components/Navigation";
 import SmallScreenNav from "./components/Modal/SmallScreenNav";
 import ProfilePicture from "./components/Tweet/default_profile.png";
 import Overlay from "./components/Modal/Overlay";
-import Login from "./pages/Auth/Login";
-import Signup from "./pages/Auth/Signup";
 import axiosInstance from "./axios";
 import { AuthContextProvider } from "./store/auth-context";
-import UserFollowers from "./pages/UserFollowings";
-import UserFollowings from "./pages/UserFollowings";
-import TweetDetailPage from "./pages/TweetDetailPage";
+
+const HomePage = React.lazy(() => import("./pages/HomePage"))
+const Explore = React.lazy(() => import("./pages/Explore"))
+const Profile = React.lazy(() => import("./pages/ProfilePage"))
+const Bookmarks = React.lazy(() => import("./pages/Bookmarks"))
+const Login = React.lazy(() => import("./pages/Auth/Login"))
+const Signup = React.lazy(() => import("./pages/Auth/Signup"))
+const TweetDetailPage = React.lazy(() => import("./pages/TweetDetailPage"))
+const UserFollowers = React.lazy(() => import("./pages/UserFollowers"))
+const UserFollowings = React.lazy(() => import("./pages/UserFollowings"))
 
 function App() {
   const shouldRedirect = true;
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isAddTweetVisible, setIsAddTweetVisible] = useState(false);
-  const isLoggedIn = !!localStorage.getItem('access_token');
+  const isLoggedIn = !!localStorage.getItem("access_token");
   const tweetContent = useRef("");
 
   const clickMenuHandler = () => {
@@ -94,44 +95,49 @@ function App() {
             </form>
           </div>
         )}
-        <Routes>
-          <Route
-            path="home"
-            element={
-              <HomePage
-                pageName="Home"
-                onMenuClick={clickMenuHandler}
+        <Suspense>
+          <Routes>
+            <Route
+              path="home"
+              element={
+                <HomePage pageName="Home" onMenuClick={clickMenuHandler} />
+              }
+            />
+            <Route
+              path="/"
+              element={
+                shouldRedirect ? <Navigate replace to="/home" /> : <HomePage />
+              }
+            />
+            <Route
+              path="explore"
+              element={
+                <Explore pageName="Explore" onMenuClick={clickMenuHandler} />
+              }
+            />
+            <Route
+              path="bookmarks"
+              element={<Bookmarks pageName="Bookmarks" />}
+            />
+            {
+              <Route
+                path="login"
+                element={
+                  !isLoggedIn ? <Login /> : <Navigate replace to="/home" />
+                }
               />
             }
-          />
-          <Route
-            path="/"
-            element={
-              shouldRedirect ? <Navigate replace to="/home" /> : <HomePage />
-            }
-          />
-          <Route
-            path="explore"
-            element={
-              <Explore pageName="Explore" onMenuClick={clickMenuHandler} />
-            }
-          />
-          <Route
-            path="bookmarks"
-            element={<Bookmarks pageName="Bookmarks" />}
-          />
-          {
-          <Route
-            path="login"
-            element={!isLoggedIn ? <Login /> : <Navigate replace to="/home" />}
-          />}
-          <Route path="signup" element={<Signup />} />
-          <Route path="tweets/:tweetId" element={<TweetDetailPage pageName="Tweet" />} />
-          <Route path=":username" element={<Profile pageName="Profile" />} />
-          <Route path=":username/followers" element={<UserFollowers />} />
-          <Route path=":username/following" element={<UserFollowings />} />
-          {/* <Route path='*' element={<NoMatch />} /> */}
-        </Routes>
+            <Route path="signup" element={<Signup />} />
+            <Route
+              path="tweets/:tweetId"
+              element={<TweetDetailPage pageName="Tweet" />}
+            />
+            <Route path=":username" element={<Profile pageName="Profile" />} />
+            <Route path=":username/followers" element={<UserFollowers />} />
+            <Route path=":username/following" element={<UserFollowings />} />
+            {/* <Route path='*' element={<NoMatch />} /> */}
+          </Routes>
+        </Suspense>
         <SmallScreenNav
           isMenuOpen={isMenuOpen}
           onCloseBtnClick={closeMenuHandler}
