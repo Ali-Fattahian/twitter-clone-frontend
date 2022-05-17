@@ -15,7 +15,8 @@ const TweetList = (props) => {
         <Tweet
           tweetId={tweet.id}
           key={tweet.id}
-          fullname={`${tweet.firstname} ${tweet.lastname}`}
+          firstname={tweet.firstname}
+          lastname={tweet.lastname}
           username={tweet.user}
           picture={tweet.userPicture}
           timeCreated={dateTimeGenerator(
