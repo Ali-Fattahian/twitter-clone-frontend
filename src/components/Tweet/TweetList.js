@@ -27,6 +27,8 @@ const TweetList = (props) => {
           reply={tweet.tweetReply}
           retweet={tweet.tweetRetweets}
           likes={tweet.likes.length}
+          isBookmarkPage={props.isBookmarkPage}
+          setNeedRefresh={props.setNeedRefresh}
         />
       ))}
     </section>

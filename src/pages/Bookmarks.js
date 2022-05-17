@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 
 import Searchbar from "../components/Searchbar";
 import TweetList from "../components/Tweet/TweetList";
@@ -9,24 +9,25 @@ const Bookmarks = () => {
   const [tweetList, setTweetList] = useState([]);
   const isLoggedIn = !!localStorage.getItem('access_token');
   const navigate = useNavigate()
+  const [needRefresh, setNeedRefresh] = useState(null)
 
-  const getTweets = async () => {
+  const getTweets = useCallback(async () => {
     if (isLoggedIn) {
       const response = await axiosInstance.get(
         "http://127.0.0.1:8000/api/bookmarks"
       );
       if (response.status === 200) {
-        const tweets = response.data.map((tweet) => tweet.tweet); // Slightly different response structure
+        const tweets = response.data.map((tweet) => tweet.tweet);
         setTweetList(tweets);
       } 
     } else {
       navigate('/login')
     }
-  };
+  }, [isLoggedIn, navigate]);
 
   useEffect(() => {
     getTweets();
-  }, []);
+  }, [needRefresh, getTweets]);
 
   return (
     <React.Fragment>
@@ -39,10 +40,10 @@ const Bookmarks = () => {
               marginTop: "1.5rem",
             }}
           >
-            You haven't saved any tweets yet.
+            You don't have any saved tweets.
           </p>
         ) : (
-          <TweetList tweetList={tweetList} />
+          <TweetList tweetList={tweetList} isBookmarkPage={true} setNeedRefresh={setNeedRefresh} />
         )}
       </div>
       <div className="main__right-side">

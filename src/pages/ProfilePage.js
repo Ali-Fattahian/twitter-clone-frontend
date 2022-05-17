@@ -49,7 +49,7 @@ const ProfilePage = () => {
             <p>Sorry this profile doesn't exist.</p>
           </section>
         )}
-        <TweetList /> {/* shows the tweets from this account */}
+        <TweetList isBookmarkPage={false} /> {/* shows the tweets from this account */}
       </div>
       <div className="main__right-side">
         <Searchbar />

@@ -45,7 +45,7 @@ const HomePage = (props) => {
           <p>{props.pageName}</p>
         </section>
         <AddTweet onError={showErrorMessageHandler} />
-        <TweetList tweetList={tweetList} />
+        <TweetList tweetList={tweetList} isBookmarkPage={false} />
       </div>
       <div className="main__right-side">
         <Searchbar />

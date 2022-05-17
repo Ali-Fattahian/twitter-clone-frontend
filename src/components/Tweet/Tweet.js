@@ -9,6 +9,7 @@ import AddReply from "../Reply/AddReply";
 import ErrorMessage from "../Modal/ErrorMessage";
 import Overlay from "../Modal/Overlay";
 import SaveTweet from "../SaveTweet";
+import DeleteSaveTweet from "../DeleteSaveTweet";
 
 const Tweet = (props) => {
   const userLink = `/${props.username}`;
@@ -22,7 +23,7 @@ const Tweet = (props) => {
   const [isAddReplyVisible, setIsAddReplyVisible] = useState(false);
   const [hasError, setHasError] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
-  const [, setNewReply] = useState(null)
+  const [, setNewReply] = useState(null);
 
   const showReply = () => {
     setIsAddReplyVisible(true);
@@ -84,7 +85,9 @@ const Tweet = (props) => {
 
   let likeButton;
   if (isLoggedIn) {
-    likeButton = <div title="Like">{!isLoading && hasStarted && likeOrDislike}</div>;
+    likeButton = (
+      <div title="Like">{!isLoading && hasStarted && likeOrDislike}</div>
+    );
   } else {
     likeButton = (
       <div title="Like">
@@ -169,8 +172,22 @@ const Tweet = (props) => {
             </div>
             {likeButton}
             <div title="Save">
-              <SaveTweet tweetId={props.tweetId} setHasError={setHasError} setErrorMessage={setErrorMessage} />
+              <SaveTweet
+                tweetId={props.tweetId}
+                setHasError={setHasError}
+                setErrorMessage={setErrorMessage}
+              />
             </div>
+            {props.isBookmarkPage && (
+              <div title="Remove this item">
+                <DeleteSaveTweet
+                  tweetId={props.tweetId}
+                  setHasError={setHasError}
+                  setErrorMessage={setErrorMessage}
+                  setNeedRefresh={props.setNeedRefresh}
+                />
+              </div>
+            )}
           </div>
         </div>
       </div>
