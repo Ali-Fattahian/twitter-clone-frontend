@@ -8,6 +8,7 @@ import classes from "./TweetStyle.module.css";
 import AddReply from "../Reply/AddReply";
 import ErrorMessage from "../Modal/ErrorMessage";
 import Overlay from "../Modal/Overlay";
+import SaveTweet from "../SaveTweet";
 
 const Tweet = (props) => {
   const userLink = `/${props.username}`;
@@ -83,10 +84,10 @@ const Tweet = (props) => {
 
   let likeButton;
   if (isLoggedIn) {
-    likeButton = <div>{!isLoading && hasStarted && likeOrDislike}</div>;
+    likeButton = <div title="Like">{!isLoading && hasStarted && likeOrDislike}</div>;
   } else {
     likeButton = (
-      <div>
+      <div title="Like">
         <i className="fa fa-heart-o" onClick={() => navigate("/login")} />
         <p>{props.likes}</p>
       </div>
@@ -157,6 +158,7 @@ const Tweet = (props) => {
           <div className={classes["tweet-content"]}>{props.content}</div>
           <div className={classes["tweet-right__bottom"]}>
             <div
+              title="Reply"
               onClick={(e) => {
                 e.stopPropagation();
                 showReply();
@@ -165,13 +167,9 @@ const Tweet = (props) => {
               <i className="fa fa-reply" />
               <p>{props.reply}</p>
             </div>
-            <div>
-              <i className="fa fa-retweet" />
-              <p>{props.retweet}</p>
-            </div>
             {likeButton}
-            <div>
-              <i className="fa fa-upload" />
+            <div title="Save">
+              <SaveTweet tweetId={props.tweetId} setHasError={setHasError} setErrorMessage={setErrorMessage} />
             </div>
           </div>
         </div>
