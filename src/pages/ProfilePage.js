@@ -15,7 +15,11 @@ const ProfilePage = () => {
   const [hasStarted, setHasStarted] = useState(false);
   const [error, setError] = useState(null);
   const { username } = useParams();
-  const [follow, setFollow] = useState(null)
+  const [follow, setFollow] = useState(null);
+  const [profileTweets, setProfileTweets] = useState([]);
+  const [tweetsIsLoading, setTweetsIsLoading] = useState(false);
+  const [tweetsHasStarted, setTweetHasStarted] = useState(false);
+  const [tweetsHasError, setTweetsHasError] = useState(false);
 
   const getProfile = useCallback(async () => {
     setHasStarted(true);
@@ -36,20 +40,51 @@ const ProfilePage = () => {
     setIsLoading(false);
   }, [isLoggedIn, username]);
 
+  const getTweets = useCallback(async () => {
+    setTweetHasStarted(true);
+    setTweetsIsLoading(true);
+    await axios
+      .get(`http://127.0.0.1:8000/api/profiles/${username}/tweets`)
+      .then((res) => {
+        if (res.status === 200) {
+          setProfileTweets(res.data);
+        }
+      })
+      .catch(() => setTweetsHasError(true));
+    setTweetsIsLoading(false);
+  }, [username]);
+
   useEffect(() => {
     getProfile();
-  }, [getProfile, follow]);
+    getTweets();
+  }, [getProfile, follow, getTweets]);
 
   return (
     <React.Fragment>
       <div className="main__middle-side">
-        {!error && !isLoading && hasStarted && <Profile user={user} setFollow={setFollow} />}
+        {!error && !isLoading && hasStarted && (
+          <Profile user={user} setFollow={setFollow} />
+        )}
         {hasStarted && error && (
           <section className="profile-not-found">
             <p>Sorry this profile doesn't exist.</p>
           </section>
         )}
-        <TweetList isBookmarkPage={false} /> {/* shows the tweets from this account */}
+        {tweetsHasStarted && !tweetsIsLoading && !tweetsHasError && (
+          <TweetList isBookmarkPage={false} tweetList={profileTweets} />
+        )}
+        {tweetsHasStarted &&
+          !tweetsIsLoading &&
+          !tweetsHasError &&
+          profileTweets.length === 0 && (
+            <p
+              style={{
+                textAlign: "center",
+                color: "#71767b",
+                marginTop: "1.5rem",
+              }}
+            >No tweets from this profile yet!</p>
+          )}
       </div>
       <div className="main__right-side">
         <Searchbar />
