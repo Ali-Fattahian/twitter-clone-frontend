@@ -28,9 +28,13 @@
 
 .form-section {
   width: 100%;
+}
+
+.err-msg {
   font-size: 13px;
   font-weight: lighter;
-  color: red;
+  color: #ff5a5a;
+  margin-top: 5px;
 }
 
 #user-name {
