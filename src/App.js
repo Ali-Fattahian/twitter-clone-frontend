@@ -13,17 +13,18 @@ import Overlay from "./components/Modal/Overlay";
 import axiosInstance from "./axios";
 import { AuthContextProvider } from "./store/auth-context";
 import Spinner from "./components/Spinner";
+import EditProfilePage from "./pages/EditProfilePage";
 
-const HomePage = React.lazy(() => import("./pages/HomePage"))
-const Explore = React.lazy(() => import("./pages/Explore"))
-const Profile = React.lazy(() => import("./pages/ProfilePage"))
-const Bookmarks = React.lazy(() => import("./pages/Bookmarks"))
-const Login = React.lazy(() => import("./pages/Auth/Login"))
-const Signup = React.lazy(() => import("./pages/Auth/Signup"))
-const TweetDetailPage = React.lazy(() => import("./pages/TweetDetailPage"))
-const UserFollowers = React.lazy(() => import("./pages/UserFollowers"))
-const UserFollowings = React.lazy(() => import("./pages/UserFollowings"))
-const NoMatch = React.lazy(() => import("./pages/NoMatch"))
+const HomePage = React.lazy(() => import("./pages/HomePage"));
+const Explore = React.lazy(() => import("./pages/Explore"));
+const Profile = React.lazy(() => import("./pages/ProfilePage"));
+const Bookmarks = React.lazy(() => import("./pages/Bookmarks"));
+const Login = React.lazy(() => import("./pages/Auth/Login"));
+const Signup = React.lazy(() => import("./pages/Auth/Signup"));
+const TweetDetailPage = React.lazy(() => import("./pages/TweetDetailPage"));
+const UserFollowers = React.lazy(() => import("./pages/UserFollowers"));
+const UserFollowings = React.lazy(() => import("./pages/UserFollowings"));
+const NoMatch = React.lazy(() => import("./pages/NoMatch"));
 
 function App() {
   const shouldRedirect = true;
@@ -135,9 +136,18 @@ function App() {
               element={<TweetDetailPage pageName="Tweet" />}
             />
             <Route path=":username" element={<Profile pageName="Profile" />} />
+            <Route
+              path="edit/:username"
+              element={
+                <EditProfilePage
+                  pageName="Edit Profile"
+                  onMenuClick={clickMenuHandler}
+                />
+              }
+            />
             <Route path=":username/followers" element={<UserFollowers />} />
             <Route path=":username/following" element={<UserFollowings />} />
-            <Route path='*' element={<NoMatch />} />
+            <Route path="*" element={<NoMatch />} />
           </Routes>
         </Suspense>
         <SmallScreenNav

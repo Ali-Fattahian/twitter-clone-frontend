@@ -40,9 +40,9 @@ const Signup = () => {
           })
             .then((res) => res.json())
             .then((data) => {
-              isUsernameValid = data !== true;
+              isEmailValid = data !== true;
             });
-          return isUsernameValid;
+          return isEmailValid;
         }
       ),
     username: Yup.string()
@@ -62,9 +62,9 @@ const Signup = () => {
           })
             .then((res) => res.json())
             .then((data) => {
-              isEmailValid = data !== true;
+              isUsernameValid = data !== true;
             });
-          return isEmailValid;
+          return isUsernameValid;
         }
       ),
   });
@@ -102,7 +102,7 @@ const Signup = () => {
           onSubmit={formSubmitHandler}
           validationSchema={SignUpSchema}
         >
-          {({ isSubmitting }) => (
+          {() => (
             <Form className={classes.form}>
               <div className={classes["form-section"]}>
                 <i

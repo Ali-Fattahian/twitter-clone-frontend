@@ -1,0 +1,119 @@
+.edit-profile {
+    width: 100%;
+    height: 100%;
+}
+
+.form-container {
+    width: 100%;
+    height: 100%;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-section {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 0 1rem;
+    position: relative;
+}
+
+#profile-picture-accept, #background-image-accept {
+    display: none;
+}
+
+#background-image__container {
+    padding: 0;
+}
+
+.form .profile-picture__container {
+    justify-content: flex-start;
+}
+
+.background-image__label, .profile-picture__label {
+    position: absolute;
+    z-index: 2;
+}
+
+.background-image__label i {
+    transform: translateY(77px);
+    font-size: 32px;
+    color: #56595b;
+}
+
+.profile-picture__label i {
+    transform: translate(42px, 8px);
+    font-size: 28px;
+    color: #272f37;
+}
+
+.background-image__label i,
+.profile-picture__label i {
+    transition: opacity 350ms ease-in-out;
+    cursor: pointer;
+}
+
+.background-image__label i:hover,
+.profile-picture__label i:hover {
+    opacity: .9;
+}
+
+.form-section input {
+    width: 100%;
+    height: 45px;
+    max-width: 566px;
+    padding: .5rem .2rem;
+    margin: 12px 0;
+    border: 1px solid #cfd9dd;
+}
+
+.form-section input:focus {
+    outline-color: var(--blue-primary);
+}
+
+.form-section input:focus::placeholder {
+    color: var(--blue-primary);
+}
+
+.background-image-empty {
+    width: 596px;
+    height: 198.66px;
+    background-color: #cfd9dd;
+}
+
+.profile-picture {
+    width: 112px;
+    height: 112px;
+    border-radius: 50%;
+    transform: translateY(-40px);
+}
+
+.btns {
+    display: flex;
+    justify-content: space-between;
+}
+
+.btns button {
+    transition: opacity 350ms ease-in-out;
+}
+
+.btns button:hover {
+    opacity: .9;
+}
+
+/* @media screen and (max-width: 655px) {
+    .background-image-empty {
+        width: 100%;
+        height: 20vw;
+    }
+}
+
+@media screen and (max-width: 499px) {
+    .background-image__label i {
+        transform: translateY(50px);
+    }
+} */
+/* get an image with that color, and set it as object: cover; */
