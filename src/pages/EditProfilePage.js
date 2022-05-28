@@ -1,36 +1,47 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import classes from "./EditProfilePage.module.css";
 import EditProfileForm from "../components/EditProfileForm";
 import Searchbar from "../components/Searchbar";
-import axiosInstance from '../axios';
+import axiosInstance from "../axios";
+import { parseJwt } from "../utils";
 
-const EditProfilePage = props => {
-  const [isLoading, setIsLoading] = useState(false)
-  const [hasStarted, setHasStarted] = useState(false)
-  const [hasError, setHasError] = useState(false)
-  const [errorMessage, setErrorMessage] = useState(null)
-  const [profile, setProfile] = useState(null)
-  const { username } = useParams()
+const EditProfilePage = (props) => {
+  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
+  const [hasStarted, setHasStarted] = useState(false);
+  const [hasError, setHasError] = useState(false);
+  const [profile, setProfile] = useState(null);
+  const { username } = useParams();
 
   const getProfile = useCallback(async () => {
-    setIsLoading(true)
-    setHasStarted(true)
-    await axiosInstance.get(`profiles/${username}`).then(res => {
+    setIsLoading(true);
+    setHasStarted(true);
+    await axiosInstance.get(`profiles/${username}`).then((res) => {
       if (res.status === 200) {
-        setProfile(res.data)
+        setProfile(res.data);
       } else {
-        setErrorMessage("Sorry this page doesn't exist.")
-        setHasError(true)
+        setHasError(true);
       }
-    })
-    setIsLoading(false)
-  }, [username])
+    });
+    setIsLoading(false);
+  }, [username]);
 
   useEffect(() => {
-    getProfile()
-  }, [getProfile])
+    if (!!localStorage.getItem("access_token")) {
+      getProfile();
+      if (profile) {
+        const token = localStorage.getItem("access_token");
+        const tokenId = parseJwt(token).user_id;
+        if (tokenId !== profile.id) {
+          navigate("/home");
+        }
+      }
+    } else {
+      navigate("/home");
+    }
+  }, [getProfile]);
 
   return (
     <React.Fragment>
@@ -40,10 +51,23 @@ const EditProfilePage = props => {
           <p>{props.pageName}</p>
         </section>
         <section className={classes["edit-profile"]}>
-            <div className={classes['form-container']}>
-              {hasStarted && !isLoading && !hasError && <EditProfileForm profile={profile} />}
-              {hasStarted && !isLoading && hasError && <p>{errorMessage}</p>}
-            </div>
+          <div className={classes["form-container"]}>
+            {(hasStarted && !isLoading && !hasError && (
+              <EditProfileForm
+                profile={profile}
+              />
+            )) || (
+              <p
+                style={{
+                  textAlign: "center",
+                  color: "#71767b",
+                  marginTop: "1.5rem",
+                }}
+              >
+                Sorry this page doesn't exist.
+              </p>
+            )}
+          </div>
         </section>
       </div>
       <div className="main__right-side">

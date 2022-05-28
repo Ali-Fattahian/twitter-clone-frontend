@@ -1,11 +1,14 @@
 import React from "react";
-import { Field, Form, Formik } from "formik";
+import { Field, Form, Formik, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import classes from "../pages/EditProfilePage.module.css";
+import axiosInstance from "../axios";
+import { useNavigate } from "react-router-dom";
 
 const EditProfileForm = (props) => {
   let isUsernameValid;
   let isEmailValid;
+  const navigate = useNavigate()
 
   const EditProfileSchema = Yup.object().shape({
     firstname: Yup.string()
@@ -20,6 +23,7 @@ const EditProfileForm = (props) => {
         "checkDupUsername",
         "A user with this username already exists",
         async (value) => {
+          if (value === props.profile.username) return true; // This username already exists, but it's ok in this case.
           await fetch("http://127.0.0.1:8000/api/check-username/", {
             method: "POST",
             body: JSON.stringify({
@@ -43,6 +47,7 @@ const EditProfileForm = (props) => {
         "checkDupEmail",
         "A user with this email already exists",
         async (value) => {
+          if (value === props.profile.email) return true;
           await fetch("http://127.0.0.1:8000/api/check-email/", {
             method: "POST",
             body: JSON.stringify({
@@ -61,6 +66,32 @@ const EditProfileForm = (props) => {
       ),
     bio: Yup.string().max(300, "Too Long!"),
   });
+
+  const formSubmitHandler = async (values) => {
+    const formData = new FormData();
+    formData.append("picture", values.profilePicture);
+    await axiosInstance
+      .put(
+        `profiles/${props.profile.username}`,
+        {
+          firstname: values.firstname,
+          lastname: values.lastname,
+          bio: values.bio,
+          email: values.email,
+          username: values.username,
+          formData,
+        },
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+        }
+      )
+      .then((res) => {
+        if (res && res.status === 200) {
+          navigate(`/edit/${values.username}`)
+        }
+      });
+  };
+
   return (
     <Formik
       initialValues={{
@@ -72,11 +103,12 @@ const EditProfileForm = (props) => {
         username: props.profile.username,
         email: props.profile.email,
       }}
+      onSubmit={formSubmitHandler}
       validationSchema={EditProfileSchema}
     >
       {() => {
         return (
-          <Form className={classes["form"]}>
+          <Form className={classes["form"]} encType="multipart/form-data">
             <div
               className={classes["form-section"]}
               id={classes["background-image__container"]}
@@ -122,18 +154,43 @@ const EditProfileForm = (props) => {
             </div>
             <div className={classes["form-section"]}>
               <Field type="text" name="firstname" placeholder="First name..." />
+              <ErrorMessage
+                name="firstname"
+                component="div"
+                className={classes["err-msg"]}
+              />
             </div>
             <div className={classes["form-section"]}>
               <Field type="text" name="lastname" placeholder="Last name..." />
+              <ErrorMessage
+                name="lastname"
+                component="div"
+                className={classes["err-msg"]}
+              />
             </div>
             <div className={classes["form-section"]}>
               <Field type="textarea" name="bio" placeholder="Bio..." />
+              <ErrorMessage
+                name="bio"
+                component="div"
+                className={classes["err-msg"]}
+              />
             </div>
             <div className={classes["form-section"]}>
               <Field type="email" name="email" placeholder="Email..." />
+              <ErrorMessage
+                name="email"
+                component="div"
+                className={classes["err-msg"]}
+              />
             </div>
             <div className={classes["form-section"]}>
               <Field type="text" name="username" placeholder="Username..." />
+              <ErrorMessage
+                name="username"
+                component="div"
+                className={classes["err-msg"]}
+              />
             </div>
             <div
               className={classes["form-section"]}

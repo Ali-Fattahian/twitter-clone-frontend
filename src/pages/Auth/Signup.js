@@ -70,7 +70,6 @@ const Signup = () => {
   });
 
   const formSubmitHandler = (values, { resetForm }) => {
-    console.log(values);
     const sendData = async () => {
       await axios.post("http://127.0.0.1:8000/api/", {
         email: values.email,

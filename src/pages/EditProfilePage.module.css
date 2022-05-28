@@ -1,107 +1,120 @@
 .edit-profile {
-    width: 100%;
-    height: 100%;
+  width: 100%;
+  height: 100%;
 }
 
 .form-container {
-    width: 100%;
-    height: 100%;
+  width: 100%;
+  height: 100%;
 }
 
 .form {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .form-section {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    padding: 0 1rem;
-    position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 0 1rem;
+  position: relative;
+  align-items: center;
+  gap: .5rem;
 }
 
-#profile-picture-accept, #background-image-accept {
-    display: none;
+.err-msg {
+  font-size: 13px;
+  font-weight: lighter;
+  color: #ff5a5a;
+  margin-top: 5px;
 }
 
-#background-image__container {
-    padding: 0;
+#profile-picture-accept,
+#background-image-accept {
+  display: none;
+}
+
+.form #background-image__container {
+  padding: 0;
+  align-items: flex-start;
 }
 
 .form .profile-picture__container {
-    justify-content: flex-start;
+  justify-content: flex-start;
+  align-items: flex-start;
 }
 
-.background-image__label, .profile-picture__label {
-    position: absolute;
-    z-index: 2;
+.background-image__label,
+.profile-picture__label {
+  position: absolute;
+  z-index: 2;
 }
 
 .background-image__label i {
-    transform: translateY(77px);
-    font-size: 32px;
-    color: #56595b;
+  transform: translateY(77px);
+  font-size: 32px;
+  color: #56595b;
 }
 
 .profile-picture__label i {
-    transform: translate(42px, 8px);
-    font-size: 28px;
-    color: #272f37;
+  transform: translate(42px, 8px);
+  font-size: 28px;
+  color: #272f37;
 }
 
 .background-image__label i,
 .profile-picture__label i {
-    transition: opacity 350ms ease-in-out;
-    cursor: pointer;
+  transition: opacity 350ms ease-in-out;
+  cursor: pointer;
 }
 
 .background-image__label i:hover,
 .profile-picture__label i:hover {
-    opacity: .9;
+  opacity: 0.9;
 }
 
 .form-section input {
-    width: 100%;
-    height: 45px;
-    max-width: 566px;
-    padding: .5rem .2rem;
-    margin: 12px 0;
-    border: 1px solid #cfd9dd;
+  width: 100%;
+  height: 45px;
+  max-width: 566px;
+  padding: 0.5rem 0.2rem;
+  margin: 12px 0;
+  border: 1px solid #cfd9dd;
 }
 
 .form-section input:focus {
-    outline-color: var(--blue-primary);
+  outline-color: var(--blue-primary);
 }
 
 .form-section input:focus::placeholder {
-    color: var(--blue-primary);
+  color: var(--blue-primary);
 }
 
 .background-image-empty {
-    width: 596px;
-    height: 198.66px;
-    background-color: #cfd9dd;
+  width: 596px;
+  height: 198.66px;
+  background-color: #cfd9dd;
 }
 
 .profile-picture {
-    width: 112px;
-    height: 112px;
-    border-radius: 50%;
-    transform: translateY(-40px);
+  width: 112px;
+  height: 112px;
+  border-radius: 50%;
+  transform: translateY(-40px);
 }
 
 .btns {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
 
 .btns button {
-    transition: opacity 350ms ease-in-out;
+  transition: opacity 350ms ease-in-out;
 }
 
 .btns button:hover {
-    opacity: .9;
+  opacity: 0.9;
 }
 
 /* @media screen and (max-width: 655px) {
