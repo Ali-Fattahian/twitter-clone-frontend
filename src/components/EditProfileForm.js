@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Field, Form, Formik, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import classes from "../pages/EditProfilePage.module.css";
@@ -8,7 +8,9 @@ import { useNavigate } from "react-router-dom";
 const EditProfileForm = (props) => {
   let isUsernameValid;
   let isEmailValid;
-  const navigate = useNavigate()
+  const [profilePicture, setProfilePicture] = useState(props.profile.picture);
+  const [profileChanged, setProfileChanged] = useState(false);
+  const navigate = useNavigate();
 
   const EditProfileSchema = Yup.object().shape({
     firstname: Yup.string()
@@ -69,7 +71,7 @@ const EditProfileForm = (props) => {
 
   const formSubmitHandler = async (values) => {
     const formData = new FormData();
-    formData.append("picture", values.profilePicture);
+    formData.append("picture", profilePicture);
     await axiosInstance
       .put(
         `profiles/${props.profile.username}`,
@@ -79,7 +81,7 @@ const EditProfileForm = (props) => {
           bio: values.bio,
           email: values.email,
           username: values.username,
-          formData,
+          picture: formData.get("picture"),
         },
         {
           headers: { "Content-Type": "multipart/form-data" },
@@ -87,7 +89,7 @@ const EditProfileForm = (props) => {
       )
       .then((res) => {
         if (res && res.status === 200) {
-          navigate(`/edit/${values.username}`)
+          navigate(`/edit/${values.username}`);
         }
       });
   };
@@ -98,7 +100,7 @@ const EditProfileForm = (props) => {
         firstname: props.profile.firstname,
         lastname: props.profile.lastname,
         bio: props.profile.bio,
-        profilePicture: props.profile.picture,
+        profilePicture,
         backgroundImage: "",
         username: props.profile.username,
         email: props.profile.email,
@@ -145,9 +147,17 @@ const EditProfileForm = (props) => {
                 type="file"
                 multiple
                 accept="image/*"
+                onChange={(e) => {
+                  setProfileChanged(true);
+                  setProfilePicture(e.target.files[0]);
+                }}
               />
               <img
-                src={props.profile.picture}
+                src={
+                  profileChanged
+                    ? URL.createObjectURL(profilePicture)
+                    : profilePicture
+                }
                 alt="Profile"
                 className={classes["profile-picture"]}
               />
