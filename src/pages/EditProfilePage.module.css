@@ -49,6 +49,15 @@
 .profile-picture__label {
   position: absolute;
   z-index: 2;
+  left: 46%;
+  top: 0;
+}
+
+.profile-picture__label {
+  display: flex;
+  top: 0;
+  left: 0;
+  width: 100%;
 }
 
 .background-image__label i {
@@ -58,7 +67,6 @@
 }
 
 .profile-picture__label i {
-  transform: translate(42px, 8px);
   font-size: 28px;
   color: #272f37;
 }
@@ -73,6 +81,7 @@
 .profile-picture__label i:hover {
   opacity: 0.9;
 }
+
 
 .form-section input {
   width: 100%;
@@ -91,15 +100,20 @@
   color: var(--blue-primary);
 }
 
-.background-image-empty {
-  width: 596px;
-  height: 198.66px;
-  background-color: #cfd9dd;
+.background-image {
+  display: block;
+  width: 100%;
+  max-width: 596px;
+  max-height: 198px;
+  object-fit: cover;
 }
 
 .profile-picture {
-  width: 112px;
-  height: 112px;
+  display: block;
+  width: 9vw;
+  height: 9vw;
+  max-width: 112px;
+  max-height: 112px;
   border-radius: 50%;
   transform: translateY(-40px);
 }
@@ -117,16 +131,16 @@
   opacity: 0.9;
 }
 
-/* @media screen and (max-width: 655px) {
-    .background-image-empty {
-        width: 100%;
-        height: 20vw;
+@media screen and (max-width: 655px) {
+    .profile-picture {
+        width: 13vw;
+        height: 13vw;
     }
 }
 
 @media screen and (max-width: 499px) {
-    .background-image__label i {
-        transform: translateY(50px);
+    .profile-picture {
+      width: 20vw;
+      height: 20vw;
     }
-} */
-/* get an image with that color, and set it as object: cover; */
+}

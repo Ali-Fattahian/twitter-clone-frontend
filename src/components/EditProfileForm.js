@@ -9,6 +9,11 @@ const EditProfileForm = (props) => {
   let isUsernameValid;
   let isEmailValid;
   const [profilePicture, setProfilePicture] = useState(props.profile.picture);
+  const [backgroundPicture, setBackgroundPicture] = useState(
+    props.profile.background_picture
+  );
+  const [backgroundPictureChanged, setBackgroundPictureChanged] =
+    useState(false);
   const [profileChanged, setProfileChanged] = useState(false);
   const navigate = useNavigate();
 
@@ -72,26 +77,95 @@ const EditProfileForm = (props) => {
   const formSubmitHandler = async (values) => {
     const formData = new FormData();
     formData.append("picture", profilePicture);
-    await axiosInstance
-      .put(
-        `profiles/${props.profile.username}`,
-        {
-          firstname: values.firstname,
-          lastname: values.lastname,
-          bio: values.bio,
-          email: values.email,
-          username: values.username,
-          picture: formData.get("picture"),
-        },
-        {
-          headers: { "Content-Type": "multipart/form-data" },
-        }
-      )
-      .then((res) => {
-        if (res && res.status === 200) {
-          navigate(`/edit/${values.username}`);
-        }
-      });
+    formData.append("background_picture", backgroundPicture);
+    if (profileChanged && backgroundPictureChanged) {
+      await axiosInstance
+        .put(
+          `profiles/${props.profile.username}`,
+          {
+            firstname: values.firstname,
+            lastname: values.lastname,
+            bio: values.bio,
+            email: values.email,
+            username: values.username,
+            picture: formData.get("picture"),
+            background_picture: formData.get("background_picture"),
+          },
+          {
+            headers: { "Content-Type": "multipart/form-data" },
+          }
+        )
+        .then((res) => {
+          if (res && res.status === 200) {
+            navigate(`/edit/${values.username}`);
+          }
+        });
+    }
+    if (profileChanged && !backgroundPictureChanged) {
+      await axiosInstance
+        .put(
+          `profiles/${props.profile.username}`,
+          {
+            firstname: values.firstname,
+            lastname: values.lastname,
+            bio: values.bio,
+            email: values.email,
+            username: values.username,
+            picture: formData.get("picture"),
+          },
+          {
+            headers: { "Content-Type": "multipart/form-data" },
+          }
+        )
+        .then((res) => {
+          if (res && res.status === 200) {
+            navigate(`/edit/${values.username}`);
+          }
+        });
+    }
+    if (!profileChanged && backgroundPictureChanged) {
+      await axiosInstance
+        .put(
+          `profiles/${props.profile.username}`,
+          {
+            firstname: values.firstname,
+            lastname: values.lastname,
+            bio: values.bio,
+            email: values.email,
+            username: values.username,
+            background_picture: formData.get("background_picture"),
+          },
+          {
+            headers: { "Content-Type": "multipart/form-data" },
+          }
+        )
+        .then((res) => {
+          if (res && res.status === 200) {
+            navigate(`/edit/${values.username}`);
+          }
+        });
+    }
+    if (!profileChanged && !backgroundPictureChanged) {
+      await axiosInstance
+        .put(
+          `profiles/${props.profile.username}`,
+          {
+            firstname: values.firstname,
+            lastname: values.lastname,
+            bio: values.bio,
+            email: values.email,
+            username: values.username,
+          },
+          {
+            headers: { "Content-Type": "multipart/form-data" },
+          }
+        )
+        .then((res) => {
+          if (res && res.status === 200) {
+            navigate(`/edit/${values.username}`);
+          }
+        });
+    }
   };
 
   return (
@@ -100,15 +174,15 @@ const EditProfileForm = (props) => {
         firstname: props.profile.firstname,
         lastname: props.profile.lastname,
         bio: props.profile.bio,
-        profilePicture,
-        backgroundImage: "",
+        profilePicture: props.profile.picture,
+        backgroundPicture: props.profile.background_picture,
         username: props.profile.username,
         email: props.profile.email,
       }}
       onSubmit={formSubmitHandler}
       validationSchema={EditProfileSchema}
     >
-      {() => {
+      {({ resetForm }) => {
         return (
           <Form className={classes["form"]} encType="multipart/form-data">
             <div
@@ -126,12 +200,21 @@ const EditProfileForm = (props) => {
                 type="file"
                 multiple
                 accept="image/*"
+                name="backgroundPicture"
+                onChange={(e) => {
+                  setBackgroundPicture(e.target.files[0]);
+                  setBackgroundPictureChanged(true);
+                }}
               />
-              {props.profile.background_img ? (
-                <img src={props.profile.background_img} alt="Background" />
-              ) : (
-                <div className={classes["background-image-empty"]}></div>
-              )}
+              <img
+                src={
+                  backgroundPictureChanged
+                    ? URL.createObjectURL(backgroundPicture)
+                    : backgroundPicture
+                }
+                alt="Background"
+                className={classes["background-image"]}
+              />
             </div>
             <div
               className={`${classes["form-section"]} ${classes["profile-picture__container"]}`}
@@ -214,6 +297,7 @@ const EditProfileForm = (props) => {
                     color: "#0f1419",
                     border: "1px solid #0f1419",
                   }}
+                  onClick={() => resetForm()}
                 >
                   Cancel
                 </button>
