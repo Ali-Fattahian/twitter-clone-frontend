@@ -223,7 +223,7 @@ const EditProfileForm = (props) => {
                 htmlFor={classes["profile-picture-accept"]}
                 className={classes["profile-picture__label"]}
               >
-                <i className="fa fa-camera"></i>
+                Change picture
               </label>
               <input
                 id={classes["profile-picture-accept"]}
