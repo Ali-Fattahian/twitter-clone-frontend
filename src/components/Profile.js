@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 
 import FollowButton from "./FollowButton";
 import classes from "./Profile.module.css";
-import ProfilePicture from "./Tweet/default_profile.png";
 import dateTimeGenerator from "../utils";
 import { parseJwt } from "../utils";
 import axiosInstance from "../axios";
@@ -58,10 +57,10 @@ const Profile = (props) => {
         </div>
         <div></div>
       </div>
-      <img src={ProfilePicture} alt="header" />
+      <img src={props.user.background_picture} alt="header" />
       <div className={classes["profile__bottom"]}>
         <div className={classes["profile__bottom-middle"]}>
-          <img src={ProfilePicture} alt="profile" />
+          <img src={props.user.picture} alt="profile" />
           {!isLoading && hasStarted && followOrEdit}
         </div>
         <div className={classes["profile__bottom-bottom"]}>
