@@ -22,7 +22,7 @@ const Profile = (props) => {
       const token = localStorage.getItem("access_token");
       const username = parseJwt(token).username;
       if (username === props.user.username) {
-        setFollowOrEdit(<button className="btn">Edit profile</button>);
+        setFollowOrEdit(<button className="btn" onClick={() => navigate(`/edit/${username}`)}>Edit profile</button>);
       } else {
         await axiosInstance
           .get(`follow/${props.user.username}/check`)
@@ -38,7 +38,7 @@ const Profile = (props) => {
       }
     }
     setIsLoading(false);
-  }, [props.user, props.setFollow]);
+  }, [props.user, props.setFollow, navigate]);
 
   useEffect(() => {
     checkForButton();

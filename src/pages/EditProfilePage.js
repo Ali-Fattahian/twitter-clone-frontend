@@ -41,7 +41,7 @@ const EditProfilePage = (props) => {
     } else {
       navigate("/home");
     }
-  }, [getProfile]);
+  }, [getProfile, navigate]);
 
   return (
     <React.Fragment>

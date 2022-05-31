@@ -97,6 +97,10 @@ const EditProfileForm = (props) => {
         )
         .then((res) => {
           if (res && res.status === 200) {
+            if (values.username !== props.profile.username) {
+              localStorage.clear();
+              navigate('/home')
+            };
             navigate(`/edit/${values.username}`);
           }
         });
@@ -119,6 +123,10 @@ const EditProfileForm = (props) => {
         )
         .then((res) => {
           if (res && res.status === 200) {
+            if (values.username !== props.profile.username) {
+              localStorage.clear();
+              navigate('/home')
+            };
             navigate(`/edit/${values.username}`);
           }
         });
@@ -141,6 +149,10 @@ const EditProfileForm = (props) => {
         )
         .then((res) => {
           if (res && res.status === 200) {
+            if (values.username !== props.profile.username) {
+              localStorage.clear();
+              navigate('/home')
+            };
             navigate(`/edit/${values.username}`);
           }
         });
@@ -162,6 +174,10 @@ const EditProfileForm = (props) => {
         )
         .then((res) => {
           if (res && res.status === 200) {
+            if (values.username !== props.profile.username) {
+              localStorage.clear()
+              navigate('/home')
+            };
             navigate(`/edit/${values.username}`);
           }
         });
@@ -285,6 +301,7 @@ const EditProfileForm = (props) => {
                 className={classes["err-msg"]}
               />
             </div>
+            <small>*If you change your username, you will be logged out, you should log in again after that.</small>
             <div
               className={classes["form-section"]}
               style={{ display: "block" }}
@@ -298,6 +315,7 @@ const EditProfileForm = (props) => {
                     border: "1px solid #0f1419",
                   }}
                   onClick={() => resetForm()}
+                  type="reset"
                 >
                   Cancel
                 </button>

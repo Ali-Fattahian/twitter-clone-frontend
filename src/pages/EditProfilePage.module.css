@@ -13,6 +13,13 @@
   flex-direction: column;
 }
 
+.form small {
+  margin: 1rem;
+  margin-top: .5rem;
+  color: var(--gray);
+  font-weight: lighter;
+}
+
 .form-section {
   width: 100%;
   display: flex;
