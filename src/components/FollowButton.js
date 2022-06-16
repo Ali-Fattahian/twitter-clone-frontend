@@ -16,7 +16,10 @@ const FollowButton = (props) => {
           user: props.user.id
         }
       );
-      if (response.status === 201) props.setFollow(true);
+      if (response.status === 201) {
+        props.setFollow(true)
+        props.setFollowWasSuc(response.data.id) // To make a refresh on suggested users list
+      };
     }
   };
 

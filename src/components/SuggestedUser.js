@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 
 const SuggestedUser = props => {
   const navigate = useNavigate()
-
   const profileClickHandler = () => navigate(`/${props.user.username}`)
 
   return (
@@ -19,7 +18,7 @@ const SuggestedUser = props => {
         </div>
       </div>
       <div className={classes["suggested-user__right"]}>
-        <FollowButton color="#fff" backgroundColor="#000" user={props.user} />
+        <FollowButton color="#fff" backgroundColor="#000" user={props.user} setFollowWasSuc={props.setFollowWasSuc} setFollow={props.setFollow} />
       </div>
     </div>
   );

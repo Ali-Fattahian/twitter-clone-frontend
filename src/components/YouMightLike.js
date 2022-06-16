@@ -7,6 +7,8 @@ import SuggestedUser from "./SuggestedUser";
 const YouMightLike = () => {
   const [suggestedUsers, setSuggestedUsers] = useState([]);
   const isLoggedIn = !!localStorage.getItem("access_token");
+  const [followWasSuc, setFollowWasSuc] = useState(null);
+  const [follow, setFollow] = useState(null) // Completely useless, i have to make it, pass it down to follow btn because i did it in profile page and it is expected in follow btn comp
 
   const getSuggestedUsers = useCallback(async () => {
     let response;
@@ -22,15 +24,16 @@ const YouMightLike = () => {
 
   useEffect(() => {
     getSuggestedUsers()
-  }, [getSuggestedUsers])
+  }, [getSuggestedUsers, followWasSuc])
 
   return (
     <section className={classes["you-might-like"]}>
       <p>Who to follow</p>
       <div className={classes["suggested-users"]}>
-        {suggestedUsers.map((user) => (
-          <SuggestedUser user={user} key={user.id} />
+        {suggestedUsers.length > 0 && suggestedUsers.map((user) => (
+          <SuggestedUser user={user} key={user.id} setFollowWasSuc={setFollowWasSuc} setFollow={setFollow} />
         ))}
+        {suggestedUsers.length === 0 && <p style={{color:'black', textAlign:'center', fontWeight: 'bold'}}>No Suggested users</p>}
       </div>
     </section>
   );
