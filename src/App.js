@@ -109,7 +109,7 @@ function App() {
             <Route
               path="/"
               element={
-                shouldRedirect ? <Navigate replace to="/home" /> : <HomePage />
+                shouldRedirect ? <Navigate replace to="/login" /> : <Login />
               }
             />
             <Route

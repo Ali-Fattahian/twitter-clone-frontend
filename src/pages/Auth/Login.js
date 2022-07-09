@@ -20,7 +20,7 @@ const Login = () => {
 
     login(emailCurrentValue, passwordCurrentValue)
 
-    navigate("/", { replace: true });
+    navigate("/home", { replace: true });
   };
   return (
     <div className={classes["page-container"]}>
@@ -35,6 +35,7 @@ const Login = () => {
             ref={password}
           />
           <p id={classes['not-have-account']}>Don't have an account? <Link to='/signup'>Sign up</Link></p>
+          <p id={classes['not-have-account']}>Don't have an account? <a href='/home'>Enter as a guest</a></p>
           <button type="submit" className="btn">
             Next
           </button>
