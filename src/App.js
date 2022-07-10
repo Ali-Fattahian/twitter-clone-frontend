@@ -103,7 +103,7 @@ function App() {
             <Route
               path="home"
               element={
-                <HomePage pageName="Home" onMenuClick={clickMenuHandler} />
+                <HomePage pageName="Home" onMenuClick={clickMenuHandler} isMenuOpen={isMenuOpen} />
               }
             />
             <Route

@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { Link } from "react-router-dom";
 import classes from "./TweetStyle.module.css";
-import Profile from "./default_profile.png";
+import ProfilePicture from "./default_profile.png";
 import axiosInstance from "../../axios";
 
 const AddTweet = (props) => {
@@ -49,8 +49,9 @@ const AddTweet = (props) => {
       <div className={classes["add-tweet__upper"]}>
         <img
           className={classes["add-tweet__image"]}
-          src={Profile}
+          src={props.currentUserData ? props.currentUserData.picture : ProfilePicture}
           alt="Default profile"
+          style={{objectFit: 'cover'}}
         />
         <textarea
           className={classes["add-tweet__input"]}
