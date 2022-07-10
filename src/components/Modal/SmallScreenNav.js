@@ -4,19 +4,39 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { parseJwt } from "../../utils";
 import * as ReactDOM from "react-dom";
 import LoginLogoutBtn from "../LoginLogoutBtn";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const SmallScreenNav = (props) => {
   const navigate = useNavigate();
+  let currentUsername;
+  const [currentUserData, setCurrentUserData] = useState(null)
 
-  const profileClickHandler = () => {
+  const fetchUserData = async (username) => {
+    await axios
+        .get(`http://127.0.0.1:8000/api/profiles/${username}`)
+        .then((res) => {
+          if (res.status === 200)
+          setCurrentUserData(res.data)
+        })
+  }
+
+  useEffect(() => {
     if (!!localStorage.getItem("access_token")) {
       const token = localStorage.getItem("access_token");
-      const username = parseJwt(token).username;
-      navigate(`/${username}`);
+      currentUsername = parseJwt(token).username;
+      fetchUserData(currentUsername)
+    }
+  }, []);
+
+  const profileClickHandler = () => {
+    if (currentUsername) {
+      navigate(`/${currentUsername}`);
     } else {
       navigate("/login");
     }
   };
+
   return (
     <section
       id="modal"
@@ -29,24 +49,35 @@ const SmallScreenNav = (props) => {
         <i className="fa fa-close" onClick={props.onCloseBtnClick}></i>
       </div>
       <div id={classes["account-info"]}>
-        <img src={ProfilePicture} alt="Profile" />
-        <p id={classes.fullname}>Full Name</p>
-        <p id={classes.username}>@username</p>
+        <img src={currentUserData ? currentUserData.picture : ProfilePicture} alt="Profile" />
+        <p id={classes.fullname}>{currentUserData ? `${currentUserData.firstname} ${currentUserData.lastname}`: 'Anonymous User'}</p>
+        <p id={classes.username}>@{currentUserData ? currentUserData.username : 'Unknown'}</p>
       </div>
-      <div id={classes["follow-container"]}>
+      {currentUserData ? <div id={classes["follow-container"]}>
         <div className={classes.follow}>
-          190 <span>Following</span>
+          {currentUserData.follows['followings_count']} <span>Following</span>
         </div>
         <div className={classes.follow}>
-          10 <span>Follower</span>
+          {currentUserData.follows['followers_count']} <span>Follower</span>
         </div>
-      </div>
+      </div> : <div id={classes["follow-container"]}>
+        <div className={classes.follow}>
+          No <span>Following</span>
+        </div>
+        <div className={classes.follow}>
+          No <span>Follower</span>
+        </div>
+      </div>}
       <div id={classes["nav__links"]}>
         <NavLink to="/home" className={classes["nav__link"]}>
           <i className="fa fa-home"></i>
           <p>Home</p>
         </NavLink>
-        <div style={{cursor: 'pointer'}} onClick={profileClickHandler} className={classes["nav__link"]}>
+        <div
+          style={{ cursor: "pointer" }}
+          onClick={profileClickHandler}
+          className={classes["nav__link"]}
+        >
           <i className="far fa-user-circle"></i>
           <p>Profile</p>
         </div>
