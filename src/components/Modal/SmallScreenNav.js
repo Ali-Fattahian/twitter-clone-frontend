@@ -3,6 +3,7 @@ import ProfilePicture from "../Tweet/default_profile.png";
 import { NavLink, useNavigate } from "react-router-dom";
 import { parseJwt } from "../../utils";
 import * as ReactDOM from "react-dom";
+import LoginLogoutBtn from "../LoginLogoutBtn";
 
 const SmallScreenNav = (props) => {
   const navigate = useNavigate();
@@ -57,6 +58,9 @@ const SmallScreenNav = (props) => {
           <i className="fa fa-bookmark-o"></i>
           <p>Bookmarks</p>
         </NavLink>
+        <div className={classes["nav__link"]}>
+          <LoginLogoutBtn text={true} />
+        </div>
       </div>
     </section>
   );

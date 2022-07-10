@@ -9,6 +9,7 @@ const Login = () => {
   const password = useRef('');
   const navigate = useNavigate()
   const {login} = useContext(AuthContext)
+  if (!!localStorage.getItem('access_token')) navigate('/home') // Logged in users don't have access to login page
 
   const formSubmitHandler = (e) => {
     e.preventDefault();

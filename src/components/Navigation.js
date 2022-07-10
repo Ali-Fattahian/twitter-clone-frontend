@@ -1,8 +1,9 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import classes from "./Navigation.module.css";
 import { parseJwt } from "../utils";
+import LoginLogoutBtn from "./LoginLogoutBtn";
 
-const Navigation = props => {
+const Navigation = (props) => {
   const navigate = useNavigate()
 
   const profileClickHandler = () => {
@@ -56,6 +57,9 @@ const Navigation = props => {
         <div className={classes["nav__item"]} id={classes["nav__tweet"]} onClick={props.onAddTweetFormClick}>
           <button className="btn">Tweet</button>
           <i id={classes['add-tweet-icon']} class="fas fa-plus"></i> 
+        </div>
+        <div className={classes["nav__item"]}>
+          <LoginLogoutBtn />
         </div>
       </nav>
     </section>
