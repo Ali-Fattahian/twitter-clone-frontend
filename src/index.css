@@ -33,6 +33,12 @@ a {
   color: #eee;
 }
 
+.p-info--center {
+  text-align: center;
+  color: #71767b;
+  margin-top: 1.5rem;
+}
+
 #root {
   display: grid;
   grid-template-columns: 1fr 2fr 1fr;

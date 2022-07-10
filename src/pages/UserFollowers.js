@@ -88,9 +88,9 @@ const UserFollowings = () => {
           <section className={classes["has-error"]}>
             <p
               style={{
-                textAlign: "center",
-                color: "#71767b",
+                margin: "0",
               }}
+            className="p-info--center"
             >
               This user doesn't have any followers.
             </p>
@@ -99,9 +99,9 @@ const UserFollowings = () => {
         {hasStarted && error && (
           <section className={classes["has-error"]}>
             <p
+              className="p-info--center"
               style={{
-                textAlign: "center",
-                color: "#71767b",
+                margin: "0"
               }}
             >
               Sorry this profile doesn't exist.

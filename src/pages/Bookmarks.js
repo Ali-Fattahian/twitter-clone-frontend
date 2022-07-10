@@ -33,13 +33,7 @@ const Bookmarks = () => {
     <React.Fragment>
       <div className="main__middle-side">
         {tweetList.length === 0 ? (
-          <p
-            style={{
-              textAlign: "center",
-              color: "#71767b",
-              marginTop: "1.5rem",
-            }}
-          >
+          <p className="p-info--center">
             You don't have any saved tweets.
           </p>
         ) : (

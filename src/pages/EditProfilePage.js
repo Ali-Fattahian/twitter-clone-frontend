@@ -57,13 +57,7 @@ const EditProfilePage = (props) => {
                 profile={profile}
               />
             )) || (
-              <p
-                style={{
-                  textAlign: "center",
-                  color: "#71767b",
-                  marginTop: "1.5rem",
-                }}
-              >
+              <p className="p-info--center">
                 Sorry this page doesn't exist.
               </p>
             )}

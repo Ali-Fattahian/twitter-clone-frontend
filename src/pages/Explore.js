@@ -27,7 +27,7 @@ const Explore = (props) => {
           <img src={ProfilePicture} alt="Profile" onClick={props.onMenuClick} />
           <Searchbar />
         </div>
-        {tweetList.length === 0 ? <p style={{textAlign: 'center', color: '#71767b', marginTop: '1.5rem'}}>No tweets from the last 24 hours.</p> : <TweetList tweetList={tweetList} isBookmarkPage={false} />}
+        {tweetList.length === 0 ? <p className="p-info--center">No tweets from the last 24 hours.</p> : <TweetList tweetList={tweetList} isBookmarkPage={false} />}
       </div>
       <div className="main__right-side">
         <YouMightLike />

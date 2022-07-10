@@ -11,7 +11,7 @@ const TweetList = (props) => {
     );
   return (
     <section id="tweet-list" className={classes["tweet-list"]}>
-      {props.tweetList.map((tweet) => (
+      {props.tweetList.length!==0 ? props.tweetList.map((tweet) => (
         <Tweet
           tweetId={tweet.id}
           key={tweet.id}
@@ -30,7 +30,7 @@ const TweetList = (props) => {
           isBookmarkPage={props.isBookmarkPage}
           setNeedRefresh={props.setNeedRefresh}
         />
-      ))}
+      )) : <p className="p-info--center">No posts yet!</p>}
     </section>
   );
 };

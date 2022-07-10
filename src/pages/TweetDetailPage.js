@@ -82,13 +82,7 @@ const TweetDetailPage = (props) => {
             setNewReply={setNewReply}
           />
         ) : (
-          <p
-            style={{
-              textAlign: "center",
-              color: "#71767b",
-              marginTop: "1.5rem",
-            }}
-          >
+          <p className="p-info--center">
             This tweet doesn't exist.
           </p>
         )}
