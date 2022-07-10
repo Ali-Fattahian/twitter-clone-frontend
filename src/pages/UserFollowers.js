@@ -54,10 +54,10 @@ const UserFollowings = () => {
                   onClick={() => navigate(-1)}
                 ></i>
               </div>
-              <div className={classes["user-info"]}>
+              {/* <div className={classes["user-info"]}>
                 <p id={classes["user__fullname"]}>Fullname</p>
                 <p id={classes["user__username"]}>@Username</p>
-              </div>
+              </div> */}
             </div>
           </div>
           <div className={classes["switch-follows__section"]}>

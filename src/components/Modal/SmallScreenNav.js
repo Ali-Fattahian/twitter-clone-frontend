@@ -10,22 +10,21 @@ import axios from "axios";
 const SmallScreenNav = (props) => {
   const navigate = useNavigate();
   let currentUsername;
-  const [currentUserData, setCurrentUserData] = useState(null)
+  const [currentUserData, setCurrentUserData] = useState(null);
 
   const fetchUserData = async (username) => {
     await axios
-        .get(`http://127.0.0.1:8000/api/profiles/${username}`)
-        .then((res) => {
-          if (res.status === 200)
-          setCurrentUserData(res.data)
-        })
-  }
+      .get(`http://127.0.0.1:8000/api/profiles/${username}`)
+      .then((res) => {
+        if (res.status === 200) setCurrentUserData(res.data);
+      });
+  };
 
   useEffect(() => {
     if (!!localStorage.getItem("access_token")) {
       const token = localStorage.getItem("access_token");
       currentUsername = parseJwt(token).username;
-      fetchUserData(currentUsername)
+      fetchUserData(currentUsername);
     }
   }, []);
 
@@ -49,25 +48,42 @@ const SmallScreenNav = (props) => {
         <i className="fa fa-close" onClick={props.onCloseBtnClick}></i>
       </div>
       <div id={classes["account-info"]}>
-        <img src={currentUserData ? currentUserData.picture : ProfilePicture} alt="Profile" />
-        <p id={classes.fullname}>{currentUserData ? `${currentUserData.firstname} ${currentUserData.lastname}`: 'Anonymous User'}</p>
-        <p id={classes.username}>@{currentUserData ? currentUserData.username : 'Unknown'}</p>
+        <img
+          src={currentUserData ? currentUserData.picture : ProfilePicture}
+          alt="Profile"
+        />
+        {currentUserData ? (
+          <p id={classes.fullname} className={classes['real-name']} onClick={() => navigate(`/${currentUserData.username}`)}>
+            {currentUserData.firstname} {currentUserData.lastname}
+          </p>
+        ) : (
+          <p id={classes.fullname}>Anonymous User</p>
+        )}
+        {currentUserData ? (
+          <p id={classes.username} className={classes['real-name']} onClick={() => navigate(`/${currentUserData.username}`)}>@{currentUserData.username}</p>
+        ) : (
+          <p id={classes.username}>@Unknown</p>
+        )}
       </div>
-      {currentUserData ? <div id={classes["follow-container"]}>
-        <div className={classes.follow}>
-          {currentUserData.follows['followings_count']} <span>Following</span>
+      {currentUserData ? (
+        <div id={classes["follow-container"]}>
+          <div className={classes.follow}>
+            {currentUserData.follows["followings_count"]} <span>Following</span>
+          </div>
+          <div className={classes.follow}>
+            {currentUserData.follows["followers_count"]} <span>Follower</span>
+          </div>
         </div>
-        <div className={classes.follow}>
-          {currentUserData.follows['followers_count']} <span>Follower</span>
+      ) : (
+        <div id={classes["follow-container"]}>
+          <div className={classes.follow}>
+            No <span>Following</span>
+          </div>
+          <div className={classes.follow}>
+            No <span>Follower</span>
+          </div>
         </div>
-      </div> : <div id={classes["follow-container"]}>
-        <div className={classes.follow}>
-          No <span>Following</span>
-        </div>
-        <div className={classes.follow}>
-          No <span>Follower</span>
-        </div>
-      </div>}
+      )}
       <div id={classes["nav__links"]}>
         <NavLink to="/home" className={classes["nav__link"]}>
           <i className="fa fa-home"></i>

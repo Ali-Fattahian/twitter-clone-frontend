@@ -45,6 +45,14 @@
     color: var(--gray);
 }
 
+.real-name {
+    cursor: pointer;
+}
+
+.real-name:hover {
+    text-decoration: underline;
+}
+
 #follow-container {
     display: flex;
     justify-content: flex-start;

@@ -7,7 +7,7 @@ const SmallProfile = props => {
   const navigate = useNavigate()
 
   return (
-    <div className={classes['small-profile__section']} onClick={() => {navigate(`/${props.username}`)}}>
+    <div className={classes['small-profile__section']} onClick={() => {navigate(`/${props.username}`)}} style={{cursor: 'pointer'}} >
         <div className={classes['small-profile__left-part']}>
             <img src={ProfilePicture} alt='Profile' />
         </div>
