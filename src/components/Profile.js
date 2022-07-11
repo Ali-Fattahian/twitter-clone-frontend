@@ -48,7 +48,7 @@ const Profile = (props) => {
       <div className={classes["profile__top"]}>
         <div className={classes["profile__top-left"]}>
           <div id={classes.icon}>
-            <i className="fa fa-chevron-left" onClick={() => navigate(-1)}></i>
+            <i className="fa fa-chevron-left" onClick={() => navigate('/home')}></i>
           </div>
           <div>
             <h3>{`${props.user.firstname} ${props.user.lastname}`}</h3>

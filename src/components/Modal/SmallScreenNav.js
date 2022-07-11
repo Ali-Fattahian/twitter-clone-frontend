@@ -67,10 +67,10 @@ const SmallScreenNav = (props) => {
       </div>
       {currentUserData ? (
         <div id={classes["follow-container"]}>
-          <div className={classes.follow}>
+          <div className={classes.follow} onClick={() => navigate(`/${currentUserData.username}/followings`)} style={{cursor: 'pointer'}}>
             {currentUserData.follows["followings_count"]} <span>Following</span>
           </div>
-          <div className={classes.follow}>
+          <div className={classes.follow} onClick={() => navigate(`/${currentUserData.username}/followers`)} style={{cursor: 'pointer'}}>
             {currentUserData.follows["followers_count"]} <span>Follower</span>
           </div>
         </div>

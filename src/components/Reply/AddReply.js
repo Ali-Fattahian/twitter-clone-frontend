@@ -75,7 +75,7 @@ const AddReply = (props) => {
         <div className={classes["add-reply__upper"]}>
           <img
             className={classes["add-reply__image"]}
-            src={Profile}
+            src={Profile} // Or the current user
             alt="Default profile"
           />
           <textarea

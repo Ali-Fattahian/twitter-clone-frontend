@@ -124,7 +124,7 @@ const Tweet = (props) => {
           firstname={props.firstname}
           lastname={props.lastname}
           timeCreated={props.timeCreated}
-          // picture={Picture}
+          picture={props.picture}
           content={props.content}
           hideReply={hideReply}
           setNewReply={setNewReply}
@@ -132,7 +132,7 @@ const Tweet = (props) => {
       </section>
       <div className={classes.tweet} onClick={tweetDetailNavigateHandler}>
         <div className={classes["tweet-left"]}>
-          <img src={props.picture} alt="Profile" />
+          <img src={props.picture} alt="Profile" style={{objectFit: 'cover'}} />
         </div>
         <div className={classes["tweet-right"]}>
           <div className={classes["tweet-right__top"]}>
@@ -152,11 +152,11 @@ const Tweet = (props) => {
               </a>{" "}
               {/* this is a link to the post */}
             </div>
-            <div className={classes.more}>
+            {/* <div className={classes.more}>
               <div></div>
               <div></div>
               <div></div>
-            </div>
+            </div> */}
           </div>
           <div className={classes["tweet-content"]}>{props.content}</div>
           <div className={classes["tweet-right__bottom"]}>

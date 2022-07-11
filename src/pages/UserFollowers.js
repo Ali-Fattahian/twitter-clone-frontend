@@ -51,7 +51,7 @@ const UserFollowings = () => {
               <div id={classes.icon}>
                 <i
                   className="fa fa-chevron-left"
-                  onClick={() => navigate(-1)}
+                  onClick={() => navigate(`/${username}`)}
                 ></i>
               </div>
               {/* <div className={classes["user-info"]}>
@@ -72,7 +72,7 @@ const UserFollowings = () => {
             </NavLink>
             <NavLink
               className={classes["switch-follow"]}
-              to={`/${username}/following`}
+              to={`/${username}/followings`}
               style={({ isActive }) =>
                 isActive ? { color: "#000" } : {color: "#536471"}
               }

@@ -99,15 +99,12 @@ const TweetDetail = (props) => {
       replyContent.current.value = "";
       return;
     }
-    console.log(response);
   }
 
   const onClose = () => {
     setErrorMessage(null);
     setHasError(false);
   };
-
-  console.log(hasError, errorMessage)
 
   return (
     <section className={classes["tweet-detail"]}>
@@ -126,11 +123,11 @@ const TweetDetail = (props) => {
             </a>
           </div>
         </div>
-        <div className={classes["tweet-detail__more-btn"]}>
+        {/* <div className={classes["tweet-detail__more-btn"]}>
           <div></div>
           <div></div>
           <div></div>
-        </div>
+        </div> */}
       </div>
       <div className={classes["tweet-detail__middle"]}>
         <p className={classes["tweet-detail__content"]}>{props.content}</p>

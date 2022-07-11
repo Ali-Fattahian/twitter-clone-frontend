@@ -5,7 +5,6 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import TweetDetail from "../components/Tweet/TweetDetail";
 import dateTimeGenerator from "../utils";
-import Picture from "../components/Tweet/default_profile.png";
 import AddReply from "../components/Reply/AddReply";
 import ErrorMessage from "../components/Modal/ErrorMessage";
 import Overlay from "../components/Modal/Overlay";
@@ -68,11 +67,11 @@ const TweetDetailPage = (props) => {
         {tweetDetail ? (
           <TweetDetail
             tweetId={tweetId}
-            picture={Picture}
-            content={tweetDetail.content}
-            username={tweetDetail.user}
-            firstname={tweetDetail.firstname}
-            lastname={tweetDetail.lastname}
+            picture={tweetDetail.user.picture}
+            content={tweetDetail.user.content}
+            username={tweetDetail.user.user}
+            firstname={tweetDetail.user.firstname}
+            lastname={tweetDetail.user.lastname}
             likes={tweetDetail.likes.length}
             timeCreated={dateTimeGenerator(
               tweetDetail.date_created.created_ago,
@@ -94,14 +93,14 @@ const TweetDetailPage = (props) => {
             <AddReply
               onError={showErrorMessageHandler}
               tweetId={tweetId}
-              username={tweetDetail.user}
-              firstname={tweetDetail.firstname}
-              lastname={tweetDetail.lastname}
+              username={tweetDetail.user.username}
+              firstname={tweetDetail.user.firstname}
+              lastname={tweetDetail.user.lastname}
               timeCreated={dateTimeGenerator(
                 tweetDetail.date_created.created_ago,
                 tweetDetail.date_created.created
               )}
-              picture={Picture}
+              picture={tweetDetail.user.picture}
               content={tweetDetail.content}
               hideReply={hideReply}
               setNewReply={setNewReply}

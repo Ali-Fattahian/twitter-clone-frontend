@@ -146,7 +146,7 @@ function App() {
               }
             />
             <Route path=":username/followers" element={<UserFollowers />} />
-            <Route path=":username/following" element={<UserFollowings />} />
+            <Route path=":username/followings" element={<UserFollowings />} />
             <Route path="*" element={<NoMatch />} />
           </Routes>
         </Suspense>
