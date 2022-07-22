@@ -37,7 +37,6 @@ const AddReply = (props) => {
       replyContent.current.value = "";
       return;
     }
-    console.log(response);
   }
 
   return (

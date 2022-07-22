@@ -9,7 +9,6 @@ import AddReply from "../Reply/AddReply";
 import ErrorMessage from "../Modal/ErrorMessage";
 import Overlay from "../Modal/Overlay";
 import SaveTweet from "../SaveTweet";
-import DeleteSaveTweet from "../DeleteSaveTweet";
 
 const Tweet = (props) => {
   const userLink = `/${props.username}`;
@@ -176,18 +175,10 @@ const Tweet = (props) => {
                 tweetId={props.tweetId}
                 setHasError={setHasError}
                 setErrorMessage={setErrorMessage}
+                setNeedRefreshTweetList={props.setNeedRefresh}
+                isBookmarkPage={props.isBookmarkPage}
               />
             </div>
-            {props.isBookmarkPage && (
-              <div title="Remove this item">
-                <DeleteSaveTweet
-                  tweetId={props.tweetId}
-                  setHasError={setHasError}
-                  setErrorMessage={setErrorMessage}
-                  setNeedRefresh={props.setNeedRefresh}
-                />
-              </div>
-            )}
           </div>
         </div>
       </div>
