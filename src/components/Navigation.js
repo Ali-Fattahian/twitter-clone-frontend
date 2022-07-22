@@ -20,30 +20,30 @@ const Navigation = (props) => {
     <section className={`${classes["nav-container"]} main__left-side`}>
       <nav className={classes.nav}>
         <NavLink to="/home" className={classes["nav__item"]} id={classes['twitter-icon']}>
-          <i class="fa fa-twitter"></i>
+          <i className="fa fa-twitter"></i>
         </NavLink>
         <NavLink
           to="/"
           className={classes['nav__item']}
           >
-          <i class="fa fa-home"></i>
+          <i className="fa fa-home"></i>
           <p>Home</p>
         </NavLink>
         <NavLink
           to="/explore"
           className={classes['nav__item']}
         >
-          <i class="fa fa-hashtag"></i>
+          <i className="fa fa-hashtag"></i>
           <p>Explore</p>
         </NavLink>
         {/* <NavLink to='/' className={classes["nav__item"]}>
-          <i class="fa fa-envelope-o"></i>
+          <i className="fa fa-envelope-o"></i>
           <p>Messages</p>
         </NavLink> */}
         <NavLink
           to="/bookmarks"
           className={classes['nav__item']}>
-          <i class="fa fa-bookmark-o"></i>
+          <i className="fa fa-bookmark-o"></i>
           <p>Bookmarks</p>
         </NavLink>
         <div
@@ -51,12 +51,12 @@ const Navigation = (props) => {
           to="/:username"
           className={classes['nav__item']}
         >
-          <i class="far fa-user-circle"></i>
+          <i className="far fa-user-circle"></i>
           <p>Profile</p>
         </div>
         <div className={classes["nav__item"]} id={classes["nav__tweet"]} onClick={props.onAddTweetFormClick}>
           <button className="btn">Tweet</button>
-          <i id={classes['add-tweet-icon']} class="fas fa-plus"></i> 
+          <i id={classes['add-tweet-icon']} className="fas fa-plus"></i> 
         </div>
         <div className={classes["nav__item"]}>
           <LoginLogoutBtn />

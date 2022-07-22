@@ -43,7 +43,7 @@ const AddReply = (props) => {
   return (
     <div className={classes["reply-section"]}>
       <div className={classes["close-reply__section"]}>
-        <i class="fa fa-times" aria-hidden="true" onClick={() => props.hideReply()} style={{cursor: "pointer"}}></i>
+        <i className="fa fa-times" aria-hidden="true" onClick={() => props.hideReply()} style={{cursor: "pointer"}}></i>
       </div>
       <div className={classes["user__info"]}>
           <div className={classes['user-info__left']}>

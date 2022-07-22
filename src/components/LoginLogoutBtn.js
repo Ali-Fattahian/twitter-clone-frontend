@@ -7,7 +7,7 @@ const LoginLogoutBtn = (props) => {
       {!!localStorage.getItem("access_token") ? (
         <i
           style={{ display: "flex", gap: "1rem" }}
-          class="fa fa-sign-out"
+          className="fa fa-sign-out"
           aria-hidden="true"
           onClick={() => localStorage.clear()}
         >
@@ -16,7 +16,7 @@ const LoginLogoutBtn = (props) => {
       ) : (
         <i
           style={{ display: "flex", gap: "1rem" }}
-          class="fa fa-sign-in"
+          className="fa fa-sign-in"
           aria-hidden="true"
           onClick={() => navigate("/login")}
         >

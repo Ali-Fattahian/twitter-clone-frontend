@@ -23,7 +23,7 @@ const SaveTweet = (props) => {
 
   return (
     <i
-      class="fa fa-paper-plane"
+      className="fa fa-paper-plane"
       aria-hidden="true"
       onClick={saveTweetHandler}
     ></i>
