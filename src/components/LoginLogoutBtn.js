@@ -20,7 +20,7 @@ const LoginLogoutBtn = (props) => {
           aria-hidden="true"
           onClick={() => navigate("/login")}
         >
-          {props.text && <p style={{fontWeight: '500'}}>Log in</p>}
+          {props.text && <p style={{fontWeight: '500', cursor: 'pointer'}}>Log in</p>}
         </i>
       )}
     </>
