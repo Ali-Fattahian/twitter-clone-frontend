@@ -2,10 +2,11 @@ import React, { useState, useEffect, useCallback } from "react";
 
 import Searchbar from "../components/Searchbar";
 import TweetList from "../components/Tweet/TweetList";
+import Overlay from "../components/Modal/Overlay";
 import axiosInstance from "../axios";
 import { useNavigate } from "react-router-dom";
 
-const Bookmarks = () => {
+const Bookmarks = (props) => {
   const [tweetList, setTweetList] = useState([]);
   const isLoggedIn = !!localStorage.getItem('access_token');
   const navigate = useNavigate()
@@ -25,12 +26,17 @@ const Bookmarks = () => {
     }
   }, [isLoggedIn, navigate]);
 
+  const onOverlayClick = () => {
+    props.onMenuClick()
+  }
+
   useEffect(() => {
     getTweets();
   }, [needRefresh, getTweets]);
 
   return (
     <React.Fragment>
+      {!!props.isMenuOpen ? <Overlay onOverlayClick={onOverlayClick} isVisible={true} /> : <Overlay onOverlayClick={onOverlayClick} isVisible={false} />}
       <div className="main__middle-side">
         {tweetList.length === 0 ? (
           <p className="p-info--center">

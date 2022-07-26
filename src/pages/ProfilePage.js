@@ -6,9 +6,10 @@ import Profile from "../components/Profile";
 import axios from "axios";
 import { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import Overlay from "../components/Modal/Overlay";
 import axiosInstance from "../axios";
 
-const ProfilePage = () => {
+const ProfilePage = (props) => {
   const [user, setUser] = useState(null);
   const isLoggedIn = !!localStorage.getItem("access_token");
   const [isLoading, setIsLoading] = useState(false);
@@ -40,6 +41,10 @@ const ProfilePage = () => {
     setIsLoading(false);
   }, [isLoggedIn, username]);
 
+  const onOverlayClick = () => {
+    props.onMenuClick()
+  }
+
   const getTweets = useCallback(async () => {
     setTweetHasStarted(true);
     setTweetsIsLoading(true);
@@ -61,6 +66,7 @@ const ProfilePage = () => {
 
   return (
     <React.Fragment>
+      {!!props.isMenuOpen ? <Overlay onOverlayClick={onOverlayClick} isVisible={true} /> : <Overlay onOverlayClick={onOverlayClick} isVisible={false} />}
       <div className="main__middle-side">
         {!error && !isLoading && hasStarted && (
           <Profile user={user} setFollow={setFollow} />

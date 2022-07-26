@@ -109,7 +109,7 @@ function App() {
             <Route
               path="/"
               element={
-                shouldRedirect ? <Navigate replace to="/login" /> : <Login />
+                shouldRedirect ? <Navigate replace to="/login" /> : <Login onMenuClick={clickMenuHandler} isMenuOpen={isMenuOpen} />
               }
             />
             <Route
@@ -120,7 +120,7 @@ function App() {
             />
             <Route
               path="bookmarks"
-              element={<Bookmarks pageName="Bookmarks" />}
+              element={<Bookmarks pageName="Bookmarks" onMenuClick={clickMenuHandler} isMenuOpen={isMenuOpen} />}
             />
             {
               <Route
@@ -130,24 +130,25 @@ function App() {
                 }
               />
             }
-            <Route path="signup" element={<Signup />} />
+            <Route path="signup" element={<Signup onMenuClick={clickMenuHandler} isMenuOpen={isMenuOpen} />} />
             <Route
               path="tweets/:tweetId"
               element={<TweetDetailPage pageName="Tweet" />}
             />
-            <Route path=":username" element={<Profile pageName="Profile" />} />
+            <Route path=":username" element={<Profile pageName="Profile" onMenuClick={clickMenuHandler} isMenuOpen={isMenuOpen} />} />
             <Route
               path="edit/:username"
               element={
                 <EditProfilePage
                   pageName="Edit Profile"
                   onMenuClick={clickMenuHandler}
+                  isMenuOpen={isMenuOpen}
                 />
               }
             />
-            <Route path=":username/followers" element={<UserFollowers />} />
-            <Route path=":username/followings" element={<UserFollowings />} />
-            <Route path="*" element={<NoMatch />} />
+            <Route path=":username/followers" element={<UserFollowers onMenuClick={clickMenuHandler} isMenuOpen={isMenuOpen} />} />
+            <Route path=":username/followings" element={<UserFollowings onMenuClick={clickMenuHandler} isMenuOpen={isMenuOpen} />} />
+            <Route path="*" element={<NoMatch onMenuClick={clickMenuHandler} isMenuOpen={isMenuOpen} />} />
           </Routes>
         </Suspense>
         <SmallScreenNav

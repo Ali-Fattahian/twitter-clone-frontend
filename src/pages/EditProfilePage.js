@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import classes from "./EditProfilePage.module.css";
 import EditProfileForm from "../components/EditProfileForm";
 import Searchbar from "../components/Searchbar";
+import Overlay from "../components/Modal/Overlay";
 import axiosInstance from "../axios";
 import { parseJwt } from "../utils";
 
@@ -28,6 +29,10 @@ const EditProfilePage = (props) => {
     setIsLoading(false);
   }, [username]);
 
+  const onOverlayClick = () => {
+    props.onMenuClick()
+  }
+
   useEffect(() => {
     if (!!localStorage.getItem("access_token")) {
       getProfile();
@@ -45,6 +50,7 @@ const EditProfilePage = (props) => {
 
   return (
     <React.Fragment>
+      {!!props.isMenuOpen ? <Overlay onOverlayClick={onOverlayClick} isVisible={true} /> : <Overlay onOverlayClick={onOverlayClick} isVisible={false} />}
       <div className="main__middle-side" id="homepage-middle">
         <section className="menu-btn__section">
           {/* <img src={ProfilePicture} alt="Profile" onClick={props.onMenuClick} /> */}

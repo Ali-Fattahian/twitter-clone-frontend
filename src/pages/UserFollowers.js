@@ -5,11 +5,11 @@ import classes from "./FollowPage.module.css";
 import YouMightLike from "../components/YouMightLike";
 import ProfileList from "../components/ProfileList";
 import Searchbar from "../components/Searchbar";
-
+import Overlay from "../components/Modal/Overlay";
 import axios from "axios";
 import axiosInstance from "../axios";
 
-const UserFollowings = () => {
+const UserFollowings = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [hasStarted, setHasStarted] = useState(false);
   const [error, setError] = useState(null);
@@ -38,12 +38,17 @@ const UserFollowings = () => {
     setIsLoading(false);
   }, [isLoggedIn, username, setHasStarted]);
 
+  const onOverlayClick = () => {
+    props.onMenuClick()
+  }
+
   useEffect(() => {
     getProfile();
   }, [getProfile]);
 
   return (
     <React.Fragment>
+      {!!props.isMenuOpen ? <Overlay onOverlayClick={onOverlayClick} isVisible={true} /> : <Overlay onOverlayClick={onOverlayClick} isVisible={false} />}
       <div className="main__middle-side">
         <div className={classes["middle-top__section"]}>
           <div className={classes["user-info__section"]}>
