@@ -115,7 +115,7 @@ function App() {
             <Route
               path="explore"
               element={
-                <Explore pageName="Explore" onMenuClick={clickMenuHandler} />
+                <Explore pageName="Explore" onMenuClick={clickMenuHandler} isMenuOpen={isMenuOpen} />
               }
             />
             <Route

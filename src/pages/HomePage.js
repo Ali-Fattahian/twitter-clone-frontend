@@ -65,7 +65,12 @@ const HomePage = (props) => {
       )}
       <div className="main__middle-side" id="homepage-middle">
         <section className="menu-btn__section">
-          <img src={currentUserData ? currentUserData.picture : ProfilePicture} alt="Profile" onClick={props.onMenuClick} style={{objectFit: 'cover'}} />
+          {/* <img src={currentUserData ? currentUserData.picture : ProfilePicture} alt="Profile" onClick={props.onMenuClick} style={{objectFit: 'cover'}} /> */}
+          <div className="ham-menu__btn" onClick={props.onMenuClick}>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
           <p>{props.pageName}</p>
         </section>
         <AddTweet onError={showErrorMessageHandler} currentUserData={currentUserData} />

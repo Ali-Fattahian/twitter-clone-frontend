@@ -29,8 +29,8 @@ const SmallScreenNav = (props) => {
   }, []);
 
   const profileClickHandler = () => {
-    if (currentUsername) {
-      navigate(`/${currentUsername}`);
+    if (currentUserData) {
+      navigate(`/${currentUserData.username}`);
     } else {
       navigate("/login");
     }

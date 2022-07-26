@@ -4,14 +4,17 @@ import classes from "./Pages.module.css";
 import YouMightLike from "../components/YouMightLike";
 import Searchbar from "../components/Searchbar";
 import TweetList from "../components/Tweet/TweetList";
-import ProfilePicture from "../components/Tweet/default_profile.png";
+// import ProfilePicture from "../components/Tweet/default_profile.png";
+import Overlay from "../components/Modal/Overlay";
 import axiosInstance from "../axios";
 
 const Explore = (props) => {
   const [tweetList, setTweetList] = useState([]);
 
   const getTweets = async () => {
-    const response = await axiosInstance.get("http://127.0.0.1:8000/api/explore");
+    const response = await axiosInstance.get(
+      "http://127.0.0.1:8000/api/explore"
+    );
 
     if (response.status === 200) setTweetList(response.data);
   };
@@ -20,14 +23,28 @@ const Explore = (props) => {
     getTweets();
   }, []);
 
+  const onOverlayClick = () => {
+    props.onMenuClick()
+  }
+
   return (
     <React.Fragment>
+      {!!props.isMenuOpen ? <Overlay onOverlayClick={onOverlayClick} isVisible={true} /> : <Overlay onOverlayClick={onOverlayClick} isVisible={false} />}
       <div className="main__middle-side" id="explore-middle">
         <div className={classes["search-bar__container"]}>
-          <img src={ProfilePicture} alt="Profile" onClick={props.onMenuClick} />
+        {/* <img src={ProfilePicture} alt="Profile" onClick={props.onMenuClick} /> */}
+          <div className="ham-menu__btn" onClick={props.onMenuClick}>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
           <Searchbar />
         </div>
-        {tweetList.length === 0 ? <p className="p-info--center">No tweets from the last 24 hours.</p> : <TweetList tweetList={tweetList} isBookmarkPage={false} />}
+        {tweetList.length === 0 ? (
+          <p className="p-info--center">No tweets from the last 24 hours.</p>
+        ) : (
+          <TweetList tweetList={tweetList} isBookmarkPage={false} />
+        )}
       </div>
       <div className="main__right-side">
         <YouMightLike />
