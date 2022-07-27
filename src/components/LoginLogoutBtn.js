@@ -1,7 +1,14 @@
 import { useNavigate } from "react-router-dom";
+import axiosInstance from "../axios";
 
 const LoginLogoutBtn = (props) => {
   const navigate = useNavigate();
+  const logoutHandler = () => {
+    localStorage.clear();
+    axiosInstance.defaults.headers['Authorization'] = null
+    props.setRefreshHomePageOnAuthChange(Date.now())
+    navigate("/home");
+  };
   return (
     <>
       {!!localStorage.getItem("access_token") ? (
@@ -9,9 +16,9 @@ const LoginLogoutBtn = (props) => {
           style={{ display: "flex", gap: "1rem" }}
           className="fa fa-sign-out"
           aria-hidden="true"
-          onClick={() => localStorage.clear()}
+          onClick={logoutHandler}
         >
-          {props.text && <p style={{fontWeight: '500'}}>Log out</p>}
+          {props.text && <p style={{ fontWeight: "500" }}>Log out</p>}
         </i>
       ) : (
         <i
@@ -20,7 +27,9 @@ const LoginLogoutBtn = (props) => {
           aria-hidden="true"
           onClick={() => navigate("/login")}
         >
-          {props.text && <p style={{fontWeight: '500', cursor: 'pointer'}}>Log in</p>}
+          {props.text && (
+            <p style={{ fontWeight: "500", cursor: "pointer" }}>Log in</p>
+          )}
         </i>
       )}
     </>

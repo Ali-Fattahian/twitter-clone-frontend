@@ -39,6 +39,7 @@ function App() {
 
   const showAddTweetHandler = () => setIsAddTweetVisible(true);
   const closeAddTweetHandler = () => setIsAddTweetVisible(false);
+  const [refreshHomePageOnAuthChange, setRefreshHomePageOnAuthChange] = useState(null)
 
   const closeMenuHandler = () => setIsMenuOpen(false);
 
@@ -75,7 +76,7 @@ function App() {
           isVisible={isAddTweetVisible}
           onOverlayClick={closeAddTweetHandler}
         />
-        <Navigation onAddTweetFormClick={showAddTweetHandler} />
+        <Navigation onAddTweetFormClick={showAddTweetHandler} setRefreshHomePageOnAuthChange={setRefreshHomePageOnAuthChange} />
         {isAddTweetVisible && (
           <div className="add-tweet__container">
             <form className="add-tweet" onSubmit={addTweetHandler}>
@@ -103,7 +104,7 @@ function App() {
             <Route
               path="home"
               element={
-                <HomePage pageName="Home" onMenuClick={clickMenuHandler} isMenuOpen={isMenuOpen} />
+                <HomePage pageName="Home" onMenuClick={clickMenuHandler} isMenuOpen={isMenuOpen} refreshHomePageOnAuthChange={refreshHomePageOnAuthChange} />
               }
             />
             <Route

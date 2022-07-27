@@ -59,7 +59,7 @@ const Navigation = (props) => {
           <i id={classes['add-tweet-icon']} className="fas fa-plus"></i> 
         </div>
         <div className={classes["nav__item"]}>
-          <LoginLogoutBtn />
+          <LoginLogoutBtn setRefreshHomePageOnAuthChange={props.setRefreshHomePageOnAuthChange} />
         </div>
       </nav>
     </section>

@@ -38,7 +38,7 @@ const HomePage = (props) => {
       currentUsername = parseJwt(token).username;
       fetchUserData(currentUsername)
     }
-  }, []);
+  }, [props.refreshHomePageOnAuthChange]);
 
   const showErrorMessageHandler = (message) => {
     setErrorMessage(message);
