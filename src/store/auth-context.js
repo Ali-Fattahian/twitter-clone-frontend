@@ -1,11 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import axiosInstance from "../axios";
 
 export const AuthContext = React.createContext({
   login: () => {},
+  loginHasError: false,
+  setLoginHasError: () => {}
 });
 
 export const AuthContextProvider = (props) => {
+
+  const [loginHasError, setLoginHasError] = useState(false)
 
   const login = (email, password) => {
     axiosInstance
@@ -19,11 +23,11 @@ export const AuthContextProvider = (props) => {
       axiosInstance.defaults.headers["Authorization"] =
         "JWT " + localStorage.getItem("access_token");
       document.location.reload() // Reload the location (most importantly home page, to get new data from api with new headers)
-    });
+    }).catch(err => setLoginHasError(true));
   }
 
   return (
-    <AuthContext.Provider value={{ login }}>
+    <AuthContext.Provider value={{ login, loginHasError, setLoginHasError}}>
       {props.children}
     </AuthContext.Provider>
   );
