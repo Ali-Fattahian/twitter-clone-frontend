@@ -18,10 +18,8 @@ const Login = () => {
 
     if (!emailCurrentValue.includes("@")) return;
     if (emailCurrentValue.trim().length === 0 || passwordCurrentValue.trim().length === 0) return;
-
     login(emailCurrentValue, passwordCurrentValue)
-
-    navigate("/home", { replace: true });
+    navigate("/home");
   };
   return (
     <div className={classes["page-container"]}>

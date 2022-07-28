@@ -18,6 +18,7 @@ export const AuthContextProvider = (props) => {
       localStorage.setItem("access_token", res.data.access);
       axiosInstance.defaults.headers["Authorization"] =
         "JWT " + localStorage.getItem("access_token");
+      document.location.reload() // Reload the location (most importantly home page, to get new data from api with new headers)
     });
   }
 
