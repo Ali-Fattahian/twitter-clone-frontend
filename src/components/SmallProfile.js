@@ -1,6 +1,5 @@
 import classes from './Profile.module.css';
 import FollowButton from './FollowButton';
-import ProfilePicture from './Tweet/default_profile.png'
 import { useNavigate } from 'react-router-dom';
 
 const SmallProfile = props => {
@@ -9,7 +8,7 @@ const SmallProfile = props => {
   return (
     <div className={classes['small-profile__section']} onClick={() => {navigate(`/${props.username}`)}} style={{cursor: 'pointer'}} >
         <div className={classes['small-profile__left-part']}>
-            <img src={ProfilePicture} alt='Profile' />
+            <img src={props.picture} alt='Profile' />
         </div>
         <div className={classes['small-profile__right-part']}>
             <div className={classes['small-profile__right-top']}>

@@ -92,9 +92,6 @@ const UserFollowings = (props) => {
         {hasStarted && !error && !isLoading && profiles.length === 0 && (
           <section className={classes["has-error"]}>
             <p
-              style={{
-                margin: "0",
-              }}
             className="p-info--center"
             >
               This user doesn't have any followers.

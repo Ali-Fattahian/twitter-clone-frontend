@@ -33,11 +33,9 @@ const AddTweet = (props) => {
     );
 
     if (response.status === 201) {
-      console.log("success");
       tweetContent.current.value = "";
       return;
     }
-    console.log(response);
   }
 
   return (

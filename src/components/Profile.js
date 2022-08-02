@@ -79,7 +79,7 @@ const Profile = (props) => {
             )}
           </p>
           <div className={classes.follow}>
-            <div className={classes["user-follow"]} onClick={() => navigate(`/${props.user.username}/following`)}>
+            <div className={classes["user-follow"]} onClick={() => navigate(`/${props.user.username}/followings`)}>
               <span>{props.user.follows.followings_count}</span>
               <p id={classes["user-follow__text"]}>Following</p>
             </div>
@@ -95,10 +95,7 @@ const Profile = (props) => {
 };
 
 // Images should be a link to the image
-// Fullname at the top and the tweet count are links to the profile page
 // Follow button is Following turns into Unfollow (red) (244, 33, 46) on hover. at least in dark mode.
 // For not followings, it is a Follow text (black color) and (#eff3f4) background and gets a little darker on hover.
-// Following and Follower number at the bottom show real peaple
-// Follow button text turns into 'Edit profile' for the users profile
 
 export default Profile;
