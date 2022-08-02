@@ -1,12 +1,36 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import classes from "./Reply.module.css";
-import Profile from '../Tweet/default_profile.png'
+import Profile from "../Tweet/default_profile.png";
 import axiosInstance from "../../axios";
+import { parseJwt } from "../../utils";
 
 const AddReply = (props) => {
   const replyContent = useRef("");
   const isLoggedIn = !!localStorage.getItem("access_token");
+  const [currentUserPfp, setCurrentUserPfp] = useState(null);
+  const [startedLoadingPfp, setStartedLoadingPfp] = useState(false);
+  const [finishedLoadingPfp, setFinishedLoadingPfp] = useState(false);
+
+  async function fetchCurrentUserData() {
+    let username = parseJwt(localStorage.getItem("access_token")).username;
+    axiosInstance.get(`profiles/${username}`).then((res) => {
+      if (res.status === 200) {
+        setCurrentUserPfp(res.data.picture);
+      }
+    });
+  }
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      setStartedLoadingPfp(true);
+      fetchCurrentUserData();
+      setFinishedLoadingPfp(true);
+    } else {
+      setStartedLoadingPfp(true);
+      setFinishedLoadingPfp(true);
+    }
+  }, [isLoggedIn]);
 
   const formSubmitHandler = (e) => {
     e.preventDefault();
@@ -24,16 +48,13 @@ const AddReply = (props) => {
     }
   };
 
-
-
   async function sendData() {
     const response = await axiosInstance.post(`tweets/${props.tweetId}/reply`, {
       text: replyContent.current.value,
     });
 
     if (response.status === 201) {
-      props.setNewReply(response.data.id)
-      console.log("success");
+      props.setNewReply(response.data.id);
       replyContent.current.value = "";
       return;
     }
@@ -42,29 +63,28 @@ const AddReply = (props) => {
   return (
     <div className={classes["reply-section"]}>
       <div className={classes["close-reply__section"]}>
-        <i className="fa fa-times" aria-hidden="true" onClick={() => props.hideReply()} style={{cursor: "pointer"}}></i>
+        <i
+          className="fa fa-times"
+          aria-hidden="true"
+          onClick={() => props.hideReply()}
+          style={{ cursor: "pointer" }}
+        ></i>
       </div>
       <div className={classes["user__info"]}>
-          <div className={classes['user-info__left']}>
-              <img src={props.picture} alt='Profile' />
+        <div className={classes["user-info__left"]}>
+          <img src={props.picture} alt="Profile" />
+        </div>
+        <div className={classes["user-info__right"]}>
+          <div className={classes["user__names"]}>
+            <p id={classes["fullname"]}>
+              {`${props.firstname} ${props.lastname}`}
+            </p>
+            <p id={classes["username"]}>{props.username}</p>
+            <p>·</p>
+            <p id={classes["time-created"]}>{props.timeCreated}</p>
           </div>
-          <div className={classes['user-info__right']}>
-              <div className={classes['user__names']}>
-                  <p id={classes['fullname']}>
-                      {`${props.firstname} ${props.lastname}`}
-                  </p>
-                  <p id={classes['username']}>
-                      {props.username}
-                  </p>
-                  <p>·</p>
-                  <p id={classes['time-created']}>
-                    {props.timeCreated}
-                  </p>
-              </div>
-              <div className={classes['tweet-content']}>
-                  {props.content}
-              </div>
-          </div>
+          <div className={classes["tweet-content"]}>{props.content}</div>
+        </div>
       </div>
       <form
         id="add-reply"
@@ -72,11 +92,19 @@ const AddReply = (props) => {
         onSubmit={formSubmitHandler}
       >
         <div className={classes["add-reply__upper"]}>
-          <img
-            className={classes["add-reply__image"]}
-            src={Profile} // Or the current user
-            alt="Default profile"
-          />
+          {startedLoadingPfp && currentUserPfp && finishedLoadingPfp && isLoggedIn ? (
+            <img
+              className={classes["add-reply__image"]}
+              src={currentUserPfp}
+              alt="Default profile"
+            />
+          ) : (
+            <img
+              className={classes["add-reply__image"]}
+              src={Profile}
+              alt="Default profile"
+            />
+          )}
           <textarea
             className={classes["add-reply__input"]}
             placeholder="Tweet your reply"

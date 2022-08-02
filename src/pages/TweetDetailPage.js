@@ -9,6 +9,8 @@ import AddReply from "../components/Reply/AddReply";
 import ErrorMessage from "../components/Modal/ErrorMessage";
 import Overlay from "../components/Modal/Overlay";
 import ReplyList from "../components/Reply/ReplyList";
+import { parseJwt } from "../utils";
+import axiosInstance from "../axios";
 
 const TweetDetailPage = (props) => {
   const [tweetDetail, setTweetDetail] = useState(null);
@@ -16,7 +18,10 @@ const TweetDetailPage = (props) => {
   const [hasError, setHasError] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
   const [isReplyVisible, setIsReplyVisible] = useState(false);
-  const [newReply, setNewReply] = useState(null)
+  const [newReply, setNewReply] = useState(null);
+  const [currentUserPfp, setCurrentUserPfp] = useState(null);
+  const [startedLoadingPfp, setStartedLoadingPfp] = useState(false);
+  const [finishedLoadingPfp, setFinishedLoadingPfp] = useState(false);
 
   const getTweets = useCallback(async () => {
     const response = await axios.get(
@@ -28,6 +33,15 @@ const TweetDetailPage = (props) => {
 
   useEffect(() => {
     getTweets();
+    if (!!localStorage.getItem("access_token")) {
+      setStartedLoadingPfp(true);
+      fetchCurrentUserData(); // For profile picture
+      setFinishedLoadingPfp(true);
+    } else {
+      setStartedLoadingPfp(true);
+      setCurrentUserPfp(ProfilePicture);
+      setFinishedLoadingPfp(true);
+    }
   }, [getTweets]);
 
   const showErrorMessageHandler = (message) => {
@@ -39,6 +53,15 @@ const TweetDetailPage = (props) => {
     setErrorMessage(null);
     setHasError(false);
   };
+
+  async function fetchCurrentUserData() {
+    let username = parseJwt(localStorage.getItem("access_token")).username;
+    axiosInstance.get(`profiles/${username}`).then((res) => {
+      if (res.status === 200) {
+        setCurrentUserPfp(res.data.picture);
+      }
+    });
+  }
 
   const showReply = () => {
     setIsReplyVisible(true);
@@ -64,7 +87,7 @@ const TweetDetailPage = (props) => {
           <img src={ProfilePicture} alt="Profile" onClick={props.onMenuClick} />
           <p>{props.pageName}</p>
         </section>
-        {tweetDetail ? (
+        {finishedLoadingPfp && startedLoadingPfp && tweetDetail ? (
           <TweetDetail
             tweetId={tweetId}
             picture={tweetDetail.user.picture}
@@ -79,11 +102,10 @@ const TweetDetailPage = (props) => {
             )}
             showReply={showReply}
             setNewReply={setNewReply}
+            currentUserPfp={currentUserPfp}
           />
         ) : (
-          <p className="p-info--center">
-            This tweet doesn't exist.
-          </p>
+          <p className="p-info--center">This tweet doesn't exist.</p>
         )}
         {tweetDetail && (
           <div

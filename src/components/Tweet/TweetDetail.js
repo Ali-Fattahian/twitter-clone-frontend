@@ -5,7 +5,6 @@ import classes from "./TweetStyle.module.css";
 import LikeButton from "../LikeButton";
 import UnlikeButton from "../UnlikeButton";
 import axiosInstance from "../../axios";
-import Picture from "./default_profile.png";
 import SaveTweet from "../SaveTweet";
 import ErrorMessage from "../Modal/ErrorMessage";
 
@@ -19,8 +18,8 @@ const TweetDetail = (props) => {
   const [fakeLikeNumber, setFakeLikeNumber] = useState(props.likes); // This is a fake number, when a user adds a like to a post, it is going to be in db, but instead refreshing the data from db, i set this fake number for number of likes, which is the same as the real one.
   const isLoggedIn = !!localStorage.getItem("access_token");
   const replyContent = useRef("");
-  const [hasError, setHasError] = useState(false)
-  const [errorMessage, setErrorMessage] = useState(null)
+  const [hasError, setHasError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(null);
 
   const checkForLikeButton = useCallback(async () => {
     setHasStarted(true);
@@ -94,8 +93,7 @@ const TweetDetail = (props) => {
     });
 
     if (response.status === 201) {
-      console.log("success");
-      props.setNewReply(response.data.id)
+      props.setNewReply(response.data.id);
       replyContent.current.value = "";
       return;
     }
@@ -108,7 +106,9 @@ const TweetDetail = (props) => {
 
   return (
     <section className={classes["tweet-detail"]}>
-      {hasError && <ErrorMessage onClose={onClose} errorMessage={errorMessage} />}
+      {hasError && (
+        <ErrorMessage onClose={onClose} errorMessage={errorMessage} />
+      )}
       <div className={classes["tweet-detail__top"]}>
         <div className={classes["user-info"]}>
           <div className={classes["tweet-detail__user-picture"]}>
@@ -134,20 +134,33 @@ const TweetDetail = (props) => {
       </div>
       <div className={classes["tweet-detail__bottom"]}>
         <div className={classes["tweet-detail__btns"]}>
-          <div title="Reply" className={classes["tweet-detail__interactive-btn"]}>
+          <div
+            title="Reply"
+            className={classes["tweet-detail__interactive-btn"]}
+          >
             <i className="fa fa-reply" onClick={props.showReply} />
             <p>{props.reply}</p>
           </div>
-          <div title="Like" className={classes["tweet-detail__interactive-btn"]}>
+          <div
+            title="Like"
+            className={classes["tweet-detail__interactive-btn"]}
+          >
             {likeButton}
           </div>
-          <div title="Save" className={classes["tweet-detail__interactive-btn"]}>
-            <SaveTweet tweetId={props.tweetId} setHasError={setHasError} setErrorMessage={setErrorMessage} />
+          <div
+            title="Save"
+            className={classes["tweet-detail__interactive-btn"]}
+          >
+            <SaveTweet
+              tweetId={props.tweetId}
+              setHasError={setHasError}
+              setErrorMessage={setErrorMessage}
+            />
           </div>
         </div>
         <div className={classes["always-visible__add-reply"]}>
           <form onSubmit={formSubmitHandler}>
-            <img src={Picture} alt="Profile" />
+            <img src={props.currentUserPfp} alt="Profile" />
             <textarea placeholder="Tweet your reply" ref={replyContent} />
             <button className="btn" type="submit">
               Reply
