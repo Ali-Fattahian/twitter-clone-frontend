@@ -1,12 +1,16 @@
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import classes from "./TweetStyle.module.css";
 import ProfilePicture from "./default_profile.png";
 import axiosInstance from "../../axios";
+import { parseJwt } from "../../utils";
 
 const AddTweet = (props) => {
   const tweetContent = useRef("");
   const isLoggedIn = !!localStorage.getItem("access_token");
+  const [currentUserPfp, setCurrentUserPfp] = useState(null);
+  const [hasStartedLoadingPfp, setHasStartedLoadingPfp] = useState(false)
+  const [hasfinishedLoadingPfp, setHasfinishedLoadingPfp] = useState(false)
 
   const formSubmitHandler = (e) => {
     e.preventDefault();
@@ -24,6 +28,16 @@ const AddTweet = (props) => {
     }
   };
 
+  async function fetchCurrentUserData () {
+    let username = parseJwt(localStorage.getItem('access_token')).username
+
+    axiosInstance.get(`profiles/${username}`).then(res => {
+      if (res.status === 200) {
+        setCurrentUserPfp(res.data.picture)
+      }
+    })
+  }
+
   async function sendData() {
     const response = await axiosInstance.post(
       "http://127.0.0.1:8000/api/compose/tweet",
@@ -38,6 +52,17 @@ const AddTweet = (props) => {
     }
   }
 
+  useEffect(() => {
+    if (isLoggedIn) {
+      setHasStartedLoadingPfp(true)
+      fetchCurrentUserData()
+      setHasfinishedLoadingPfp(true)
+    } else {
+      setHasStartedLoadingPfp(true)
+      setHasfinishedLoadingPfp(true)
+    }
+  }, [])
+
   return (
     <form
       id="add-tweet"
@@ -45,12 +70,12 @@ const AddTweet = (props) => {
       onSubmit={formSubmitHandler}
     >
       <div className={classes["add-tweet__upper"]}>
-        <img
+        {hasfinishedLoadingPfp && hasStartedLoadingPfp && <img
           className={classes["add-tweet__image"]}
-          src={props.currentUserData ? props.currentUserData.picture : ProfilePicture}
-          alt="Default profile"
+          src={isLoggedIn && currentUserPfp ? currentUserPfp : ProfilePicture}
+          alt="User profile"
           style={{objectFit: 'cover'}}
-        />
+        />}
         <textarea
           className={classes["add-tweet__input"]}
           placeholder="What's happening?"

@@ -13,6 +13,8 @@ const ProfileList = (props) => {
           lastname={profile.lastname}
           bio={profile.bio}
           picture={profile.picture}
+          pageName={props.pageName}
+          setRefreshFollow={props.setRefreshFollow}
         />
       ))}
     </div>

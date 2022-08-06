@@ -6,13 +6,18 @@ const UnfollowButton = (props) => {
   const isLoggedIn = !!localStorage.getItem("access_token");
 
   const unfollowHandler = async (e) => {
+    let response;
     e.stopPropagation()
     if (!isLoggedIn) {
       navigate("/login");
     } else {
-      const response = await axiosInstance.delete(
-        `profiles/${props.unfollowId}/follow/delete`
-      );
+      if (props.pageName === 'followings') {
+        response = await axiosInstance.delete(`unfollow/${props.username}`)
+      } else {
+        response = await axiosInstance.delete(
+          `profiles/${props.unfollowId}/follow/delete`
+        );
+      }
       if (response.status === 204) props.setFollow(false);
     }
   };

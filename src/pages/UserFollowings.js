@@ -15,6 +15,7 @@ const UserFollowings = (props) => {
   const [hasStarted, setHasStarted] = useState(false);
   const [error, setError] = useState(null);
   const [profiles, setProfiles] = useState([]);
+  const [refreshFollow, setRefreshFollow] = useState(null)
 
   const isLoggedIn = !!localStorage.getItem("access_token");
   const navigate = useNavigate();
@@ -45,7 +46,7 @@ const UserFollowings = (props) => {
 
   useEffect(() => {
     getProfile();
-  }, [getProfile]);
+  }, [getProfile, refreshFollow]);
 
   return (
     <React.Fragment>
@@ -84,7 +85,7 @@ const UserFollowings = (props) => {
           </div>
         </div>
         {!isLoading && !error && hasStarted && (
-          <ProfileList profiles={profiles} />
+          <ProfileList profiles={profiles} pageName='followings' setRefreshFollow={setRefreshFollow} />
         )}
         {hasStarted && !error && !isLoading && profiles.length === 0 && (
           <section className={classes["has-error"]}>

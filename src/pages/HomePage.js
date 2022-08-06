@@ -4,8 +4,6 @@ import AddTweet from "../components/Tweet/AddTweet";
 import TweetList from "../components/Tweet/TweetList";
 import ProfilePicture from "../components/Tweet/default_profile.png";
 import axiosInstance from "../axios";
-import axios from "axios";
-import { parseJwt } from "../utils";
 import ErrorMessage from "../components/Modal/ErrorMessage";
 import Overlay from "../components/Modal/Overlay";
 
@@ -13,17 +11,6 @@ const HomePage = (props) => {
   const [tweetList, setTweetList] = useState([]);
   const [hasError, setHasError] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
-  const [currentUserData, setCurrentUserData] = useState(null)
-  let currentUsername;
-
-  const fetchUserData = async (username) => {
-    await axios
-        .get(`http://127.0.0.1:8000/api/profiles/${username}`)
-        .then((res) => {
-          if (res.status === 200)
-          setCurrentUserData(res.data)
-        })
-  }
 
   const getTweets = async () => {
     const response = await axiosInstance.get("http://127.0.0.1:8000/api/home");
@@ -33,11 +20,6 @@ const HomePage = (props) => {
 
   useEffect(() => {
     getTweets();
-    if (!!localStorage.getItem("access_token")) {
-      const token = localStorage.getItem("access_token");
-      currentUsername = parseJwt(token).username;
-      fetchUserData(currentUsername)
-    }
   }, [props.refreshHomePageOnAuthChange]);
 
   const showErrorMessageHandler = (message) => {
@@ -73,7 +55,7 @@ const HomePage = (props) => {
           </div>
           <p>{props.pageName}</p>
         </section>
-        <AddTweet onError={showErrorMessageHandler} currentUserData={currentUserData} />
+        <AddTweet onError={showErrorMessageHandler} />
         <TweetList tweetList={tweetList} isBookmarkPage={false} />
       </div>
       <div className="main__right-side">

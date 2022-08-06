@@ -1,4 +1,4 @@
-import React, { useState, useRef, Suspense } from "react";
+import React, { useState, Suspense } from "react";
 import "./App.css";
 import {
   BrowserRouter as Router,
@@ -8,12 +8,11 @@ import {
 } from "react-router-dom";
 import Navigation from "./components/Navigation";
 import SmallScreenNav from "./components/Modal/SmallScreenNav";
-import ProfilePicture from "./components/Tweet/default_profile.png";
 import Overlay from "./components/Modal/Overlay";
-import axiosInstance from "./axios";
 import { AuthContextProvider } from "./store/auth-context";
 import Spinner from "./components/Spinner";
 import EditProfilePage from "./pages/EditProfilePage";
+import AddTweetOverlay from "./components/Tweet/AddTweetOverlay";
 
 const HomePage = React.lazy(() => import("./pages/HomePage"));
 const Explore = React.lazy(() => import("./pages/Explore"));
@@ -31,7 +30,6 @@ function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isAddTweetVisible, setIsAddTweetVisible] = useState(false);
   const isLoggedIn = !!localStorage.getItem("access_token");
-  const tweetContent = useRef("");
 
   const clickMenuHandler = () => {
     setIsMenuOpen((prevState) => !prevState);
@@ -43,32 +41,6 @@ function App() {
 
   const closeMenuHandler = () => setIsMenuOpen(false);
 
-  const addTweetHandler = (e) => {
-    e.preventDefault();
-
-    if (isLoggedIn) {
-      if (tweetContent.current.value.trim().length > 0) {
-        sendData();
-      }
-    }
-  };
-
-  async function sendData() {
-    const response = await axiosInstance.post(
-      "http://127.0.0.1:8000/api/compose/tweet",
-      {
-        content: tweetContent.current.value,
-      }
-    );
-
-    if (response.status === 201) {
-      console.log("success");
-      tweetContent.current.value = "";
-      return;
-    }
-    console.log(response);
-  }
-
   return (
     <AuthContextProvider>
       <Router>
@@ -77,28 +49,7 @@ function App() {
           onOverlayClick={closeAddTweetHandler}
         />
         <Navigation onAddTweetFormClick={showAddTweetHandler} setRefreshHomePageOnAuthChange={setRefreshHomePageOnAuthChange} />
-        {isAddTweetVisible && (
-          <div className="add-tweet__container">
-            <form className="add-tweet" onSubmit={addTweetHandler}>
-              <div className="add-tweet__section">
-                <i onClick={closeAddTweetHandler} className="fa fa-close"></i>
-              </div>
-              <div className="add-tweet__section" id="add-tweet__input">
-                <img src={ProfilePicture} alt="Default Profile" />
-                <textarea
-                  name="tweet-content"
-                  placeholder="What's happening?"
-                  ref={tweetContent}
-                />
-              </div>
-              <div className="add-tweet__section" id="add-tweet__btn">
-                <button type="submit" className="btn">
-                  Tweet
-                </button>
-              </div>
-            </form>
-          </div>
-        )}
+        {isAddTweetVisible && <AddTweetOverlay closeAddTweetHandler={closeAddTweetHandler} />}
         <Suspense fallback={<Spinner />}>
           <Routes>
             <Route
