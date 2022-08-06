@@ -26,14 +26,14 @@ const Navigation = (props) => {
           to="/"
           className={classes['nav__item']}
           >
-          <i className="fa fa-home"></i>
+          <i className="fa fa-home" title="Home page"></i>
           <p>Home</p>
         </NavLink>
         <NavLink
           to="/explore"
           className={classes['nav__item']}
         >
-          <i className="fa fa-hashtag"></i>
+          <i className="fa fa-hashtag" title="Explore page"></i>
           <p>Explore</p>
         </NavLink>
         {/* <NavLink to='/' className={classes["nav__item"]}>
@@ -43,7 +43,7 @@ const Navigation = (props) => {
         <NavLink
           to="/bookmarks"
           className={classes['nav__item']}>
-          <i className="fa fa-bookmark-o"></i>
+          <i className="fa fa-bookmark-o" title="Bookmarks page"></i>
           <p>Bookmarks</p>
         </NavLink>
         <div
@@ -51,12 +51,12 @@ const Navigation = (props) => {
           to="/:username"
           className={classes['nav__item']}
         >
-          <i className="far fa-user-circle"></i>
+          <i className="far fa-user-circle" title="Profile page"></i>
           <p>Profile</p>
         </div>
         <div className={classes["nav__item"]} id={classes["nav__tweet"]} onClick={props.onAddTweetFormClick}>
           <button className="btn">Tweet</button>
-          <i id={classes['add-tweet-icon']} className="fas fa-plus"></i> 
+          <i id={classes['add-tweet-icon']} className="fas fa-plus" title="Add a tweet"></i> 
         </div>
         <div className={classes["nav__item"]}>
           <LoginLogoutBtn setRefreshHomePageOnAuthChange={props.setRefreshHomePageOnAuthChange} />

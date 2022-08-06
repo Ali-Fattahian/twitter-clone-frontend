@@ -86,7 +86,7 @@ const SmallScreenNav = (props) => {
       )}
       <div id={classes["nav__links"]}>
         <NavLink to="/home" className={classes["nav__link"]}>
-          <i className="fa fa-home"></i>
+          <i className="fa fa-home" title="Home page"></i>
           <p>Home</p>
         </NavLink>
         <div
@@ -94,15 +94,15 @@ const SmallScreenNav = (props) => {
           onClick={profileClickHandler}
           className={classes["nav__link"]}
         >
-          <i className="far fa-user-circle"></i>
+          <i className="far fa-user-circle" title="Profile page"></i>
           <p>Profile</p>
         </div>
         <NavLink to="/explore" className={classes["nav__link"]}>
-          <i className="fa fa-search"></i>
+          <i className="fa fa-search" title="Explore page"></i>
           <p>Explore</p>
         </NavLink>
         <NavLink to="/bookmarks" className={classes["nav__link"]}>
-          <i className="fa fa-bookmark-o"></i>
+          <i className="fa fa-bookmark-o" title="Bookmarks Page"></i>
           <p>Bookmarks</p>
         </NavLink>
         <div className={classes["nav__link"]}>
