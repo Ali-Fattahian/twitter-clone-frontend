@@ -34,6 +34,14 @@
     color: var(--gray);
 }
 
+.link--underline {
+    cursor: pointer;
+}
+
+.link--underline:hover {
+    text-decoration: underline;
+}
+
 #fullname {
     font-weight: bold;
     color: var(--light-theme-color)

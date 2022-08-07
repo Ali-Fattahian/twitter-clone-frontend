@@ -175,7 +175,7 @@
 }
 
 .tweet-detail__middle p {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     font-weight: bold;
 }
 
@@ -265,5 +265,8 @@
 @media screen and (max-width: 499px) {
     .tweet-detail {
         transform: translateY(62px);
+    }
+    .tweet-detail__middle p {
+        font-size: 1rem;
     }
 }

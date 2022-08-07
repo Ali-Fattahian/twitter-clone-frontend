@@ -8,27 +8,27 @@ import { parseJwt } from "../../utils";
 const AddReply = (props) => {
   const replyContent = useRef("");
   const isLoggedIn = !!localStorage.getItem("access_token");
-  const [currentUserPfp, setCurrentUserPfp] = useState(null);
-  const [startedLoadingPfp, setStartedLoadingPfp] = useState(false);
-  const [finishedLoadingPfp, setFinishedLoadingPfp] = useState(false);
+  const [currentUserData, setCurrentUserData] = useState(null);
+  const [startedLoadingData, setStartedLoadingData] = useState(false);
+  const [finishedLoadingData, setFinishedLoadingData] = useState(false);
 
   async function fetchCurrentUserData() {
     let username = parseJwt(localStorage.getItem("access_token")).username;
     axiosInstance.get(`profiles/${username}`).then((res) => {
       if (res.status === 200) {
-        setCurrentUserPfp(res.data.picture);
+        setCurrentUserData(res.data);
       }
     });
   }
 
   useEffect(() => {
     if (isLoggedIn) {
-      setStartedLoadingPfp(true);
+      setStartedLoadingData(true);
       fetchCurrentUserData();
-      setFinishedLoadingPfp(true);
+      setFinishedLoadingData(true);
     } else {
-      setStartedLoadingPfp(true);
-      setFinishedLoadingPfp(true);
+      setStartedLoadingData(true);
+      setFinishedLoadingData(true);
     }
   }, [isLoggedIn]);
 
@@ -92,10 +92,10 @@ const AddReply = (props) => {
         onSubmit={formSubmitHandler}
       >
         <div className={classes["add-reply__upper"]}>
-          {startedLoadingPfp && currentUserPfp && finishedLoadingPfp && isLoggedIn ? (
+          {startedLoadingData && currentUserData && finishedLoadingData && isLoggedIn ? (
             <img
               className={classes["add-reply__image"]}
-              src={currentUserPfp}
+              src={currentUserData.picture}
               alt="Default profile"
             />
           ) : (

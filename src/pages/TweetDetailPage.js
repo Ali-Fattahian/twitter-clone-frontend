@@ -20,8 +20,8 @@ const TweetDetailPage = (props) => {
   const [isReplyVisible, setIsReplyVisible] = useState(false);
   const [newReply, setNewReply] = useState(null);
   const [currentUserPfp, setCurrentUserPfp] = useState(null);
-  const [startedLoadingPfp, setStartedLoadingPfp] = useState(false);
-  const [finishedLoadingPfp, setFinishedLoadingPfp] = useState(false);
+  const [startedLoading, setStartedLoading] = useState(false);
+  const [finishedLoading, setFinishedLoading] = useState(false);
 
   const getTweets = useCallback(async () => {
     const response = await axios.get(
@@ -32,15 +32,16 @@ const TweetDetailPage = (props) => {
   }, [tweetId]);
 
   useEffect(() => {
-    getTweets();
     if (!!localStorage.getItem("access_token")) {
-      setStartedLoadingPfp(true);
+      setStartedLoading(true);
+      getTweets()
       fetchCurrentUserData(); // For profile picture
-      setFinishedLoadingPfp(true);
+      setFinishedLoading(true);
     } else {
-      setStartedLoadingPfp(true);
+      setStartedLoading(true);
+      getTweets()
       setCurrentUserPfp(ProfilePicture);
-      setFinishedLoadingPfp(true);
+      setFinishedLoading(true);
     }
   }, [getTweets]);
 
@@ -87,11 +88,11 @@ const TweetDetailPage = (props) => {
           <img src={ProfilePicture} alt="Profile" onClick={props.onMenuClick} />
           <p>{props.pageName}</p>
         </section>
-        {finishedLoadingPfp && startedLoadingPfp && tweetDetail ? (
+        {finishedLoading && startedLoading && tweetDetail ? (
           <TweetDetail
             tweetId={tweetId}
             picture={tweetDetail.user.picture}
-            content={tweetDetail.user.content}
+            content={tweetDetail.content}
             username={tweetDetail.user.user}
             firstname={tweetDetail.user.firstname}
             lastname={tweetDetail.user.lastname}
