@@ -34,12 +34,12 @@ const TweetDetailPage = (props) => {
   useEffect(() => {
     if (!!localStorage.getItem("access_token")) {
       setStartedLoading(true);
-      getTweets()
+      getTweets();
       fetchCurrentUserData(); // For profile picture
       setFinishedLoading(true);
     } else {
       setStartedLoading(true);
-      getTweets()
+      getTweets();
       setCurrentUserPfp(ProfilePicture);
       setFinishedLoading(true);
     }
@@ -74,19 +74,27 @@ const TweetDetailPage = (props) => {
     document.getElementById("add-reply__container").classList.add("hidden");
   };
 
+  const onOverlayClick = () => {
+    props.onMenuClick()
+  }
+
   return (
     <React.Fragment>
+      <Overlay onOverlayClick={onOverlayClick} isVisible={!!props.isMenuOpen} />
+      <Overlay onOverlayClick={hideReply} isVisible={isReplyVisible} />
       {hasError && (
         <ErrorMessage
           errorMessage={errorMessage}
           onClose={errorMessageCloseHandler}
         />
       )}
-      <Overlay isVisible={isReplyVisible} onOverlayClick={() => hideReply()} />
       <div className="main__middle-side" id="homepage-middle">
         <section className="menu-btn__section">
-          <img src={ProfilePicture} alt="Profile" onClick={props.onMenuClick} />
-          <p>{props.pageName}</p>
+          <div className="ham-menu__btn" onClick={props.onMenuClick}>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
         </section>
         {finishedLoading && startedLoading && tweetDetail ? (
           <TweetDetail

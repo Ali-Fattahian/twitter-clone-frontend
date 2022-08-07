@@ -85,7 +85,7 @@ function App() {
             <Route path="signup" element={<Signup onMenuClick={clickMenuHandler} isMenuOpen={isMenuOpen} />} />
             <Route
               path="tweets/:tweetId"
-              element={<TweetDetailPage pageName="Tweet" />}
+              element={<TweetDetailPage onMenuClick={clickMenuHandler} isMenuOpen={isMenuOpen} />}
             />
             <Route path=":username" element={<Profile pageName="Profile" onMenuClick={clickMenuHandler} isMenuOpen={isMenuOpen} />} />
             <Route
