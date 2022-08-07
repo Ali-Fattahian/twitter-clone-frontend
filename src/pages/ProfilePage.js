@@ -6,7 +6,6 @@ import Profile from "../components/Profile";
 import axios from "axios";
 import { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import Overlay from "../components/Modal/Overlay";
 import axiosInstance from "../axios";
 
 const ProfilePage = (props) => {
@@ -66,14 +65,13 @@ const ProfilePage = (props) => {
 
   return (
     <React.Fragment>
-      {!!props.isMenuOpen ? <Overlay onOverlayClick={onOverlayClick} isVisible={true} /> : <Overlay onOverlayClick={onOverlayClick} isVisible={false} />}
       <div className="main__middle-side">
         {!error && !isLoading && hasStarted && (
-          <Profile user={user} setFollow={setFollow} />
+          <Profile user={user} setFollow={setFollow} isMenuOpen={props.isMenuOpen} onOverlayClick={onOverlayClick} onMenuClick={props.onMenuClick} />
         )}
         {hasStarted && error && (
           <section className="profile-not-found">
-            <p>Sorry this profile doesn't exist.</p>
+            <p className="p-info--center" style={{marginTop: '0'}}>Sorry this profile doesn't exist.</p>
           </section>
         )}
         {tweetsHasStarted && !tweetsIsLoading && !tweetsHasError && (
@@ -83,12 +81,7 @@ const ProfilePage = (props) => {
           !tweetsIsLoading &&
           !tweetsHasError &&
           profileTweets.length === 0 && (
-            <p
-              style={{
-                textAlign: "center",
-                color: "#71767b",
-                marginTop: "1.5rem",
-              }}
+            <p className="p-info--center"
             >No tweets from this profile yet!</p>
           )}
       </div>

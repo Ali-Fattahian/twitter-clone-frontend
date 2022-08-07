@@ -136,6 +136,13 @@ a {
   height: 2px;
 }
 
+.ham-menu__container {
+  display: none;
+  padding: 14px;
+  align-items: center;
+  border-bottom: 1px solid var(--light-theme-border);
+}
+
 .add-tweet__container {
   width: 100%;
   margin: 1rem;
@@ -339,5 +346,9 @@ a {
 
   .main__right-side {
     display: none;
+  }
+
+  .ham-menu__container {
+    display: flex;
   }
 }

@@ -14,6 +14,12 @@
     padding-bottom: 0;
 }
 
+#ham-menu__btn {
+    display: none;
+    justify-content: center;
+    transform: translateY(-2px);
+}
+
 .profile > img {
     display: block;
     width: 100%;
@@ -31,7 +37,7 @@
 
 .profile__top-left {
     display: flex;
-    gap: 1.5rem;
+    transform: translateX(10px);
 }
 
 .profile__top-left > div {
@@ -198,5 +204,14 @@
 
     .profile__bottom-bottom {
         margin-top: .7rem;
+    }
+
+    #ham-menu__btn {
+        display: flex;
+    }
+
+    .profile__top-left {
+        gap: 1.5rem;
+        transform: none;
     }
 }

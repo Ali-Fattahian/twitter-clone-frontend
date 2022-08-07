@@ -8,9 +8,9 @@ import { useNavigate } from "react-router-dom";
 
 const Bookmarks = (props) => {
   const [tweetList, setTweetList] = useState([]);
-  const isLoggedIn = !!localStorage.getItem('access_token');
-  const navigate = useNavigate()
-  const [needRefresh, setNeedRefresh] = useState(null)
+  const isLoggedIn = !!localStorage.getItem("access_token");
+  const navigate = useNavigate();
+  const [needRefresh, setNeedRefresh] = useState(null);
 
   const getTweets = useCallback(async () => {
     if (isLoggedIn) {
@@ -20,15 +20,15 @@ const Bookmarks = (props) => {
       if (response.status === 200) {
         const tweets = response.data.map((tweet) => tweet.tweet);
         setTweetList(tweets);
-      } 
+      }
     } else {
-      navigate('/login')
+      navigate("/login");
     }
   }, [isLoggedIn, navigate]);
 
   const onOverlayClick = () => {
-    props.onMenuClick()
-  }
+    props.onMenuClick();
+  };
 
   useEffect(() => {
     getTweets();
@@ -36,14 +36,28 @@ const Bookmarks = (props) => {
 
   return (
     <React.Fragment>
-      {!!props.isMenuOpen ? <Overlay onOverlayClick={onOverlayClick} isVisible={true} /> : <Overlay onOverlayClick={onOverlayClick} isVisible={false} />}
+      {!!props.isMenuOpen ? (
+        <Overlay onOverlayClick={onOverlayClick} isVisible={true} />
+      ) : (
+        <Overlay onOverlayClick={onOverlayClick} isVisible={false} />
+      )}
       <div className="main__middle-side">
+        <div className="ham-menu__container" style={{gap: '1.5rem'}}>
+          <div className="ham-menu__btn" onClick={props.onMenuClick}>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+          <p>{props.pageName}</p>
+        </div>
         {tweetList.length === 0 ? (
-          <p className="p-info--center">
-            You don't have any saved tweets.
-          </p>
+          <p className="p-info--center">You don't have any saved tweets.</p>
         ) : (
-          <TweetList tweetList={tweetList} isBookmarkPage={true} setNeedRefresh={setNeedRefresh} />
+          <TweetList
+            tweetList={tweetList}
+            isBookmarkPage={true}
+            setNeedRefresh={setNeedRefresh}
+          />
         )}
       </div>
       <div className="main__right-side">

@@ -7,6 +7,7 @@ import dateTimeGenerator from "../utils";
 import { parseJwt } from "../utils";
 import axiosInstance from "../axios";
 import UnfollowButton from "./UnfollowButton";
+import Overlay from "./Modal/Overlay";
 
 const Profile = (props) => {
   const navigate = useNavigate();
@@ -21,18 +22,30 @@ const Profile = (props) => {
       const token = localStorage.getItem("access_token");
       const username = parseJwt(token).username;
       if (username === props.user.username) {
-        setFollowOrEdit(<button className="btn" onClick={() => navigate(`/edit/${username}`)}>Edit profile</button>);
+        setFollowOrEdit(
+          <button className="btn" onClick={() => navigate(`/edit/${username}`)}>
+            Edit profile
+          </button>
+        );
       } else {
         await axiosInstance
           .get(`follow/${props.user.username}/check`)
           .then((res) => {
             if (res.status === 200) {
-              setFollowOrEdit(<UnfollowButton unfollowId={res.data.id} setFollow={props.setFollow} />)
+              setFollowOrEdit(
+                <UnfollowButton
+                  unfollowId={res.data.id}
+                  setFollow={props.setFollow}
+                />
+              );
             } else {
-              throw res.status
-            }}
-          ).catch(() => {
-            setFollowOrEdit(<FollowButton user={props.user} setFollow={props.setFollow} />)
+              throw res.status;
+            }
+          })
+          .catch(() => {
+            setFollowOrEdit(
+              <FollowButton user={props.user} setFollow={props.setFollow} />
+            );
           });
       }
     }
@@ -45,10 +58,17 @@ const Profile = (props) => {
 
   return (
     <section className={classes.profile}>
+      {!!props.isMenuOpen ? (
+        <Overlay onOverlayClick={props.onOverlayClick} isVisible={true} />
+      ) : (
+        <Overlay onOverlayClick={props.onOverlayClick} isVisible={false} />
+      )}
       <div className={classes["profile__top"]}>
         <div className={classes["profile__top-left"]}>
-          <div id={classes.icon}>
-            <i className="fa fa-chevron-left" onClick={() => navigate('/home')}></i>
+          <div className="ham-menu__btn" id={classes['ham-menu__btn']} onClick={props.onMenuClick}>
+            <div></div>
+            <div></div>
+            <div></div>
           </div>
           <div>
             <h3>{`${props.user.firstname} ${props.user.lastname}`}</h3>
@@ -79,11 +99,17 @@ const Profile = (props) => {
             )}
           </p>
           <div className={classes.follow}>
-            <div className={classes["user-follow"]} onClick={() => navigate(`/${props.user.username}/followings`)}>
+            <div
+              className={classes["user-follow"]}
+              onClick={() => navigate(`/${props.user.username}/followings`)}
+            >
               <span>{props.user.follows.followings_count}</span>
               <p id={classes["user-follow__text"]}>Following</p>
             </div>
-            <div className={classes["user-follow"]} onClick={() => navigate(`/${props.user.username}/followers`)}>
+            <div
+              className={classes["user-follow"]}
+              onClick={() => navigate(`/${props.user.username}/followers`)}
+            >
               <span>{props.user.follows.followers_count}</span>
               <p id={classes["user-follow__text"]}>Followers</p>
             </div>

@@ -30,8 +30,8 @@ const EditProfilePage = (props) => {
   }, [username]);
 
   const onOverlayClick = () => {
-    props.onMenuClick()
-  }
+    props.onMenuClick();
+  };
 
   useEffect(() => {
     if (!!localStorage.getItem("access_token")) {
@@ -50,22 +50,26 @@ const EditProfilePage = (props) => {
 
   return (
     <React.Fragment>
-      {!!props.isMenuOpen ? <Overlay onOverlayClick={onOverlayClick} isVisible={true} /> : <Overlay onOverlayClick={onOverlayClick} isVisible={false} />}
+      {!!props.isMenuOpen ? (
+        <Overlay onOverlayClick={onOverlayClick} isVisible={true} />
+      ) : (
+        <Overlay onOverlayClick={onOverlayClick} isVisible={false} />
+      )}
       <div className="main__middle-side" id="homepage-middle">
         <section className="menu-btn__section">
-          {/* <img src={ProfilePicture} alt="Profile" onClick={props.onMenuClick} /> */}
+          <div className="ham-menu__btn" onClick={props.onMenuClick}>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
           <p>{props.pageName}</p>
         </section>
         <section className={classes["edit-profile"]}>
           <div className={classes["form-container"]}>
             {(hasStarted && !isLoading && !hasError && (
-              <EditProfileForm
-                profile={profile}
-              />
+              <EditProfileForm profile={profile} />
             )) || (
-              <p className="p-info--center">
-                Sorry this page doesn't exist.
-              </p>
+              <p className="p-info--center">Sorry this page doesn't exist.</p>
             )}
           </div>
         </section>

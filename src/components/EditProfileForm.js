@@ -239,7 +239,7 @@ const EditProfileForm = (props) => {
                 htmlFor={classes["profile-picture-accept"]}
                 className={classes["profile-picture__label"]}
               >
-                Change picture
+                Change profile picture
               </label>
               <input
                 id={classes["profile-picture-accept"]}
@@ -317,7 +317,7 @@ const EditProfileForm = (props) => {
                   onClick={() => resetForm()}
                   type="reset"
                 >
-                  Cancel
+                  Reset
                 </button>
                 <button
                   type="submit"
