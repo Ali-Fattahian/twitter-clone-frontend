@@ -23,7 +23,7 @@ const Navigation = (props) => {
           <i className="fa fa-twitter"></i>
         </NavLink>
         <NavLink
-          to="/"
+          to="/home"
           className={classes['nav__item']}
           >
           <i className="fa fa-home" title="Home page"></i>
