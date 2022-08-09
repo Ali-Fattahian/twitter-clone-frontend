@@ -11,14 +11,14 @@ const UnfollowButton = (props) => {
     if (!isLoggedIn) {
       navigate("/login");
     } else {
-      if (props.pageName === 'followings') {
+      if (props.pageName === 'followings' || props.pageName==='followers') {
         response = await axiosInstance.delete(`unfollow/${props.username}`)
       } else {
         response = await axiosInstance.delete(
           `profiles/${props.unfollowId}/follow/delete`
         );
       }
-      if (response.status === 204) props.setFollow(false);
+      if (response.status === 204) props.setFollow(Date.now());
     }
   };
 

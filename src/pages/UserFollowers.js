@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from "react";
-import { NavLink, useNavigate, useParams } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 
 import classes from "./FollowPage.module.css";
 import YouMightLike from "../components/YouMightLike";
@@ -16,9 +16,8 @@ const UserFollowings = (props) => {
   const [profiles, setProfiles] = useState([]);
 
   const isLoggedIn = !!localStorage.getItem("access_token");
-  const navigate = useNavigate();
   const { username } = useParams();
-  const [refreshFollow, setRefreshFollow] = useState(null)
+  const [refreshFollow, setRefreshFollow] = useState(null);
 
   const getProfile = useCallback(async () => {
     setHasStarted(true);
@@ -40,8 +39,8 @@ const UserFollowings = (props) => {
   }, [isLoggedIn, username, setHasStarted]);
 
   const onOverlayClick = () => {
-    props.onMenuClick()
-  }
+    props.onMenuClick();
+  };
 
   useEffect(() => {
     getProfile();
@@ -49,29 +48,31 @@ const UserFollowings = (props) => {
 
   return (
     <React.Fragment>
-      {!!props.isMenuOpen ? <Overlay onOverlayClick={onOverlayClick} isVisible={true} /> : <Overlay onOverlayClick={onOverlayClick} isVisible={false} />}
+      {!!props.isMenuOpen ? (
+        <Overlay onOverlayClick={onOverlayClick} isVisible={true} />
+      ) : (
+        <Overlay onOverlayClick={onOverlayClick} isVisible={false} />
+      )}
       <div className="main__middle-side">
         <div className={classes["middle-top__section"]}>
           <div className={classes["user-info__section"]}>
-            <div>
-              <div id={classes.icon}>
-                <i
-                  className="fa fa-chevron-left"
-                  onClick={() => navigate(`/${username}`)}
-                ></i>
+            <section className={classes["top-navigation"]}>
+              <div id={classes['ham-menu__btn']} className="ham-menu__btn" onClick={props.onMenuClick}>
+                <div></div>
+                <div></div>
+                <div></div>
               </div>
-              {/* <div className={classes["user-info"]}>
-                <p id={classes["user__fullname"]}>Fullname</p>
-                <p id={classes["user__username"]}>@Username</p>
-              </div> */}
-            </div>
+              <div className={classes["top-navigation__username"]}>
+                <a href={`/${username}`}>{username} profile</a>
+              </div>
+            </section>
           </div>
           <div className={classes["switch-follows__section"]}>
             <NavLink
               className={classes["switch-follow"]}
               to={`/${username}/followers`}
               style={({ isActive }) =>
-                isActive ? { color: "#000" } : {color: "#536471"}
+                isActive ? { color: "#000" } : { color: "#536471" }
               }
             >
               Followers
@@ -80,7 +81,7 @@ const UserFollowings = (props) => {
               className={classes["switch-follow"]}
               to={`/${username}/followings`}
               style={({ isActive }) =>
-                isActive ? { color: "#000" } : {color: "#536471"}
+                isActive ? { color: "#000" } : { color: "#536471" }
               }
             >
               Following
@@ -88,13 +89,15 @@ const UserFollowings = (props) => {
           </div>
         </div>
         {!isLoading && !error && hasStarted && (
-          <ProfileList profiles={profiles} pageName='followers' setRefreshFollow={setRefreshFollow} />
+          <ProfileList
+            profiles={profiles}
+            pageName="followers"
+            setRefreshFollow={setRefreshFollow}
+          />
         )}
         {hasStarted && !error && !isLoading && profiles.length === 0 && (
           <section className={classes["has-error"]}>
-            <p
-            className="p-info--center"
-            >
+            <p className="p-info--center">
               This user doesn't have any followers.
             </p>
           </section>
@@ -104,7 +107,7 @@ const UserFollowings = (props) => {
             <p
               className="p-info--center"
               style={{
-                margin: "0"
+                margin: "0",
               }}
             >
               Sorry this profile doesn't exist.

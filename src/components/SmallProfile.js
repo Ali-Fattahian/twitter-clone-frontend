@@ -10,12 +10,12 @@ const SmallProfile = (props) => {
   const isLoggedIn = !!localStorage.getItem("access_token");
     const [hasStarted, setHasStarted] = useState(false)
     const [hasFinished, setHasFinished] = useState(false)
-  let whichBtn = null;
+    const [hasFollowed, setHasFollowed] = useState(false)
   useEffect(() => {
     if (isLoggedIn) {
       setHasStarted(true)
       axiosInstance.get(`follow/${props.username}/check`).then((res) => {
-        if (res.status === 200) whichBtn = "follow-exists"; // Something Truthy
+        if (res.status === 200) setHasFollowed(true); // Something Truthy
       });
       setHasFinished(true)
     } else {
@@ -43,7 +43,7 @@ const SmallProfile = (props) => {
             >{`${props.firstname} ${props.lastname}`}</p>
             <p id={classes["small-profile__username"]}>@{props.username}</p>
           </div>
-          {hasFinished && hasStarted && whichBtn ? (
+          {hasFinished && hasStarted && hasFollowed ? (
             <UnfollowButton
               setFollow={props.setRefreshFollow}
               pageName={props.pageName}
