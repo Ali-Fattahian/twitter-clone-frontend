@@ -13,24 +13,24 @@ const LoginLogoutBtn = (props) => {
     <>
       {!!localStorage.getItem("access_token") ? (
         <i
-          style={{ display: "flex", gap: "1rem", cursor: "pointer" }}
+          style={{ display: "flex", gap: "1rem", cursor: "pointer", alignItems: "center" }}
           className="fa fa-sign-out"
           aria-hidden="true"
           onClick={logoutHandler}
           title="Log out"
         >
-          {props.text && <p style={{ fontWeight: "500" }}>Log out</p>}
+          {props.text && <p style={{fontSize: "1rem", fontWeight: "normal"}}>Log out</p>}
         </i>
       ) : (
         <i
-          style={{ display: "flex", gap: "1rem", cursor: "pointer" }}
+          style={{ display: "flex", gap: "1rem", cursor: "pointer", alignItems: "center" }}
           className="fa fa-sign-in"
           aria-hidden="true"
           title="Log in page"
           onClick={() => navigate("/login")}
         >
           {props.text && (
-            <p style={{ fontWeight: "500", cursor: "pointer" }}>Log in</p>
+            <p style={{fontSize: "1rem", fontWeight: "normal"}}>Log in</p>
           )}
         </i>
       )}
