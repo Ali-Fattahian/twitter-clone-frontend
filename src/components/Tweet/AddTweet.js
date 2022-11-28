@@ -1,9 +1,10 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import classes from "./TweetStyle.module.css";
 import ProfilePicture from "./default_profile.png";
 import axiosInstance from "../../axios";
 import { parseJwt } from "../../utils";
+import { ServerContext } from "../../store/server-context";
 
 const AddTweet = (props) => {
   const tweetContent = useRef("");
@@ -11,6 +12,8 @@ const AddTweet = (props) => {
   const [currentUserPfp, setCurrentUserPfp] = useState(null);
   const [hasStartedLoadingPfp, setHasStartedLoadingPfp] = useState(false)
   const [hasfinishedLoadingPfp, setHasfinishedLoadingPfp] = useState(false)
+  const { serverURL } = useContext(ServerContext)
+  const [needToRefresh, setNeedToRefresh] = useState(null)
 
   const formSubmitHandler = (e) => {
     e.preventDefault();
@@ -25,6 +28,7 @@ const AddTweet = (props) => {
           Please <Link to="/login">login</Link> before adding a tweet.
         </p>
       );
+      setNeedToRefresh(Date.now())
     }
   };
 
@@ -40,7 +44,7 @@ const AddTweet = (props) => {
 
   async function sendData() {
     const response = await axiosInstance.post(
-      "http://127.0.0.1:8000/api/compose/tweet",
+      `${serverURL}compose/tweet`,
       {
         content: tweetContent.current.value,
       }
@@ -61,7 +65,7 @@ const AddTweet = (props) => {
       setHasStartedLoadingPfp(true)
       setHasfinishedLoadingPfp(true)
     }
-  }, [])
+  }, [isLoggedIn, needToRefresh])
 
   return (
     <form

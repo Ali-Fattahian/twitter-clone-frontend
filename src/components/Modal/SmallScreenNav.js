@@ -4,17 +4,19 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { parseJwt } from "../../utils";
 import * as ReactDOM from "react-dom";
 import LoginLogoutBtn from "../LoginLogoutBtn";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import axios from "axios";
+import { ServerContext } from "../../store/server-context";
 
 const SmallScreenNav = (props) => {
   const navigate = useNavigate();
   let currentUsername;
   const [currentUserData, setCurrentUserData] = useState(null);
+  const { serverURL } = useContext(ServerContext)
 
   const fetchUserData = async (username) => {
     await axios
-      .get(`http://127.0.0.1:8000/api/profiles/${username}`)
+      .get(`${serverURL}profiles/${username}`)
       .then((res) => {
         if (res.status === 200) setCurrentUserData(res.data);
       });

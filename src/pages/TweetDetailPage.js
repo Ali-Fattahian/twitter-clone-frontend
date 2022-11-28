@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState, useContext } from "react";
 import Searchbar from "../components/Searchbar";
 import ProfilePicture from "../components/Tweet/default_profile.png";
 import axios from "axios";
@@ -11,6 +11,7 @@ import Overlay from "../components/Modal/Overlay";
 import ReplyList from "../components/Reply/ReplyList";
 import { parseJwt } from "../utils";
 import axiosInstance from "../axios";
+import { ServerContext } from "../store/server-context";
 
 const TweetDetailPage = (props) => {
   const [tweetDetail, setTweetDetail] = useState(null);
@@ -22,14 +23,15 @@ const TweetDetailPage = (props) => {
   const [currentUserPfp, setCurrentUserPfp] = useState(null);
   const [startedLoading, setStartedLoading] = useState(false);
   const [finishedLoading, setFinishedLoading] = useState(false);
+  const { serverURL } = useContext(ServerContext)
 
   const getTweets = useCallback(async () => {
     const response = await axios.get(
-      `http://127.0.0.1:8000/api/tweets/${tweetId}`
+      `${serverURL}tweets/${tweetId}`
     );
 
     if (response.status === 200) setTweetDetail(response.data);
-  }, [tweetId]);
+  }, [tweetId, serverURL]);
 
   useEffect(() => {
     if (!!localStorage.getItem("access_token")) {
@@ -43,7 +45,7 @@ const TweetDetailPage = (props) => {
       setCurrentUserPfp(ProfilePicture);
       setFinishedLoading(true);
     }
-  }, [getTweets]);
+  }, [getTweets, hasError]);
 
   const showErrorMessageHandler = (message) => {
     setErrorMessage(message);
@@ -76,12 +78,14 @@ const TweetDetailPage = (props) => {
 
   const onOverlayClick = () => {
     props.onMenuClick()
+    setHasError(false)
   }
 
   return (
     <React.Fragment>
       <Overlay onOverlayClick={onOverlayClick} isVisible={!!props.isMenuOpen} />
       <Overlay onOverlayClick={hideReply} isVisible={isReplyVisible} />
+      <Overlay onOverlayClick={errorMessageCloseHandler} isVisible={hasError} />
       {hasError && (
         <ErrorMessage
           errorMessage={errorMessage}
@@ -112,6 +116,7 @@ const TweetDetailPage = (props) => {
             showReply={showReply}
             setNewReply={setNewReply}
             currentUserPfp={currentUserPfp}
+            onError = {showErrorMessageHandler}
           />
         ) : (
           <p className="p-info--center">This tweet doesn't exist.</p>

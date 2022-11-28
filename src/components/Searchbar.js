@@ -1,11 +1,13 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, useContext } from "react";
 import axios from "axios";
 import classes from "./Searchbar.module.css";
 import SearchResult from "./SearchResult";
+import { ServerContext } from "../store/server-context";
 
 const Searchbar = () => {
   const [input, setInput] = useState("");
   const [users, setUsers] = useState([]);
+  const { serverURL } = useContext(ServerContext)
 
   const searchFormFocusHandler = () => {
     document.querySelector(".fa-search").style.color = "#1D9bf0";
@@ -28,7 +30,7 @@ const Searchbar = () => {
 
   const getUsers = useCallback(async () => {
     const response = await axios.get(
-      "http://127.0.0.1:8000/api/search-users/",
+      `${serverURL}search-users/`,
       {
         params: { search: input },
       }

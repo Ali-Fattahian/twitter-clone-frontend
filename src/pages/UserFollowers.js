@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback, useEffect, useContext } from "react";
 import { NavLink, useParams } from "react-router-dom";
 
 import classes from "./FollowPage.module.css";
@@ -8,12 +8,14 @@ import Searchbar from "../components/Searchbar";
 import Overlay from "../components/Modal/Overlay";
 import axios from "axios";
 import axiosInstance from "../axios";
+import { ServerContext } from "../store/server-context";
 
 const UserFollowings = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [hasStarted, setHasStarted] = useState(false);
   const [error, setError] = useState(null);
   const [profiles, setProfiles] = useState([]);
+  const { serverURL } = useContext(ServerContext)
 
   const isLoggedIn = !!localStorage.getItem("access_token");
   const { username } = useParams();
@@ -24,7 +26,7 @@ const UserFollowings = (props) => {
     setIsLoading(true);
     if (!isLoggedIn) {
       await axios
-        .get(`http://127.0.0.1:8000/api/profiles/${username}/followers`)
+        .get(`${serverURL}profiles/${username}/followers`)
         .then((res) => setProfiles(res.data))
         .catch((err) => setError(err));
     }

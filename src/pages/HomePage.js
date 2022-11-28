@@ -1,19 +1,21 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import Searchbar from "../components/Searchbar";
 import AddTweet from "../components/Tweet/AddTweet";
 import TweetList from "../components/Tweet/TweetList";
-import ProfilePicture from "../components/Tweet/default_profile.png";
 import axiosInstance from "../axios";
 import ErrorMessage from "../components/Modal/ErrorMessage";
 import Overlay from "../components/Modal/Overlay";
+import { ServerContext } from "../store/server-context";
+
 
 const HomePage = (props) => {
   const [tweetList, setTweetList] = useState([]);
   const [hasError, setHasError] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
+  const { serverURL } = useContext(ServerContext)
 
   const getTweets = async () => {
-    const response = await axiosInstance.get("http://127.0.0.1:8000/api/home");
+    const response = await axiosInstance.get(`${serverURL}home`);
 
     if (response.status === 200) setTweetList(response.data);
   };

@@ -1,19 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import classes from "./Pages.module.css";
 
 import YouMightLike from "../components/YouMightLike";
 import Searchbar from "../components/Searchbar";
 import TweetList from "../components/Tweet/TweetList";
-// import ProfilePicture from "../components/Tweet/default_profile.png";
 import Overlay from "../components/Modal/Overlay";
 import axiosInstance from "../axios";
+import { ServerContext } from "../store/server-context";
 
 const Explore = (props) => {
   const [tweetList, setTweetList] = useState([]);
+  const { serverURL } = useContext(ServerContext)
 
   const getTweets = async () => {
     const response = await axiosInstance.get(
-      "http://127.0.0.1:8000/api/explore"
+      `${serverURL}explore`
     );
 
     if (response.status === 200) setTweetList(response.data);

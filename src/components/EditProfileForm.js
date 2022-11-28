@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Field, Form, Formik, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import classes from "../pages/EditProfilePage.module.css";
 import axiosInstance from "../axios";
 import { useNavigate } from "react-router-dom";
+import { ServerContext } from '../store/server-context';
 
 const EditProfileForm = (props) => {
   let isUsernameValid;
@@ -16,6 +17,7 @@ const EditProfileForm = (props) => {
     useState(false);
   const [profileChanged, setProfileChanged] = useState(false);
   const navigate = useNavigate();
+  const { serverURL } = useContext(ServerContext)
 
   const EditProfileSchema = Yup.object().shape({
     firstname: Yup.string()
@@ -31,7 +33,7 @@ const EditProfileForm = (props) => {
         "A user with this username already exists",
         async (value) => {
           if (value === props.profile.username) return true; // This username already exists, but it's ok in this case.
-          await fetch("http://127.0.0.1:8000/api/check-username/", {
+          await fetch(`${serverURL}check-username/`, {
             method: "POST",
             body: JSON.stringify({
               username: value,
@@ -55,7 +57,7 @@ const EditProfileForm = (props) => {
         "A user with this email already exists",
         async (value) => {
           if (value === props.profile.email) return true;
-          await fetch("http://127.0.0.1:8000/api/check-email/", {
+          await fetch(`${serverURL}check-email/`, {
             method: "POST",
             body: JSON.stringify({
               email: value,

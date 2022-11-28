@@ -1,21 +1,23 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useContext } from "react";
 
 import Searchbar from "../components/Searchbar";
 import TweetList from "../components/Tweet/TweetList";
 import Overlay from "../components/Modal/Overlay";
 import axiosInstance from "../axios";
 import { useNavigate } from "react-router-dom";
+import { ServerContext } from "../store/server-context";
 
 const Bookmarks = (props) => {
   const [tweetList, setTweetList] = useState([]);
   const isLoggedIn = !!localStorage.getItem("access_token");
   const navigate = useNavigate();
   const [needRefresh, setNeedRefresh] = useState(null);
+  const { serverURL } = useContext(ServerContext)
 
   const getTweets = useCallback(async () => {
     if (isLoggedIn) {
       const response = await axiosInstance.get(
-        "http://127.0.0.1:8000/api/bookmarks"
+        `${serverURL}bookmarks`
       );
       if (response.status === 200) {
         const tweets = response.data.map((tweet) => tweet.tweet);

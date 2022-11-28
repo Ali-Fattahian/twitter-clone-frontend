@@ -1,20 +1,22 @@
 import axios from "axios";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState, useContext } from "react";
 import Reply from "./Reply";
 import classes from "./Reply.module.css";
 import dateTimeGenerator from '../../utils'
+import { ServerContext } from "../../store/server-context";
 
 const ReplyList = (props) => {
   const [replyList, setReplyList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [hasStarted, setHasStarted] = useState(false);
   const [hasError, setHasError] = useState(false);
+  const { serverURL } = useContext(ServerContext)
 
   const getReplies = useCallback(async () => {
     setIsLoading(true);
     setHasStarted(true);
     await axios
-      .get(`http://127.0.0.1:8000/api/tweets/${props.tweetId}/reply`)
+      .get(`${serverURL}tweets/${props.tweetId}/reply`)
       .then((res) => {
         if (res.status === 200) {
           setReplyList(res.data);

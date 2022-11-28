@@ -13,6 +13,7 @@ import { AuthContextProvider } from "./store/auth-context";
 import Spinner from "./components/Spinner";
 import EditProfilePage from "./pages/EditProfilePage";
 import AddTweetOverlay from "./components/Tweet/AddTweetOverlay";
+import { ServerContextProvider } from "./store/server-context";
 
 const HomePage = React.lazy(() => import("./pages/HomePage"));
 const Explore = React.lazy(() => import("./pages/Explore"));
@@ -42,7 +43,9 @@ function App() {
   const closeMenuHandler = () => setIsMenuOpen(false);
 
   return (
+    <>
     <AuthContextProvider>
+    <ServerContextProvider>
       <Router>
         <Overlay
           isVisible={isAddTweetVisible}
@@ -108,7 +111,9 @@ function App() {
           onCloseBtnClick={closeMenuHandler}
         />
       </Router>
+    </ServerContextProvider>
     </AuthContextProvider>
+    </>
   );
 }
 

@@ -1,5 +1,5 @@
 import YouMightLike from "../components/YouMightLike";
-import React from "react";
+import React, { useContext } from "react";
 import TweetList from "../components/Tweet/TweetList";
 import Searchbar from "../components/Searchbar";
 import Profile from "../components/Profile";
@@ -7,6 +7,7 @@ import axios from "axios";
 import { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axiosInstance from "../axios";
+import { ServerContext } from "../store/server-context";
 
 const ProfilePage = (props) => {
   const [user, setUser] = useState(null);
@@ -20,13 +21,14 @@ const ProfilePage = (props) => {
   const [tweetsIsLoading, setTweetsIsLoading] = useState(false);
   const [tweetsHasStarted, setTweetHasStarted] = useState(false);
   const [tweetsHasError, setTweetsHasError] = useState(false);
+  const { serverURL } = useContext(ServerContext)
 
   const getProfile = useCallback(async () => {
     setHasStarted(true);
     setIsLoading(true);
     if (!isLoggedIn) {
       await axios
-        .get(`http://127.0.0.1:8000/api/profiles/${username}`)
+        .get(`${serverURL}profiles/${username}`)
         .then((res) => setUser(res.data))
         .catch((err) => setError(err));
     }
