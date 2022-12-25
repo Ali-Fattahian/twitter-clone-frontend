@@ -10,8 +10,10 @@ const Login = () => {
   const email = useRef('');
   const password = useRef('');
   const navigate = useNavigate()
-  const {login, loginHasError, setLoginHasError} = useContext(AuthContext)
+  const {login, loginHasError, setLoginHasError, user} = useContext(AuthContext)
+  // const {login, user} = useContext(AuthContext)
   if (!!localStorage.getItem('access_token')) navigate('/home') // Logged in users don't have access to login page
+  // console.log(user.username)
 
   const closeModalHandler = () => {
     setLoginHasError(false)
@@ -30,8 +32,8 @@ const Login = () => {
     <div className={classes["page-container"]}>
       <Overlay onOverlayClick={closeModalHandler} isVisible={loginHasError} />
       {loginHasError && <ErrorMessage errorMessage="Username or password is wrong" onClose={closeModalHandler} />}
-      <div className={classes["form-container"]} onSubmit={formSubmitHandler}>
-        <form className={classes.form}>
+      <div className={classes["form-container"]}>
+        <form className={classes.form} onSubmit={formSubmitHandler}>
         <i style={{cursor:'pointer'}} className="fa fa-chevron-left" onClick={() => navigate(-1)}></i>
           <h1>Sign in to Twitter clone</h1>
           <input type="email" placeholder="Your email..." ref={email} autoComplete='on' />
