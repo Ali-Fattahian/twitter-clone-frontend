@@ -1,16 +1,16 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import classes from "./Navigation.module.css";
-import { parseJwt } from "../utils";
 import LoginLogoutBtn from "./LoginLogoutBtn";
+import { useContext } from "react";
+import { AuthContext } from "../store/auth-context";
 
 const Navigation = (props) => {
   const navigate = useNavigate()
+  const { user } = useContext(AuthContext)
 
   const profileClickHandler = () => {
-    if (!!localStorage.getItem('access_token')) {
-      const token = localStorage.getItem('access_token')
-      const username = parseJwt(token).username
-      navigate(`/${username}`)
+    if (!!localStorage.getItem('authTokens')) {
+      navigate(`/${user.username}`)
     } else {
       navigate('/login');
     }

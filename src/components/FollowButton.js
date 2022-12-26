@@ -1,16 +1,17 @@
 import { useNavigate } from "react-router-dom";
-import axiosInstance from "../axios";
+import useAxios from "../useAxios";
 
 const FollowButton = (props) => {
   const navigate = useNavigate();
-  const isLoggedIn = !!localStorage.getItem("access_token");
+  const isLoggedIn = !!localStorage.getItem("authTokens");
+  const api = useAxios()
 
   const followHandler = async (e) => {
     e.stopPropagation()
     if (!isLoggedIn) {
       navigate("/login");
     } else {
-      const response = await axiosInstance.post(
+      const response = await api.post(
         "follow-request/",
         {
           user: props.user.id

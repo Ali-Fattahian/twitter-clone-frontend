@@ -1,17 +1,18 @@
 import { useNavigate } from "react-router-dom";
-import axiosInstance from "../axios";
+import useAxios from "../useAxios";
 
 const LoginLogoutBtn = (props) => {
   const navigate = useNavigate();
+  const api = useAxios()
   const logoutHandler = () => {
     localStorage.clear();
-    axiosInstance.defaults.headers['Authorization'] = null
+    api.defaults.headers['Authorization'] = null
     props.setRefreshHomePageOnAuthChange(Date.now())
     navigate("/home");
   };
   return (
     <>
-      {!!localStorage.getItem("access_token") ? (
+      {!!localStorage.getItem("authTokens") ? (
         <i
           style={{ display: "flex", gap: "1rem", cursor: "pointer", alignItems: "center" }}
           className="fa fa-sign-out"

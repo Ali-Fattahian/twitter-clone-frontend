@@ -30,7 +30,7 @@ function App() {
   const shouldRedirect = true;
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isAddTweetVisible, setIsAddTweetVisible] = useState(false);
-  const isLoggedIn = !!localStorage.getItem("access_token");
+  const isLoggedIn = !!localStorage.getItem("authTokens");
 
   const clickMenuHandler = () => {
     setIsMenuOpen((prevState) => !prevState);

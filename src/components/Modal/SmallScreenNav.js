@@ -23,8 +23,8 @@ const SmallScreenNav = (props) => {
   };
 
   useEffect(() => {
-    if (!!localStorage.getItem("access_token")) {
-      const token = localStorage.getItem("access_token");
+    if (!!localStorage.getItem("authTokens")) {
+      const token = localStorage.getItem("authTokens");
       currentUsername = parseJwt(token).username;
       fetchUserData(currentUsername);
     }

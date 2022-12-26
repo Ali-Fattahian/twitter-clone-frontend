@@ -1,17 +1,18 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import axiosInstance from "../axios";
+import useAxios from "../useAxios";
 
 const LikeButton = (props) => {
   const navigate = useNavigate()  
-  const isLoggedIn = !!localStorage.getItem("access_token");
+  const isLoggedIn = !!localStorage.getItem("authTokens");
+  const api = useAxios()
 
   const likeHandler = async (e) => {
     e.stopPropagation()
     if (!isLoggedIn) {
       navigate("/login");
     } else {
-      const response = await axiosInstance.post(`like-tweet/${props.tweetId}`);
+      const response = await api.post(`like-tweet/${props.tweetId}`);
       if (response.status === 201) {
         props.setFakeLikeNumber(prevNum => prevNum +1)
         props.setLikeClicked(true)

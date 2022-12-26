@@ -10,9 +10,9 @@ const Login = () => {
   const email = useRef('');
   const password = useRef('');
   const navigate = useNavigate()
-  const {login, loginHasError, setLoginHasError, user} = useContext(AuthContext)
+  const { login, setLoginHasError, loginHasError } = useContext(AuthContext)
   // const {login, user} = useContext(AuthContext)
-  if (!!localStorage.getItem('access_token')) navigate('/home') // Logged in users don't have access to login page
+  if (!!localStorage.getItem('authTokens')) navigate('/home') // Logged in users don't have access to login page
   // console.log(user.username)
 
   const closeModalHandler = () => {

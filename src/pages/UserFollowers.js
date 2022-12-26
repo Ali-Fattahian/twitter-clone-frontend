@@ -7,7 +7,7 @@ import ProfileList from "../components/ProfileList";
 import Searchbar from "../components/Searchbar";
 import Overlay from "../components/Modal/Overlay";
 import axios from "axios";
-import axiosInstance from "../axios";
+import useAxios from "../useAxios";
 import { ServerContext } from "../store/server-context";
 
 const UserFollowings = (props) => {
@@ -17,9 +17,10 @@ const UserFollowings = (props) => {
   const [profiles, setProfiles] = useState([]);
   const { serverURL } = useContext(ServerContext)
 
-  const isLoggedIn = !!localStorage.getItem("access_token");
+  const isLoggedIn = !!localStorage.getItem("authTokens");
   const { username } = useParams();
   const [refreshFollow, setRefreshFollow] = useState(null);
+  const api = useAxios()
 
   const getProfile = useCallback(async () => {
     setHasStarted(true);
@@ -32,13 +33,13 @@ const UserFollowings = (props) => {
     }
 
     if (isLoggedIn) {
-      await axiosInstance
+      await api
         .get(`profiles/${username}/followers`)
         .then((res) => setProfiles(res.data))
         .catch((err) => setError(err));
     }
     setIsLoading(false);
-  }, [isLoggedIn, username, setHasStarted]);
+  }, [isLoggedIn, username, setHasStarted, api, serverURL]);
 
   const onOverlayClick = () => {
     props.onMenuClick();

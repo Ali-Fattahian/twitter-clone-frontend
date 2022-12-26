@@ -5,7 +5,7 @@ import classes from "./EditProfilePage.module.css";
 import EditProfileForm from "../components/EditProfileForm";
 import Searchbar from "../components/Searchbar";
 import Overlay from "../components/Modal/Overlay";
-import axiosInstance from "../axios";
+import useAxios from "../useAxios";
 import { parseJwt } from "../utils";
 
 const EditProfilePage = (props) => {
@@ -15,11 +15,12 @@ const EditProfilePage = (props) => {
   const [hasError, setHasError] = useState(false);
   const [profile, setProfile] = useState(null);
   const { username } = useParams();
+  const api = useAxios()
 
   const getProfile = useCallback(async () => {
     setIsLoading(true);
     setHasStarted(true);
-    await axiosInstance.get(`profiles/${username}`).then((res) => {
+    await api.get(`profiles/${username}`).then((res) => {
       if (res.status === 200) {
         setProfile(res.data);
       } else {
@@ -27,17 +28,17 @@ const EditProfilePage = (props) => {
       }
     });
     setIsLoading(false);
-  }, [username]);
+  }, [username, api]);
 
   const onOverlayClick = () => {
     props.onMenuClick();
   };
 
   useEffect(() => {
-    if (!!localStorage.getItem("access_token")) {
+    if (!!localStorage.getItem("authTokens")) {
       getProfile();
       if (profile) {
-        const token = localStorage.getItem("access_token");
+        const token = localStorage.getItem("authTokens");
         const tokenId = parseJwt(token).user_id;
         if (tokenId !== profile.id) {
           navigate("/home");
@@ -46,7 +47,7 @@ const EditProfilePage = (props) => {
     } else {
       navigate("/home");
     }
-  }, [getProfile, navigate]);
+  }, [getProfile, navigate, profile]);
 
   return (
     <React.Fragment>

@@ -1,11 +1,12 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext, useCallback } from "react";
 import Searchbar from "../components/Searchbar";
 import AddTweet from "../components/Tweet/AddTweet";
 import TweetList from "../components/Tweet/TweetList";
-import axiosInstance from "../axios";
+// import api from "../axios";
 import ErrorMessage from "../components/Modal/ErrorMessage";
 import Overlay from "../components/Modal/Overlay";
 import { ServerContext } from "../store/server-context";
+import useAxios from "../useAxios";
 
 
 const HomePage = (props) => {
@@ -13,16 +14,17 @@ const HomePage = (props) => {
   const [hasError, setHasError] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
   const { serverURL } = useContext(ServerContext)
+  const api = useAxios()
 
-  const getTweets = async () => {
-    const response = await axiosInstance.get(`${serverURL}home`);
+  const getTweets = useCallback(async () => {
+    const response = await api.get(`${serverURL}home`);
 
     if (response.status === 200) setTweetList(response.data);
-  };
+  }, [api, serverURL])
 
   useEffect(() => {
     getTweets();
-  }, [props.refreshHomePageOnAuthChange]);
+  }, [props.refreshHomePageOnAuthChange, getTweets]);
 
   const showErrorMessageHandler = (message) => {
     setErrorMessage(message);

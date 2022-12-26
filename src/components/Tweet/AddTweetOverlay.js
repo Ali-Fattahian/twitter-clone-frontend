@@ -1,18 +1,19 @@
-import { useEffect, useRef, useState, useContext } from "react";
+import { useEffect, useRef, useState, useContext, useCallback } from "react";
 import { Link } from "react-router-dom";
 import classes from "./TweetStyle.module.css";
 import ProfilePicture from "./default_profile.png";
-import axiosInstance from "../../axios";
+import useAxios from '../../useAxios';
 import { parseJwt } from "../../utils";
 import { ServerContext } from "../../store/server-context";
 
 const AddTweetOverlay = (props) => {
   const tweetContent = useRef("");
-  const isLoggedIn = !!localStorage.getItem("access_token");
+  const isLoggedIn = !!localStorage.getItem("authTokens");
   const [currentUserPfp, setCurrentUserPfp] = useState(null);
   const [hasStartedLoadingPfp, setHasStartedLoadingPfp] = useState(false);
   const [hasfinishedLoadingPfp, setHasfinishedLoadingPfp] = useState(false);
   const { serverURL } = useContext(ServerContext)
+  const api = useAxios()
 
   const formSubmitHandler = (e) => {
     e.preventDefault();
@@ -30,18 +31,18 @@ const AddTweetOverlay = (props) => {
     }
   };
 
-  async function fetchCurrentUserData() {
-    let username = parseJwt(localStorage.getItem("access_token")).username;
+  const fetchCurrentUserData = useCallback(async () => {
+    let username = parseJwt(localStorage.getItem("authTokens")).username;
 
-    axiosInstance.get(`profiles/${username}`).then((res) => {
+    api.get(`profiles/${username}`).then((res) => {
       if (res.status === 200) {
         setCurrentUserPfp(res.data.picture);
       }
     });
-  }
+  }, [api])
 
   async function sendData() {
-    const response = await axiosInstance.post(
+    const response = await api.post(
       `${serverURL}compose/tweet`,
       {
         content: tweetContent.current.value,
@@ -63,7 +64,7 @@ const AddTweetOverlay = (props) => {
       setHasStartedLoadingPfp(true);
       setHasfinishedLoadingPfp(true);
     }
-  }, [isLoggedIn]);
+  }, [isLoggedIn, fetchCurrentUserData]);
 
   return (
     <div className="add-tweet__container">

@@ -2,27 +2,28 @@ import classes from "./Profile.module.css";
 import FollowButton from "./FollowButton";
 import { useNavigate } from "react-router-dom";
 import UnfollowButton from "./UnfollowButton";
-import axiosInstance from "../axios";
+import useAxios from "../useAxios";
 import { useEffect, useState } from "react";
 
 const SmallProfile = (props) => {
   const navigate = useNavigate();
-  const isLoggedIn = !!localStorage.getItem("access_token");
-    const [hasStarted, setHasStarted] = useState(false)
-    const [hasFinished, setHasFinished] = useState(false)
-    const [hasFollowed, setHasFollowed] = useState(false)
+  const isLoggedIn = !!localStorage.getItem("authTokens");
+  const api = useAxios();
+  const [hasStarted, setHasStarted] = useState(false);
+  const [hasFinished, setHasFinished] = useState(false);
+  const [hasFollowed, setHasFollowed] = useState(false);
   useEffect(() => {
     if (isLoggedIn) {
-      setHasStarted(true)
-      axiosInstance.get(`follow/${props.username}/check`).then((res) => {
+      setHasStarted(true);
+      api.get(`follow/${props.username}/check`).then((res) => {
         if (res.status === 200) setHasFollowed(true); // Something Truthy
       });
-      setHasFinished(true)
+      setHasFinished(true);
     } else {
-        setHasStarted(true)
-        setHasFinished(true)
+      setHasStarted(true);
+      setHasFinished(true);
     }
-  }, []);
+  }, [api, isLoggedIn, props.username]);
 
   return (
     <div

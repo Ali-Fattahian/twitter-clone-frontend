@@ -4,7 +4,7 @@ import { useNavigate, Link } from "react-router-dom";
 import classes from "./TweetStyle.module.css";
 import LikeButton from "../LikeButton";
 import UnlikeButton from "../UnlikeButton";
-import axiosInstance from "../../axios";
+import useAxios from "../../useAxios";
 import SaveTweet from "../SaveTweet";
 import ErrorMessage from "../Modal/ErrorMessage";
 
@@ -16,16 +16,17 @@ const TweetDetail = (props) => {
   const [likeOrDislike, setLikeOrDislike] = useState(null);
   const [likeClicked, setLikeClicked] = useState(null);
   const [fakeLikeNumber, setFakeLikeNumber] = useState(props.likes); // This is a fake number, when a user adds a like to a post, it is going to be in db, but instead refreshing the data from db, i set this fake number for number of likes, which is the same as the real one.
-  const isLoggedIn = !!localStorage.getItem("access_token");
+  const isLoggedIn = !!localStorage.getItem("authTokens");
   const replyContent = useRef("");
   const [hasError, setHasError] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
+  const api = useAxios()
 
   const checkForLikeButton = useCallback(async () => {
     setHasStarted(true);
     setIsLoading(true);
     if (isLoggedIn) {
-      await axiosInstance
+      await api
         .get(`like/${props.tweetId}/check`)
         .then((res) => {
           if (res.status === 200) {
@@ -53,7 +54,7 @@ const TweetDetail = (props) => {
         });
     }
     setIsLoading(false);
-  }, [isLoggedIn, props.tweetId, fakeLikeNumber]);
+  }, [isLoggedIn, props.tweetId, fakeLikeNumber, api]);
 
   useEffect(() => {
     checkForLikeButton();
@@ -88,7 +89,7 @@ const TweetDetail = (props) => {
   };
 
   async function sendData() {
-    const response = await axiosInstance.post(`tweets/${props.tweetId}/reply`, {
+    const response = await api.post(`tweets/${props.tweetId}/reply`, {
       text: replyContent.current.value,
     });
 

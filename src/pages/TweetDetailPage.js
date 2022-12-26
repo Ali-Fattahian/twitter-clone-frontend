@@ -10,7 +10,7 @@ import ErrorMessage from "../components/Modal/ErrorMessage";
 import Overlay from "../components/Modal/Overlay";
 import ReplyList from "../components/Reply/ReplyList";
 import { parseJwt } from "../utils";
-import axiosInstance from "../axios";
+import useAxios from "../useAxios";
 import { ServerContext } from "../store/server-context";
 
 const TweetDetailPage = (props) => {
@@ -24,6 +24,7 @@ const TweetDetailPage = (props) => {
   const [startedLoading, setStartedLoading] = useState(false);
   const [finishedLoading, setFinishedLoading] = useState(false);
   const { serverURL } = useContext(ServerContext)
+  const api = useAxios()
 
   const getTweets = useCallback(async () => {
     const response = await axios.get(
@@ -33,8 +34,17 @@ const TweetDetailPage = (props) => {
     if (response.status === 200) setTweetDetail(response.data);
   }, [tweetId, serverURL]);
 
+  const fetchCurrentUserData = useCallback(async () => {
+    let username = parseJwt(localStorage.getItem("authTokens")).username;
+    api.get(`profiles/${username}`).then((res) => {
+      if (res.status === 200) {
+        setCurrentUserPfp(res.data.picture);
+      }
+    });
+  }, [api])
+
   useEffect(() => {
-    if (!!localStorage.getItem("access_token")) {
+    if (!!localStorage.getItem("authTokens")) {
       setStartedLoading(true);
       getTweets();
       fetchCurrentUserData(); // For profile picture
@@ -45,7 +55,7 @@ const TweetDetailPage = (props) => {
       setCurrentUserPfp(ProfilePicture);
       setFinishedLoading(true);
     }
-  }, [getTweets, hasError]);
+  }, [getTweets, hasError, fetchCurrentUserData]);
 
   const showErrorMessageHandler = (message) => {
     setErrorMessage(message);
@@ -56,15 +66,6 @@ const TweetDetailPage = (props) => {
     setErrorMessage(null);
     setHasError(false);
   };
-
-  async function fetchCurrentUserData() {
-    let username = parseJwt(localStorage.getItem("access_token")).username;
-    axiosInstance.get(`profiles/${username}`).then((res) => {
-      if (res.status === 200) {
-        setCurrentUserPfp(res.data.picture);
-      }
-    });
-  }
 
   const showReply = () => {
     setIsReplyVisible(true);

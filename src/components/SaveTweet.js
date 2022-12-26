@@ -1,14 +1,21 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axiosInstance from "../axios";
+import useAxios from "../useAxios";
 
 const SaveTweet = (props) => {
   const navigate = useNavigate();
-  const isLoggedIn = !!localStorage.getItem("access_token");
+  const isLoggedIn = !!localStorage.getItem("authTokens");
   const [isSaved, setIsSaved] = useState(null)
   const [hasStarted, setHasStarted] = useState(false)
   const [hasFinished, setHasFinished] = useState(false)
   const [forceRefresh, setForceRefresh] = useState(null)
+  const api = useAxios();
+
+  const checkForSave = useCallback(async () => {
+    api.get(`bookmarks/${props.tweetId}/check`).then(res => {
+      if (res.status === 200) setIsSaved(true)
+    }).catch(() => setIsSaved(false))
+  }, [api, props.tweetId])
 
   useEffect(() => {
     if (isLoggedIn) {
@@ -19,20 +26,14 @@ const SaveTweet = (props) => {
       setHasStarted(true)
       setHasFinished(true)
     }
-  }, [forceRefresh])
-
-  async function checkForSave() {
-    axiosInstance.get(`bookmarks/${props.tweetId}/check`).then(res => {
-      if (res.status === 200) setIsSaved(true)
-    }).catch(() => setIsSaved(false))
-  } 
+  }, [forceRefresh, checkForSave, isLoggedIn])
 
   const saveTweetHandler = async (e) => {
     e.stopPropagation();
     if (!isLoggedIn) {
       navigate("/login");
     }
-    const response = await axiosInstance.post(
+    const response = await api.post(
       `tweets/${props.tweetId}/create-bookmark`
     );
 
@@ -41,7 +42,7 @@ const SaveTweet = (props) => {
 
   const removeFromSavedHandler = async (e) => {
     e.stopPropagation()
-    const response = await axiosInstance.delete(`bookmarks/${props.tweetId}/delete`)
+    const response = await api.delete(`bookmarks/${props.tweetId}/delete`)
 
     if (response.status === 204) {
       setForceRefresh(Date.now()) // refresh the save component

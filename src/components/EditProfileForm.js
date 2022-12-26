@@ -2,11 +2,12 @@ import React, { useState, useContext } from "react";
 import { Field, Form, Formik, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import classes from "../pages/EditProfilePage.module.css";
-import axiosInstance from "../axios";
+import useAxios from "../useAxios";
 import { useNavigate } from "react-router-dom";
 import { ServerContext } from '../store/server-context';
 
 const EditProfileForm = (props) => {
+  const api = useAxios()
   let isUsernameValid;
   let isEmailValid;
   const [profilePicture, setProfilePicture] = useState(props.profile.picture);
@@ -81,7 +82,7 @@ const EditProfileForm = (props) => {
     formData.append("picture", profilePicture);
     formData.append("background_picture", backgroundPicture);
     if (profileChanged && backgroundPictureChanged) {
-      await axiosInstance
+      await api
         .put(
           `profiles/${props.profile.username}`,
           {
@@ -108,7 +109,7 @@ const EditProfileForm = (props) => {
         });
     }
     if (profileChanged && !backgroundPictureChanged) {
-      await axiosInstance
+      await api
         .put(
           `profiles/${props.profile.username}`,
           {
@@ -134,7 +135,7 @@ const EditProfileForm = (props) => {
         });
     }
     if (!profileChanged && backgroundPictureChanged) {
-      await axiosInstance
+      await api
         .put(
           `profiles/${props.profile.username}`,
           {
@@ -160,7 +161,7 @@ const EditProfileForm = (props) => {
         });
     }
     if (!profileChanged && !backgroundPictureChanged) {
-      await axiosInstance
+      await api
         .put(
           `profiles/${props.profile.username}`,
           {

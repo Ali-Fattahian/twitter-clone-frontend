@@ -1,25 +1,26 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import classes from "./Reply.module.css";
 import Profile from "../Tweet/default_profile.png";
-import axiosInstance from "../../axios";
+import useAxios from "../../useAxios";
 import { parseJwt } from "../../utils";
 
 const AddReply = (props) => {
   const replyContent = useRef("");
-  const isLoggedIn = !!localStorage.getItem("access_token");
+  const isLoggedIn = !!localStorage.getItem("authTokens");
   const [currentUserData, setCurrentUserData] = useState(null);
   const [startedLoadingData, setStartedLoadingData] = useState(false);
   const [finishedLoadingData, setFinishedLoadingData] = useState(false);
+  const api = useAxios()
 
-  async function fetchCurrentUserData() {
-    let username = parseJwt(localStorage.getItem("access_token")).username;
-    axiosInstance.get(`profiles/${username}`).then((res) => {
+  const fetchCurrentUserData = useCallback(async () => {
+    let username = parseJwt(localStorage.getItem("authTokens")).username;
+    api.get(`profiles/${username}`).then((res) => {
       if (res.status === 200) {
         setCurrentUserData(res.data);
       }
     });
-  }
+  }, [api])  
 
   useEffect(() => {
     if (isLoggedIn) {
@@ -30,7 +31,7 @@ const AddReply = (props) => {
       setStartedLoadingData(true);
       setFinishedLoadingData(true);
     }
-  }, [isLoggedIn]);
+  }, [isLoggedIn, fetchCurrentUserData]);
 
   const formSubmitHandler = (e) => {
     e.preventDefault();
@@ -49,7 +50,7 @@ const AddReply = (props) => {
   };
 
   async function sendData() {
-    const response = await axiosInstance.post(`tweets/${props.tweetId}/reply`, {
+    const response = await api.post(`tweets/${props.tweetId}/reply`, {
       text: replyContent.current.value,
     });
 

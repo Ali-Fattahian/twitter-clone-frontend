@@ -1,34 +1,33 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import FollowButton from "./FollowButton";
 import classes from "./Profile.module.css";
 import dateTimeGenerator from "../utils";
-import { parseJwt } from "../utils";
-import axiosInstance from "../axios";
 import UnfollowButton from "./UnfollowButton";
 import Overlay from "./Modal/Overlay";
+import { AuthContext } from "../store/auth-context";
+import useAxios from "../useAxios";
 
 const Profile = (props) => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [hasStarted, setHasStarted] = useState(false);
   const [followOrEdit, setFollowOrEdit] = useState(null);
+  const { user } = useContext(AuthContext)
 
   const checkForButton = useCallback(async () => {
     setHasStarted(true);
     setIsLoading(true);
-    if (!!localStorage.getItem("access_token")) {
-      const token = localStorage.getItem("access_token");
-      const username = parseJwt(token).username;
-      if (username === props.user.username) {
+    if (user) {
+      if (user.username === props.user.username) {
         setFollowOrEdit(
-          <button className="btn" onClick={() => navigate(`/edit/${username}`)}>
+          <button className="btn" onClick={() => navigate(`/edit/${user.username}`)}>
             Edit profile
           </button>
         );
       } else {
-        await axiosInstance
+        await useAxios
           .get(`follow/${props.user.username}/check`)
           .then((res) => {
             if (res.status === 200) {
@@ -50,7 +49,7 @@ const Profile = (props) => {
       }
     }
     setIsLoading(false);
-  }, [props.user, props.setFollow, navigate]);
+  }, [props.user, props.setFollow, navigate, user]);
 
   useEffect(() => {
     checkForButton();
