@@ -1,30 +1,28 @@
-import React, { useEffect, useState, useContext, useCallback } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import Searchbar from "../components/Searchbar";
 import AddTweet from "../components/Tweet/AddTweet";
 import TweetList from "../components/Tweet/TweetList";
-// import api from "../axios";
+import axios from "axios";
 import ErrorMessage from "../components/Modal/ErrorMessage";
 import Overlay from "../components/Modal/Overlay";
 import { ServerContext } from "../store/server-context";
-import useAxios from "../useAxios";
-
 
 const HomePage = (props) => {
   const [tweetList, setTweetList] = useState([]);
   const [hasError, setHasError] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
-  const { serverURL } = useContext(ServerContext)
-  const api = useAxios()
+  const { serverURL } = useContext(ServerContext);
+  
 
-  const getTweets = useCallback(async () => {
-    const response = await api.get(`${serverURL}home`);
+  const getTweets = async () => {
+    const response = await axios.get(`${serverURL}home`);
 
     if (response.status === 200) setTweetList(response.data);
-  }, [api, serverURL])
+  };
 
   useEffect(() => {
     getTweets();
-  }, [props.refreshHomePageOnAuthChange, getTweets]);
+  }, []);
 
   const showErrorMessageHandler = (message) => {
     setErrorMessage(message);
@@ -37,12 +35,16 @@ const HomePage = (props) => {
   };
 
   const onOverlayClick = () => {
-    props.onMenuClick()
-  }
+    props.onMenuClick();
+  };
 
   return (
     <React.Fragment>
-      {!!props.isMenuOpen ? <Overlay onOverlayClick={onOverlayClick} isVisible={true} /> : <Overlay onOverlayClick={onOverlayClick} isVisible={false} />}
+      {!!props.isMenuOpen ? (
+        <Overlay onOverlayClick={onOverlayClick} isVisible={true} />
+      ) : (
+        <Overlay onOverlayClick={onOverlayClick} isVisible={false} />
+      )}
       {hasError && (
         <ErrorMessage
           errorMessage={errorMessage}

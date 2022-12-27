@@ -24,7 +24,7 @@ const ProfilePage = (props) => {
   const { serverURL } = useContext(ServerContext)
   const api = useAxios()
 
-  const getProfile = useCallback(async () => {
+  const getProfile = async () => {
     setHasStarted(true);
     setIsLoading(true);
     if (!isLoggedIn) {
@@ -41,13 +41,13 @@ const ProfilePage = (props) => {
         .catch((err) => setError(err));
     }
     setIsLoading(false);
-  }, [isLoggedIn, username, api, serverURL]);
+  };
 
   const onOverlayClick = () => {
     props.onMenuClick()
   }
 
-  const getTweets = useCallback(async () => {
+  const getTweets = async () => {
     setTweetHasStarted(true);
     setTweetsIsLoading(true);
     await axios
@@ -59,12 +59,12 @@ const ProfilePage = (props) => {
       })
       .catch(() => setTweetsHasError(true));
     setTweetsIsLoading(false);
-  }, [username]);
+  };
 
   useEffect(() => {
     getProfile();
     getTweets();
-  }, [getProfile, follow, getTweets]);
+  }, [follow]);
 
   return (
     <React.Fragment>

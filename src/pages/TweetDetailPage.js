@@ -9,7 +9,7 @@ import AddReply from "../components/Reply/AddReply";
 import ErrorMessage from "../components/Modal/ErrorMessage";
 import Overlay from "../components/Modal/Overlay";
 import ReplyList from "../components/Reply/ReplyList";
-import { parseJwt } from "../utils";
+import { AuthContext } from "../store/auth-context";
 import useAxios from "../useAxios";
 import { ServerContext } from "../store/server-context";
 
@@ -24,7 +24,9 @@ const TweetDetailPage = (props) => {
   const [startedLoading, setStartedLoading] = useState(false);
   const [finishedLoading, setFinishedLoading] = useState(false);
   const { serverURL } = useContext(ServerContext)
+  const { user } = useContext(AuthContext)
   const api = useAxios()
+
 
   const getTweets = useCallback(async () => {
     const response = await axios.get(
@@ -35,8 +37,7 @@ const TweetDetailPage = (props) => {
   }, [tweetId, serverURL]);
 
   const fetchCurrentUserData = useCallback(async () => {
-    let username = parseJwt(localStorage.getItem("authTokens")).username;
-    api.get(`profiles/${username}`).then((res) => {
+    api.get(`profiles/${user.username}`).then((res) => {
       if (res.status === 200) {
         setCurrentUserPfp(res.data.picture);
       }
@@ -106,7 +107,7 @@ const TweetDetailPage = (props) => {
             tweetId={tweetId}
             picture={tweetDetail.user.picture}
             content={tweetDetail.content}
-            username={tweetDetail.user.user}
+            username={tweetDetail.user.username}
             firstname={tweetDetail.user.firstname}
             lastname={tweetDetail.user.lastname}
             likes={tweetDetail.likes.length}

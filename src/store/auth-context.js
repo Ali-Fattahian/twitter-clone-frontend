@@ -35,7 +35,7 @@ export const AuthContextProvider = ({ children }) => {
     setAuthTokens(null)
     setUser(null)
     localStorage.removeItem('authTokens')
-    window.location.replace('/login')
+    window.location.reload()
   }
 
   // const updateToken = async () => {

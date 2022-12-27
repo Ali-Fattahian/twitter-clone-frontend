@@ -1,29 +1,28 @@
-import React, { useEffect, useState, useContext, useCallback } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import classes from "./Pages.module.css";
 
 import YouMightLike from "../components/YouMightLike";
 import Searchbar from "../components/Searchbar";
 import TweetList from "../components/Tweet/TweetList";
 import Overlay from "../components/Modal/Overlay";
-import useAxios from "../useAxios";
+import axios from "axios";
 import { ServerContext } from "../store/server-context";
 
 const Explore = (props) => {
   const [tweetList, setTweetList] = useState([]);
   const { serverURL } = useContext(ServerContext)
-  const api = useAxios()
 
-  const getTweets = useCallback(async () => {
-    const response = await api.get(
+  const getTweets = async () => {
+    const response = await axios.get(
       `${serverURL}explore`
     );
 
     if (response.status === 200) setTweetList(response.data);
-  }, [api, serverURL]) 
+  } 
 
   useEffect(() => {
     getTweets();
-  }, [getTweets]);
+  }, []);
 
   const onOverlayClick = () => {
     props.onMenuClick()

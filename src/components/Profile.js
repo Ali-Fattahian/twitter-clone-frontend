@@ -1,4 +1,4 @@
-import { useCallback, useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import FollowButton from "./FollowButton";
@@ -16,7 +16,7 @@ const Profile = (props) => {
   const [followOrEdit, setFollowOrEdit] = useState(null);
   const { user } = useContext(AuthContext)
 
-  const checkForButton = useCallback(async () => {
+  const checkForButton = async () => {
     setHasStarted(true);
     setIsLoading(true);
     if (user) {
@@ -49,11 +49,11 @@ const Profile = (props) => {
       }
     }
     setIsLoading(false);
-  }, [props.user, props.setFollow, navigate, user]);
+  };
 
   useEffect(() => {
     checkForButton();
-  }, [checkForButton]);
+  }, []);
 
   return (
     <section className={classes.profile}>

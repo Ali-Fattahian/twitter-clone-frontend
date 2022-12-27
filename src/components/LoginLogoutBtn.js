@@ -1,37 +1,45 @@
+import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import useAxios from "../useAxios";
+import { AuthContext } from "../store/auth-context";
 
 const LoginLogoutBtn = (props) => {
   const navigate = useNavigate();
-  const api = useAxios()
-  const logoutHandler = () => {
-    localStorage.clear();
-    api.defaults.headers['Authorization'] = null
-    props.setRefreshHomePageOnAuthChange(Date.now())
-    navigate("/home");
-  };
+  const { logout } = useContext(AuthContext);
+  const logoutHandler = () => logout();
   return (
     <>
       {!!localStorage.getItem("authTokens") ? (
         <i
-          style={{ display: "flex", gap: "1rem", cursor: "pointer", alignItems: "center" }}
+          style={{
+            display: "flex",
+            gap: "1rem",
+            cursor: "pointer",
+            alignItems: "center",
+          }}
           className="fa fa-sign-out"
           aria-hidden="true"
           onClick={logoutHandler}
           title="Log out"
         >
-          {props.text && <p style={{fontSize: "1rem", fontWeight: "normal"}}>Log out</p>}
+          {props.text && (
+            <p style={{ fontSize: "1rem", fontWeight: "normal" }}>Log out</p>
+          )}
         </i>
       ) : (
         <i
-          style={{ display: "flex", gap: "1rem", cursor: "pointer", alignItems: "center" }}
+          style={{
+            display: "flex",
+            gap: "1rem",
+            cursor: "pointer",
+            alignItems: "center",
+          }}
           className="fa fa-sign-in"
           aria-hidden="true"
           title="Log in page"
           onClick={() => navigate("/login")}
         >
           {props.text && (
-            <p style={{fontSize: "1rem", fontWeight: "normal"}}>Log in</p>
+            <p style={{ fontSize: "1rem", fontWeight: "normal" }}>Log in</p>
           )}
         </i>
       )}
