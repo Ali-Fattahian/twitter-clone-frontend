@@ -1,29 +1,14 @@
-import React, { useCallback, useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useRef } from "react";
 import { Link } from "react-router-dom";
 import classes from "./Reply.module.css";
 import Profile from "../Tweet/default_profile.png";
 import useAxios from "../../useAxios";
-import { parseJwt } from "../../utils";
 import { AuthContext } from "../../store/auth-context";
 
 const AddReply = (props) => {
   const replyContent = useRef("");
-  // const isLoggedIn = !!localStorage.getItem("authTokens");
   const { userData } = useContext(AuthContext)
   const api = useAxios()
-  // const [startedLoadingData, setStartedLoadingData] = useState(false);
-  // const [finishedLoadingData, setFinishedLoadingData] = useState(false);
-
-  // useEffect(() => {
-  //   if (isLoggedIn) {
-  //     setStartedLoadingData(true);
-  //     fetchCurrentUserData();
-  //     setFinishedLoadingData(true);
-  //   } else {
-  //     setStartedLoadingData(true);
-  //     setFinishedLoadingData(true);
-  //   }
-  // }, [isLoggedIn, fetchCurrentUserData]);
 
   const formSubmitHandler = (e) => {
     e.preventDefault();

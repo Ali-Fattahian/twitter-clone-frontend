@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import classes from "./TweetStyle.module.css";
 import ProfilePicture from "./default_profile.png";
 import useAxios from '../../useAxios';
-// import { parseJwt } from "../../utils";
 import { ServerContext } from "../../store/server-context";
 import { AuthContext } from "../../store/auth-context";
 
@@ -12,9 +11,6 @@ const AddTweetOverlay = (props) => {
   const isLoggedIn = !!localStorage.getItem("authTokens");
   const { userData } = useContext(AuthContext)
   const [error, setError] = useState(null)
-  // const [currentUserPfp, setCurrentUserPfp] = useState(null);
-  // const [hasStartedLoadingPfp, setHasStartedLoadingPfp] = useState(false);
-  // const [hasfinishedLoadingPfp, setHasfinishedLoadingPfp] = useState(false);
   const { serverURL } = useContext(ServerContext)
   const api = useAxios()
 
@@ -37,16 +33,6 @@ const AddTweetOverlay = (props) => {
     }
   };
 
-  // const fetchCurrentUserData = useCallback(async () => {
-  //   let username = parseJwt(localStorage.getItem("authTokens")).username;
-
-  //   api.get(`profiles/${username}`).then((res) => {
-  //     if (res.status === 200) {
-  //       setCurrentUserPfp(res.data.picture);
-  //     }
-  //   });
-  // }, [api])
-
   async function sendData() {
     const response = await api.post(
       `${serverURL}compose/tweet`,
@@ -61,16 +47,6 @@ const AddTweetOverlay = (props) => {
     }
   }
 
-  // useEffect(() => {
-  //   if (isLoggedIn) {
-  //     setHasStartedLoadingPfp(true);
-  //     fetchCurrentUserData();
-  //     setHasfinishedLoadingPfp(true);
-  //   } else {
-  //     setHasStartedLoadingPfp(true);
-  //     setHasfinishedLoadingPfp(true);
-  //   }
-  // }, [isLoggedIn, fetchCurrentUserData]);
 
   return (
     <div className="add-tweet__container">

@@ -144,12 +144,10 @@ const Tweet = (props) => {
               </a>
               <a id={classes["tweet-dot"]} href={userLink}>
                 ·
-              </a>{" "}
-              {/* this is a link to the post */}
+              </a>
               <a id={classes["tweet__time-created"]} href={userLink}>
                 {props.timeCreated}
-              </a>{" "}
-              {/* this is a link to the post */}
+              </a>
             </div>
             {/* <div className={classes.more}>
               <div></div>

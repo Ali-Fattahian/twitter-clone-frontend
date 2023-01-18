@@ -14,7 +14,7 @@ const Profile = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [hasStarted, setHasStarted] = useState(false);
   const [followOrEdit, setFollowOrEdit] = useState(null);
-  const { user } = useContext(AuthContext)
+  const { user } = useContext(AuthContext);
 
   const checkForButton = async () => {
     setHasStarted(true);
@@ -22,7 +22,10 @@ const Profile = (props) => {
     if (user) {
       if (user.username === props.user.username) {
         setFollowOrEdit(
-          <button className="btn" onClick={() => navigate(`/edit/${user.username}`)}>
+          <button
+            className="btn"
+            onClick={() => navigate(`/edit/${user.username}`)}
+          >
             Edit profile
           </button>
         );
@@ -64,7 +67,11 @@ const Profile = (props) => {
       )}
       <div className={classes["profile__top"]}>
         <div className={classes["profile__top-left"]}>
-          <div className="ham-menu__btn" id={classes['ham-menu__btn']} onClick={props.onMenuClick}>
+          <div
+            className="ham-menu__btn"
+            id={classes["ham-menu__btn"]}
+            onClick={props.onMenuClick}
+          >
             <div></div>
             <div></div>
             <div></div>
@@ -118,9 +125,5 @@ const Profile = (props) => {
     </section>
   );
 };
-
-// Images should be a link to the image
-// Follow button is Following turns into Unfollow (red) (244, 33, 46) on hover. at least in dark mode.
-// For not followings, it is a Follow text (black color) and (#eff3f4) background and gets a little darker on hover.
 
 export default Profile;

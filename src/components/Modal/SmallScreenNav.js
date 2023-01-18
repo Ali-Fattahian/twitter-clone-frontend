@@ -4,7 +4,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { parseJwt } from "../../utils";
 import * as ReactDOM from "react-dom";
 import LoginLogoutBtn from "../LoginLogoutBtn";
-import { useEffect, useState, useContext } from "react";
+import { useContext } from "react";
 import { AuthContext } from "../../store/auth-context";
 
 const SmallScreenNav = (props) => {

@@ -11,9 +11,7 @@ const Login = () => {
   const password = useRef('');
   const navigate = useNavigate()
   const { login, setLoginHasError, loginHasError } = useContext(AuthContext)
-  // const {login, user} = useContext(AuthContext)
   if (!!localStorage.getItem('authTokens')) navigate('/home') // Logged in users don't have access to login page
-  // console.log(user.username)
 
   const closeModalHandler = () => {
     setLoginHasError(false)

@@ -4,7 +4,7 @@ import TweetList from "../components/Tweet/TweetList";
 import Searchbar from "../components/Searchbar";
 import Profile from "../components/Profile";
 import axios from "axios";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import useAxios from "../useAxios";
 import { ServerContext } from "../store/server-context";

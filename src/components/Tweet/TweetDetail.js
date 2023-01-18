@@ -15,7 +15,7 @@ const TweetDetail = (props) => {
   const [hasStarted, setHasStarted] = useState(false);
   const [likeOrDislike, setLikeOrDislike] = useState(null);
   const [likeClicked, setLikeClicked] = useState(null);
-  const [fakeLikeNumber, setFakeLikeNumber] = useState(props.likes); // This is a fake number, when a user adds a like to a post, it is going to be in db, but instead refreshing the data from db, i set this fake number for number of likes, which is the same as the real one.
+  const [fakeLikeNumber, setFakeLikeNumber] = useState(props.likes); // This is a fake number, when a user adds a like to a post, it is going to be in db, but instead of refreshing the data from db, i set this fake number for number of likes, which is the same as the real one.
   const isLoggedIn = !!localStorage.getItem("authTokens");
   const replyContent = useRef("");
   const [hasError, setHasError] = useState(false);

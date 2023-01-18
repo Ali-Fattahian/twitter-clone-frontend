@@ -10,7 +10,6 @@ import ErrorMessage from "../components/Modal/ErrorMessage";
 import Overlay from "../components/Modal/Overlay";
 import ReplyList from "../components/Reply/ReplyList";
 import { AuthContext } from "../store/auth-context";
-import useAxios from "../useAxios";
 import { ServerContext } from "../store/server-context";
 
 const TweetDetailPage = (props) => {
@@ -21,12 +20,9 @@ const TweetDetailPage = (props) => {
   const [errorMessage, setErrorMessage] = useState(null);
   const [isReplyVisible, setIsReplyVisible] = useState(false);
   const [newReply, setNewReply] = useState(null);
-  // const [currentUserPfp, setCurrentUserPfp] = useState(null);
   const [startedLoading, setStartedLoading] = useState(false);
   const [finishedLoading, setFinishedLoading] = useState(false);
   const { serverURL } = useContext(ServerContext)
-  const api = useAxios()
-
 
   const getTweets = useCallback(async () => {
     const response = await axios.get(
@@ -35,14 +31,6 @@ const TweetDetailPage = (props) => {
 
     if (response.status === 200) setTweetDetail(response.data);
   }, [tweetId, serverURL]);
-
-  // const fetchCurrentUserData = useCallback(async () => {
-  //   api.get(`profiles/${user.username}`).then((res) => {
-  //     if (res.status === 200) {
-  //       setCurrentUserPfp(res.data.picture);
-  //     }
-  //   });
-  // }, [api])
 
   useEffect(() => {
       setStartedLoading(true);

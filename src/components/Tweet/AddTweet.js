@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import classes from "./TweetStyle.module.css";
 import ProfilePicture from "./default_profile.png";
 import useAxios from "../../useAxios";
-// import { parseJwt } from "../../utils";
 import { ServerContext } from "../../store/server-context";
 import { AuthContext } from "../../store/auth-context";
 
@@ -11,8 +10,6 @@ const AddTweet = (props) => {
   const tweetContent = useRef("");
   const isLoggedIn = !!localStorage.getItem("authTokens");
   const { userData } = useContext(AuthContext)
-  // const [hasStartedLoadingPfp, setHasStartedLoadingPfp] = useState(false);
-  // const [hasfinishedLoadingPfp, setHasfinishedLoadingPfp] = useState(false);
   const { serverURL } = useContext(ServerContext);
   const [needToRefresh, setNeedToRefresh] = useState(null);
   const api = useAxios();
@@ -35,16 +32,6 @@ const AddTweet = (props) => {
       setNeedToRefresh(Date.now());
     }
   };
-
-  // const fetchCurrentUserData = useCallback(async () => {
-  //   let username = parseJwt(localStorage.getItem("authTokens")).username;
-
-  //   api.get(`profiles/${username}`).then((res) => {
-  //     if (res.status === 200) {
-  //       setCurrentUserPfp(res.data.picture);
-  //     }
-  //   });
-  // }, [api]);
 
   async function sendData() {
     const response = await api.post(`${serverURL}compose/tweet`, {

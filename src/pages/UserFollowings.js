@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { NavLink, useParams } from "react-router-dom";
 
 import classes from "./FollowPage.module.css";
@@ -47,7 +47,7 @@ const UserFollowings = (props) => {
   };
 
   useEffect(() => {
-    getProfile()
+    getProfile();
   }, [refreshFollow]);
 
   return (

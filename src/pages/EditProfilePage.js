@@ -1,56 +1,16 @@
-// import React, { useCallback, useContext, useEffect, useState } from "react";
 import React, { useContext } from "react";
-// import { useNavigate, useParams } from "react-router-dom";
-
 import classes from "./EditProfilePage.module.css";
 import EditProfileForm from "../components/EditProfileForm";
 import Searchbar from "../components/Searchbar";
 import Overlay from "../components/Modal/Overlay";
-// import useAxios from "../useAxios";
-// import { parseJwt } from "../utils";
 import { AuthContext } from "../store/auth-context";
 
 const EditProfilePage = (props) => {
-  // const navigate = useNavigate();
-  // const [isLoading, setIsLoading] = useState(false);
-  // const [hasStarted, setHasStarted] = useState(false);
-  // const [hasError, setHasError] = useState(false);
-  // const [profile, setProfile] = useState(null);
-  // const { username } = useParams();
-  // const api = useAxios()
-  const { userData } = useContext(AuthContext)
-
-  // const getProfile = useCallback(async () => {
-  //   setIsLoading(true);
-  //   setHasStarted(true);
-  //   await api.get(`profiles/${username}`).then((res) => {
-  //     if (res.status === 200) {
-  //       setProfile(res.data);
-  //     } else {
-  //       setHasError(true);
-  //     }
-  //   });
-  //   setIsLoading(false);
-  // }, [username, api]);
+  const { userData } = useContext(AuthContext);
 
   const onOverlayClick = () => {
     props.onMenuClick();
   };
-
-  // useEffect(() => {
-  //   if (!!localStorage.getItem("authTokens")) {
-  //     getProfile();
-  //     if (profile) {
-  //       const token = localStorage.getItem("authTokens");
-  //       const tokenId = parseJwt(token).user_id;
-  //       if (tokenId !== profile.id) {
-  //         navigate("/home");
-  //       }
-  //     }
-  //   } else {
-  //     navigate("/home");
-  //   }
-  // }, [getProfile, navigate, profile]);
 
   return (
     <React.Fragment>
@@ -70,9 +30,7 @@ const EditProfilePage = (props) => {
         </section>
         <section className={classes["edit-profile"]}>
           <div className={classes["form-container"]}>
-            {(!!userData && (
-              <EditProfileForm profile={userData} />
-            )) || (
+            {(!!userData && <EditProfileForm profile={userData} />) || (
               <p className="p-info--center">Sorry this page doesn't exist.</p>
             )}
           </div>

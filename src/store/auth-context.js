@@ -74,37 +74,3 @@ export const AuthContextProvider = ({ children }) => {
     {loading ? null : children}
   </AuthContext.Provider>
 }
-
-// export const AuthContext = React.createContext({
-//   login: () => {},
-//   loginHasError: false,
-//   setLoginHasError: () => {}
-// });
-
-// export const AuthContextProvider = (props) => {
-
-//   const [loginHasError, setLoginHasError] = useState(false)
-
-//   const login = (email, password) => {
-//     api
-//     .post("token/", {
-//       email: email,
-//       password: password,
-//     })
-//     .then((res) => {
-//       localStorage.setItem("refresh_token", res.data.refresh);
-//       localStorage.setItem("authTokens", res.data.access);
-//       api.defaults.headers["Authorization"] =
-//         "JWT " + localStorage.getItem("authTokens");
-//       document.location.reload() // Reload the location (most importantly home page, to get new data from api with new headers)
-//     }).catch(err => setLoginHasError(true));
-//   }
-
-//   return (
-//     <AuthContext.Provider value={{ login, loginHasError, setLoginHasError}}>
-//       {props.children}
-//     </AuthContext.Provider>
-//   );
-// };
-
-
