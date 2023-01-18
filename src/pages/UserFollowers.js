@@ -15,14 +15,14 @@ const UserFollowings = (props) => {
   const [hasStarted, setHasStarted] = useState(false);
   const [error, setError] = useState(null);
   const [profiles, setProfiles] = useState([]);
-  const { serverURL } = useContext(ServerContext)
+  const { serverURL } = useContext(ServerContext);
 
   const isLoggedIn = !!localStorage.getItem("authTokens");
   const { username } = useParams();
   const [refreshFollow, setRefreshFollow] = useState(null);
-  const api = useAxios()
+  const api = useAxios();
 
-  const getProfile = useCallback(async () => {
+  const getProfile = async () => {
     setHasStarted(true);
     setIsLoading(true);
     if (!isLoggedIn) {
@@ -39,15 +39,15 @@ const UserFollowings = (props) => {
         .catch((err) => setError(err));
     }
     setIsLoading(false);
-  }, [isLoggedIn, username, setHasStarted, api, serverURL]);
+  };
 
   const onOverlayClick = () => {
     props.onMenuClick();
   };
 
   useEffect(() => {
-    getProfile();
-  }, [getProfile, refreshFollow]);
+    getProfile()
+  }, [refreshFollow]);
 
   return (
     <React.Fragment>
@@ -60,13 +60,17 @@ const UserFollowings = (props) => {
         <div className={classes["middle-top__section"]}>
           <div className={classes["user-info__section"]}>
             <section className={classes["top-navigation"]}>
-              <div id={classes['ham-menu__btn']} className="ham-menu__btn" onClick={props.onMenuClick}>
+              <div
+                id={classes["ham-menu__btn"]}
+                className="ham-menu__btn"
+                onClick={props.onMenuClick}
+              >
                 <div></div>
                 <div></div>
                 <div></div>
               </div>
               <div className={classes["top-navigation__username"]}>
-                <a href={`/${username}`}>{username} profile</a>
+                <a href={`/${username}`}>{username}</a>
               </div>
             </section>
           </div>

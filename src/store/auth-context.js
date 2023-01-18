@@ -10,6 +10,7 @@ export const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState(() => localStorage.getItem('authTokens') ? parseJwt(JSON.parse(localStorage.getItem('authTokens')).access) : null)
   const [userData, setUserData] = useState(null)
   const [loading, setIsLoading] = useState(true) // First Load
+  const [loginHasError, setLoginHasError] = useState(false)
 
   const login = async (email, password) => {
     const response = await fetch(`${baseURL}token/`, {
@@ -27,7 +28,7 @@ export const AuthContextProvider = ({ children }) => {
       localStorage.setItem('authTokens', JSON.stringify(data))
       window.location.replace('/home')
     } else {
-      console.log('error')
+      setLoginHasError(true)
     }
   }
 
@@ -57,6 +58,8 @@ export const AuthContextProvider = ({ children }) => {
     logout,
     setUser,
     userData,
+    loginHasError,
+    setLoginHasError,
   }
 
   useEffect(() => {
