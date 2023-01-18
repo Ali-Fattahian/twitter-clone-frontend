@@ -14,6 +14,7 @@ import Spinner from "./components/Spinner";
 import EditProfilePage from "./pages/EditProfilePage";
 import AddTweetOverlay from "./components/Tweet/AddTweetOverlay";
 import { ServerContextProvider } from "./store/server-context";
+import PrivateRoute from "./PrivateRoute";
 
 const HomePage = React.lazy(() => import("./pages/HomePage"));
 const Explore = React.lazy(() => import("./pages/Explore"));
@@ -93,11 +94,13 @@ function App() {
             <Route
               path="edit/:username"
               element={
+                <PrivateRoute>
                 <EditProfilePage
                   pageName="Edit Profile"
                   onMenuClick={clickMenuHandler}
                   isMenuOpen={isMenuOpen}
                 />
+                </PrivateRoute>
               }
             />
             <Route path=":username/followers" element={<UserFollowers onMenuClick={clickMenuHandler} isMenuOpen={isMenuOpen} />} />

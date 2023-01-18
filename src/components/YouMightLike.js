@@ -9,7 +9,7 @@ const YouMightLike = () => {
   const [suggestedUsers, setSuggestedUsers] = useState([]);
   const isLoggedIn = !!localStorage.getItem("authTokens");
   const [followWasSuc, setFollowWasSuc] = useState(null);
-  const [follow, setFollow] = useState(null) // Completely useless, i have to make it, pass it down to follow btn because i did it in profile page and it is expected in follow btn comp
+  const [follow, setFollow] = useState(null) // Completely useless, i have to make it, pass it down to follow btn because i did it in profile page and it is expected in follow btn component
   const { serverURL } = useContext(ServerContext)
   const api = useAxios()
 

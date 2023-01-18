@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import useAxios from "../../useAxios";
 import LikeButton from "../LikeButton";
@@ -44,7 +44,7 @@ const Tweet = (props) => {
     setHasError(false);
   };
 
-  const checkForLikeButton = useCallback(async () => {
+  const checkForLikeButton = async () => {
     setHasStarted(true);
     setIsLoading(true);
     if (isLoggedIn) {
@@ -76,11 +76,11 @@ const Tweet = (props) => {
         });
     }
     setIsLoading(false);
-  }, [isLoggedIn, props.tweetId, fakeLikeNumber, api]);
+  }
 
   useEffect(() => {
     checkForLikeButton();
-  }, [checkForLikeButton, likeClicked]);
+  }, [likeClicked]);
 
   let likeButton;
   if (isLoggedIn) {

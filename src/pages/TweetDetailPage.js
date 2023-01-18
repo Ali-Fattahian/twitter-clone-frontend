@@ -16,15 +16,15 @@ import { ServerContext } from "../store/server-context";
 const TweetDetailPage = (props) => {
   const [tweetDetail, setTweetDetail] = useState(null);
   const { tweetId } = useParams();
+  const { userData } = useContext(AuthContext)
   const [hasError, setHasError] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
   const [isReplyVisible, setIsReplyVisible] = useState(false);
   const [newReply, setNewReply] = useState(null);
-  const [currentUserPfp, setCurrentUserPfp] = useState(null);
+  // const [currentUserPfp, setCurrentUserPfp] = useState(null);
   const [startedLoading, setStartedLoading] = useState(false);
   const [finishedLoading, setFinishedLoading] = useState(false);
   const { serverURL } = useContext(ServerContext)
-  const { user } = useContext(AuthContext)
   const api = useAxios()
 
 
@@ -36,27 +36,22 @@ const TweetDetailPage = (props) => {
     if (response.status === 200) setTweetDetail(response.data);
   }, [tweetId, serverURL]);
 
-  const fetchCurrentUserData = useCallback(async () => {
-    api.get(`profiles/${user.username}`).then((res) => {
-      if (res.status === 200) {
-        setCurrentUserPfp(res.data.picture);
-      }
-    });
-  }, [api])
+  // const fetchCurrentUserData = useCallback(async () => {
+  //   api.get(`profiles/${user.username}`).then((res) => {
+  //     if (res.status === 200) {
+  //       setCurrentUserPfp(res.data.picture);
+  //     }
+  //   });
+  // }, [api])
 
   useEffect(() => {
-    if (!!localStorage.getItem("authTokens")) {
       setStartedLoading(true);
       getTweets();
-      fetchCurrentUserData(); // For profile picture
       setFinishedLoading(true);
-    } else {
       setStartedLoading(true);
       getTweets();
-      setCurrentUserPfp(ProfilePicture);
       setFinishedLoading(true);
-    }
-  }, [getTweets, hasError, fetchCurrentUserData]);
+  }, [getTweets, hasError]);
 
   const showErrorMessageHandler = (message) => {
     setErrorMessage(message);
@@ -117,7 +112,7 @@ const TweetDetailPage = (props) => {
             )}
             showReply={showReply}
             setNewReply={setNewReply}
-            currentUserPfp={currentUserPfp}
+            currentUserPfp={!!userData ? userData.picture : ProfilePicture}
             onError = {showErrorMessageHandler}
           />
         ) : (

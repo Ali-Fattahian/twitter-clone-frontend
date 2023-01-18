@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useNavigate, Link } from "react-router-dom";
 
 import classes from "./TweetStyle.module.css";
@@ -20,9 +20,9 @@ const TweetDetail = (props) => {
   const replyContent = useRef("");
   const [hasError, setHasError] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
-  const api = useAxios()
+  const api = useAxios();
 
-  const checkForLikeButton = useCallback(async () => {
+  const checkForLikeButton = async () => {
     setHasStarted(true);
     setIsLoading(true);
     if (isLoggedIn) {
@@ -38,11 +38,9 @@ const TweetDetail = (props) => {
                 setLikeClicked={setLikeClicked}
               />
             );
-          } else {
-            throw res.status;
           }
         })
-        .catch(() => {
+        .catch((err) => {
           setLikeOrDislike(
             <LikeButton
               tweetId={props.tweetId}
@@ -54,11 +52,11 @@ const TweetDetail = (props) => {
         });
     }
     setIsLoading(false);
-  }, [isLoggedIn, props.tweetId, fakeLikeNumber, api]);
+  };
 
   useEffect(() => {
     checkForLikeButton();
-  }, [checkForLikeButton, likeClicked]);
+  }, [likeClicked]);
 
   let likeButton;
   if (isLoggedIn) {

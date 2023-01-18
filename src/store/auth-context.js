@@ -1,6 +1,5 @@
-// import React, { useState } from "react";
-// import api from "../axios";
 import React, { useState, useEffect } from 'react';
+import axiosInstance from '../axios';
 import { parseJwt } from '../utils';
 
 export const AuthContext = React.createContext()
@@ -9,6 +8,7 @@ export const AuthContextProvider = ({ children }) => {
   const baseURL = 'http://localhost:8000/api/'
   const [authTokens, setAuthTokens] = useState(() => localStorage.getItem('authTokens') ? JSON.parse(localStorage.getItem('authTokens')) : null)
   const [user, setUser] = useState(() => localStorage.getItem('authTokens') ? parseJwt(JSON.parse(localStorage.getItem('authTokens')).access) : null)
+  const [userData, setUserData] = useState(null)
   const [loading, setIsLoading] = useState(true) // First Load
 
   const login = async (email, password) => {
@@ -31,6 +31,16 @@ export const AuthContextProvider = ({ children }) => {
     }
   }
 
+  const fetchCurrentUserData = async () => {
+    const username = parseJwt(authTokens.access).username;
+
+    axiosInstance.get(`profiles/${username}`).then((res) => {
+      if (res.status === 200) {
+        setUserData(res.data);
+      }
+    });
+  };
+
   const logout = () => {
     setAuthTokens(null)
     setUser(null)
@@ -38,29 +48,6 @@ export const AuthContextProvider = ({ children }) => {
     window.location.reload()
   }
 
-  // const updateToken = async () => {
-  //   console.log('called')
-  //   const response = await fetch(`${baseURL}token/refresh/`, {
-  //     method: 'POST',
-  //     headers: {
-  //       'Content-Type': 'application/json'
-  //     },
-  //     body: JSON.stringify({'refresh': authTokens.refresh})
-  //   })
-
-  //   const data = await response.json()
-  //   if (response.status === 200) {
-  //     setAuthTokens(data)
-  //     setUser(parseJwt(data['access']))
-  //     localStorage.setItem('authTokens', JSON.stringify(data))
-  //   } else {
-  //     logout()
-  //   }
-    
-  //   if (loading) {
-  //     setIsLoading(false)
-  //   }
-  // }
  
   const contextData = {
     authTokens,
@@ -69,11 +56,13 @@ export const AuthContextProvider = ({ children }) => {
     user,
     logout,
     setUser,
+    userData,
   }
 
   useEffect(() => {
     if (authTokens) {
       setUser(parseJwt(authTokens.access))
+      fetchCurrentUserData()
     }
     setIsLoading(false)
   }, [authTokens, loading])

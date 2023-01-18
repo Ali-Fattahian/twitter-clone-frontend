@@ -5,34 +5,15 @@ import { parseJwt } from "../../utils";
 import * as ReactDOM from "react-dom";
 import LoginLogoutBtn from "../LoginLogoutBtn";
 import { useEffect, useState, useContext } from "react";
-import axios from "axios";
-import { ServerContext } from "../../store/server-context";
+import { AuthContext } from "../../store/auth-context";
 
 const SmallScreenNav = (props) => {
   const navigate = useNavigate();
-  let currentUsername;
-  const [currentUserData, setCurrentUserData] = useState(null);
-  const { serverURL } = useContext(ServerContext)
-
-  const fetchUserData = async (username) => {
-    await axios
-      .get(`${serverURL}profiles/${username}`)
-      .then((res) => {
-        if (res.status === 200) setCurrentUserData(res.data);
-      });
-  };
-
-  useEffect(() => {
-    if (!!localStorage.getItem("authTokens")) {
-      const token = localStorage.getItem("authTokens");
-      currentUsername = parseJwt(token).username;
-      fetchUserData(currentUsername);
-    }
-  }, []);
+  const { userData } = useContext(AuthContext)
 
   const profileClickHandler = () => {
-    if (currentUserData) {
-      navigate(`/${currentUserData.username}`);
+    if (!!userData) {
+      navigate(`/${userData.username}`);
     } else {
       navigate("/login");
     }
@@ -51,29 +32,29 @@ const SmallScreenNav = (props) => {
       </div>
       <div id={classes["account-info"]}>
         <img
-          src={currentUserData ? currentUserData.picture : ProfilePicture}
+          src={!!userData ? userData.picture : ProfilePicture}
           alt="Profile"
         />
-        {currentUserData ? (
-          <p id={classes.fullname} className={classes['real-name']} onClick={() => navigate(`/${currentUserData.username}`)}>
-            {currentUserData.firstname} {currentUserData.lastname}
+        {!!userData ? (
+          <p id={classes.fullname} className={classes['real-name']} onClick={() => navigate(`/${userData.username}`)}>
+            {userData.firstname} {userData.lastname}
           </p>
         ) : (
           <p id={classes.fullname}>Anonymous User</p>
         )}
-        {currentUserData ? (
-          <p id={classes.username} className={classes['real-name']} onClick={() => navigate(`/${currentUserData.username}`)}>@{currentUserData.username}</p>
+        {!!userData ? (
+          <p id={classes.username} className={classes['real-name']} onClick={() => navigate(`/${userData.username}`)}>@{userData.username}</p>
         ) : (
           <p id={classes.username}>@Unknown</p>
         )}
       </div>
-      {currentUserData ? (
+      {!!userData ? (
         <div id={classes["follow-container"]}>
-          <div className={classes.follow} onClick={() => navigate(`/${currentUserData.username}/followings`)} style={{cursor: 'pointer'}}>
-            {currentUserData.follows["followings_count"]} <span>Following</span>
+          <div className={classes.follow} onClick={() => navigate(`/${userData.username}/followings`)} style={{cursor: 'pointer'}}>
+            {userData.follows["followings_count"]} <span>Following</span>
           </div>
-          <div className={classes.follow} onClick={() => navigate(`/${currentUserData.username}/followers`)} style={{cursor: 'pointer'}}>
-            {currentUserData.follows["followers_count"]} <span>Follower</span>
+          <div className={classes.follow} onClick={() => navigate(`/${userData.username}/followers`)} style={{cursor: 'pointer'}}>
+            {userData.follows["followers_count"]} <span>Follower</span>
           </div>
         </div>
       ) : (

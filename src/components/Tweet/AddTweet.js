@@ -1,20 +1,23 @@
-import { useEffect, useRef, useState, useContext, useCallback } from "react";
+import { useRef, useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import classes from "./TweetStyle.module.css";
 import ProfilePicture from "./default_profile.png";
 import useAxios from "../../useAxios";
-import { parseJwt } from "../../utils";
+// import { parseJwt } from "../../utils";
 import { ServerContext } from "../../store/server-context";
+import { AuthContext } from "../../store/auth-context";
 
 const AddTweet = (props) => {
   const tweetContent = useRef("");
   const isLoggedIn = !!localStorage.getItem("authTokens");
-  const [currentUserPfp, setCurrentUserPfp] = useState(null);
-  const [hasStartedLoadingPfp, setHasStartedLoadingPfp] = useState(false);
-  const [hasfinishedLoadingPfp, setHasfinishedLoadingPfp] = useState(false);
+  const { userData } = useContext(AuthContext)
+  // const [hasStartedLoadingPfp, setHasStartedLoadingPfp] = useState(false);
+  // const [hasfinishedLoadingPfp, setHasfinishedLoadingPfp] = useState(false);
   const { serverURL } = useContext(ServerContext);
   const [needToRefresh, setNeedToRefresh] = useState(null);
   const api = useAxios();
+
+  useEffect(() => {}, [needToRefresh])
 
   const formSubmitHandler = (e) => {
     e.preventDefault();
@@ -33,15 +36,15 @@ const AddTweet = (props) => {
     }
   };
 
-  const fetchCurrentUserData = useCallback(async () => {
-    let username = parseJwt(localStorage.getItem("authTokens")).username;
+  // const fetchCurrentUserData = useCallback(async () => {
+  //   let username = parseJwt(localStorage.getItem("authTokens")).username;
 
-    api.get(`profiles/${username}`).then((res) => {
-      if (res.status === 200) {
-        setCurrentUserPfp(res.data.picture);
-      }
-    });
-  }, [api]);
+  //   api.get(`profiles/${username}`).then((res) => {
+  //     if (res.status === 200) {
+  //       setCurrentUserPfp(res.data.picture);
+  //     }
+  //   });
+  // }, [api]);
 
   async function sendData() {
     const response = await api.post(`${serverURL}compose/tweet`, {
@@ -54,17 +57,6 @@ const AddTweet = (props) => {
     }
   }
 
-  useEffect(() => {
-    if (isLoggedIn) {
-      setHasStartedLoadingPfp(true);
-      fetchCurrentUserData();
-      setHasfinishedLoadingPfp(true);
-    } else {
-      setHasStartedLoadingPfp(true);
-      setHasfinishedLoadingPfp(true);
-    }
-  }, [isLoggedIn, needToRefresh, fetchCurrentUserData]);
-
   return (
     <form
       id="add-tweet"
@@ -72,14 +64,12 @@ const AddTweet = (props) => {
       onSubmit={formSubmitHandler}
     >
       <div className={classes["add-tweet__upper"]}>
-        {hasfinishedLoadingPfp && hasStartedLoadingPfp && (
           <img
             className={classes["add-tweet__image"]}
-            src={isLoggedIn && currentUserPfp ? currentUserPfp : ProfilePicture}
+            src={isLoggedIn && !!userData ? userData.picture : ProfilePicture}
             alt="User profile"
             style={{ objectFit: "cover" }}
           />
-        )}
         <textarea
           className={classes["add-tweet__input"]}
           placeholder="What's happening?"

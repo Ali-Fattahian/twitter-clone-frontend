@@ -6,13 +6,15 @@ import axios from "axios";
 import ErrorMessage from "../components/Modal/ErrorMessage";
 import Overlay from "../components/Modal/Overlay";
 import { ServerContext } from "../store/server-context";
+import { AuthContext } from "../store/auth-context";
+import ProfilePicture from "../components/Tweet/default_profile.png";
 
 const HomePage = (props) => {
   const [tweetList, setTweetList] = useState([]);
   const [hasError, setHasError] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
   const { serverURL } = useContext(ServerContext);
-  
+  const { userData } = useContext(AuthContext);
 
   const getTweets = async () => {
     const response = await axios.get(`${serverURL}home`);
@@ -53,7 +55,12 @@ const HomePage = (props) => {
       )}
       <div className="main__middle-side" id="homepage-middle">
         <section className="menu-btn__section">
-          {/* <img src={currentUserData ? currentUserData.picture : ProfilePicture} alt="Profile" onClick={props.onMenuClick} style={{objectFit: 'cover'}} /> */}
+          <img
+            src={!!userData ? userData.picture : ProfilePicture}
+            alt="Profile"
+            onClick={props.onMenuClick}
+            style={{ objectFit: "cover" }}
+          />
           <div className="ham-menu__btn" onClick={props.onMenuClick}>
             <div></div>
             <div></div>
