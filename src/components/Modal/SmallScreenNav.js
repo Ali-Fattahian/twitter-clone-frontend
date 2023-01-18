@@ -1,7 +1,6 @@
 import classes from "./SmallScreenNav.module.css";
 import ProfilePicture from "../Tweet/default_profile.png";
 import { NavLink, useNavigate } from "react-router-dom";
-import { parseJwt } from "../../utils";
 import * as ReactDOM from "react-dom";
 import LoginLogoutBtn from "../LoginLogoutBtn";
 import { useContext } from "react";
