@@ -1,4 +1,4 @@
-import { useContext, useRef } from "react";
+import { useContext, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import ErrorMessage from "../../components/Modal/ErrorMessage";
 import { AuthContext } from "../../store/auth-context";
@@ -11,7 +11,6 @@ const Login = () => {
   const password = useRef('');
   const navigate = useNavigate()
   const { login, setLoginHasError, loginHasError } = useContext(AuthContext)
-  if (!!localStorage.getItem('authTokens')) navigate('/home') // Logged in users don't have access to login page
 
   const closeModalHandler = () => {
     setLoginHasError(false)
@@ -26,6 +25,11 @@ const Login = () => {
     if (emailCurrentValue.trim().length === 0 || passwordCurrentValue.trim().length === 0) return;
     login(emailCurrentValue, passwordCurrentValue)
   };
+
+  useEffect(() => {
+    if (!!localStorage.getItem('authTokens')) navigate('/home') // Logged in users don't have access to login page
+  }, [])
+  
   return (
     <div className={classes["page-container"]}>
       <Overlay onOverlayClick={closeModalHandler} isVisible={loginHasError} />

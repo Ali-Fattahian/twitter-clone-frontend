@@ -4,10 +4,10 @@ import * as Yup from "yup";
 import classes from "../pages/EditProfilePage.module.css";
 import useAxios from "../useAxios";
 import { useNavigate } from "react-router-dom";
-import { ServerContext } from '../store/server-context';
+import { ServerContext } from "../store/server-context";
 
 const EditProfileForm = (props) => {
-  const api = useAxios()
+  const api = useAxios();
   let isUsernameValid;
   let isEmailValid;
   const [profilePicture, setProfilePicture] = useState(props.profile.picture);
@@ -18,7 +18,8 @@ const EditProfileForm = (props) => {
     useState(false);
   const [profileChanged, setProfileChanged] = useState(false);
   const navigate = useNavigate();
-  const { serverURL } = useContext(ServerContext)
+  const { serverURL } = useContext(ServerContext);
+  const [success, setSuccess] = useState(false);
 
   const EditProfileSchema = Yup.object().shape({
     firstname: Yup.string()
@@ -102,9 +103,12 @@ const EditProfileForm = (props) => {
           if (res && res.status === 200) {
             if (values.username !== props.profile.username) {
               localStorage.clear();
-              navigate('/home')
-            };
-            navigate(`/edit/${values.username}`);
+              navigate("/home");
+            }
+            setSuccess(true)
+            window.setInterval(() => {
+              setSuccess(false)
+            }, 4000)
           }
         });
     }
@@ -128,9 +132,12 @@ const EditProfileForm = (props) => {
           if (res && res.status === 200) {
             if (values.username !== props.profile.username) {
               localStorage.clear();
-              navigate('/home')
-            };
-            navigate(`/edit/${values.username}`);
+              navigate("/home");
+            }
+            setSuccess(true)
+            window.setInterval(() => {
+              setSuccess(false)
+            }, 4000)
           }
         });
     }
@@ -154,9 +161,12 @@ const EditProfileForm = (props) => {
           if (res && res.status === 200) {
             if (values.username !== props.profile.username) {
               localStorage.clear();
-              navigate('/home')
-            };
-            navigate(`/edit/${values.username}`);
+              navigate("/home");
+            }
+            setSuccess(true)
+            window.setInterval(() => {
+              setSuccess(false)
+            }, 4000)
           }
         });
     }
@@ -178,10 +188,13 @@ const EditProfileForm = (props) => {
         .then((res) => {
           if (res && res.status === 200) {
             if (values.username !== props.profile.username) {
-              localStorage.clear()
-              navigate('/home')
-            };
-            navigate(`/edit/${values.username}`);
+              localStorage.clear();
+              navigate("/home");
+            }
+            setSuccess(true)
+            window.setInterval(() => {
+              setSuccess(false)
+            }, 4000)
           }
         });
     }
@@ -304,7 +317,24 @@ const EditProfileForm = (props) => {
                 className={classes["err-msg"]}
               />
             </div>
-            <small>*If you change your username, you will be logged out, you should log in again after that.</small>
+            <small>
+              <span style={{ color: "red" }}>*</span>If you change your
+              username, you will be logged out, you should log in again after
+              that.
+            </small>
+            {success && (
+              <small
+                style={{
+                  backgroundColor: "#538953",
+                  color: "white",
+                  padding: ".5rem",
+                  borderRadius: "25px",
+                  textAlign: "center",
+                }}
+              >
+                Saved!
+              </small>
+            )}
             <div
               className={classes["form-section"]}
               style={{ display: "block" }}

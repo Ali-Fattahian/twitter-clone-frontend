@@ -31,7 +31,6 @@ function App() {
   const shouldRedirect = true;
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isAddTweetVisible, setIsAddTweetVisible] = useState(false);
-  const isLoggedIn = !!localStorage.getItem("authTokens");
 
   const clickMenuHandler = () => {
     setIsMenuOpen((prevState) => !prevState);
@@ -77,14 +76,7 @@ function App() {
               path="bookmarks"
               element={<Bookmarks pageName="Bookmarks" onMenuClick={clickMenuHandler} isMenuOpen={isMenuOpen} />}
             />
-            {
-              <Route
-                path="login"
-                element={
-                  !isLoggedIn ? <Login /> : <Navigate replace to="/home" />
-                }
-              />
-            }
+            <Route path="login" element={<Login />}/>
             <Route path="signup" element={<Signup onMenuClick={clickMenuHandler} isMenuOpen={isMenuOpen} />} />
             <Route
               path="tweets/:tweetId"
