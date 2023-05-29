@@ -18,7 +18,7 @@ import PrivateRoute from "./PrivateRoute";
 
 const HomePage = React.lazy(() => import("./pages/HomePage"));
 const Explore = React.lazy(() => import("./pages/Explore"));
-const Profile = React.lazy(() => import("./pages/ProfilePage"));
+const ProfilePage = React.lazy(() => import("./pages/ProfilePage"));
 const Bookmarks = React.lazy(() => import("./pages/Bookmarks"));
 const Login = React.lazy(() => import("./pages/Auth/Login"));
 const Signup = React.lazy(() => import("./pages/Auth/Signup"));
@@ -82,7 +82,7 @@ function App() {
               path="tweets/:tweetId"
               element={<TweetDetailPage onMenuClick={clickMenuHandler} isMenuOpen={isMenuOpen} />}
             />
-            <Route path=":username" element={<Profile pageName="Profile" onMenuClick={clickMenuHandler} isMenuOpen={isMenuOpen} />} />
+            <Route path=":username" element={<ProfilePage pageName="Profile" onMenuClick={clickMenuHandler} isMenuOpen={isMenuOpen} />} />
             <Route
               path="edit/:username"
               element={
