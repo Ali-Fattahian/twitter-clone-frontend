@@ -65,12 +65,12 @@ const AddTweetOverlay = (props) => {
             />
           <textarea
             name="tweet-content"
-            placeholder="What's happening?"
+            placeholder={`${isLoggedIn ? 'What\'s happening?' : 'Please login first'}`}
             ref={tweetContent}
           />
         </div>
         <div className="add-tweet__section" id="add-tweet__btn">
-          <button type="submit" className="btn">
+          <button type="submit" className="btn" disabled={!isLoggedIn}>
             Tweet
           </button>
         </div>

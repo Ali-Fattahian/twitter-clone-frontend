@@ -53,6 +53,11 @@
     border-bottom: none;
 } */
 
+button:disabled {
+    opacity: .7;
+    cursor: default;
+}
+
 .no-tweet {
     display: flex;
     justify-content: center;

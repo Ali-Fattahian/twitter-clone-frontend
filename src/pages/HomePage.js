@@ -15,6 +15,7 @@ const HomePage = (props) => {
   const [errorMessage, setErrorMessage] = useState(null);
   const { serverURL } = useContext(ServerContext);
   const { userData } = useContext(AuthContext);
+  const [isOverlayVisible, setIsOverlayVisible] = useState(false)
 
   const getTweets = async () => {
     const response = await axios.get(`${serverURL}home`);
@@ -34,19 +35,18 @@ const HomePage = (props) => {
   const errorMessageCloseHandler = () => {
     setErrorMessage(null);
     setHasError(false);
+    setIsOverlayVisible(false)
   };
 
   const onOverlayClick = () => {
-    props.onMenuClick();
+    setIsOverlayVisible(false)
+    setHasError(false)
+    setErrorMessage(false)
   };
 
   return (
     <React.Fragment>
-      {!!props.isMenuOpen ? (
-        <Overlay onOverlayClick={onOverlayClick} isVisible={true} />
-      ) : (
-        <Overlay onOverlayClick={onOverlayClick} isVisible={false} />
-      )}
+      <Overlay onOverlayClick={onOverlayClick} isVisible={isOverlayVisible} />
       {hasError && (
         <ErrorMessage
           errorMessage={errorMessage}
@@ -68,7 +68,7 @@ const HomePage = (props) => {
           </div>
           <p>{props.pageName}</p>
         </section>
-        <AddTweet onError={showErrorMessageHandler} />
+        <AddTweet onError={showErrorMessageHandler} setIsOverlayVisible={setIsOverlayVisible} />
         <TweetList tweetList={tweetList} isBookmarkPage={false} />
       </div>
       <div className="main__right-side">

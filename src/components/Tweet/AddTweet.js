@@ -24,6 +24,7 @@ const AddTweet = (props) => {
         sendData();
       }
     } else {
+      props.setIsOverlayVisible(true)
       props.onError(
         <p>
           Please <Link to="/login">login</Link> before adding a tweet.

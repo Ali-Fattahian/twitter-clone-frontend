@@ -57,7 +57,7 @@ function App() {
             <Route
               path="home"
               element={
-                <HomePage pageName="Home" onMenuClick={clickMenuHandler} isMenuOpen={isMenuOpen} />
+                <HomePage pageName="Home" />
               }
             />
             <Route
