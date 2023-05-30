@@ -76,6 +76,7 @@ const EditProfileForm = (props) => {
         }
       ),
     bio: Yup.string().max(300, "Too Long!"),
+    password: Yup.string().min(4, "Your password is too short."),
   });
 
   const formSubmitHandler = async (values) => {
@@ -91,6 +92,7 @@ const EditProfileForm = (props) => {
             lastname: values.lastname,
             bio: values.bio,
             email: values.email,
+            password: values.password,
             username: values.username,
             picture: formData.get("picture"),
             background_picture: formData.get("background_picture"),
@@ -105,10 +107,10 @@ const EditProfileForm = (props) => {
               localStorage.clear();
               navigate("/home");
             }
-            setSuccess(true)
+            setSuccess(true);
             window.setInterval(() => {
-              setSuccess(false)
-            }, 4000)
+              setSuccess(false);
+            }, 4000);
           }
         });
     }
@@ -121,6 +123,7 @@ const EditProfileForm = (props) => {
             lastname: values.lastname,
             bio: values.bio,
             email: values.email,
+            password: values.password,
             username: values.username,
             picture: formData.get("picture"),
           },
@@ -134,10 +137,10 @@ const EditProfileForm = (props) => {
               localStorage.clear();
               navigate("/home");
             }
-            setSuccess(true)
+            setSuccess(true);
             window.setInterval(() => {
-              setSuccess(false)
-            }, 4000)
+              setSuccess(false);
+            }, 4000);
           }
         });
     }
@@ -150,6 +153,7 @@ const EditProfileForm = (props) => {
             lastname: values.lastname,
             bio: values.bio,
             email: values.email,
+            password: values.password,
             username: values.username,
             background_picture: formData.get("background_picture"),
           },
@@ -163,10 +167,10 @@ const EditProfileForm = (props) => {
               localStorage.clear();
               navigate("/home");
             }
-            setSuccess(true)
+            setSuccess(true);
             window.setInterval(() => {
-              setSuccess(false)
-            }, 4000)
+              setSuccess(false);
+            }, 4000);
           }
         });
     }
@@ -179,6 +183,7 @@ const EditProfileForm = (props) => {
             lastname: values.lastname,
             bio: values.bio,
             email: values.email,
+            password: values.password,
             username: values.username,
           },
           {
@@ -191,10 +196,10 @@ const EditProfileForm = (props) => {
               localStorage.clear();
               navigate("/home");
             }
-            setSuccess(true)
+            setSuccess(true);
             window.setInterval(() => {
-              setSuccess(false)
-            }, 4000)
+              setSuccess(false);
+            }, 4000);
           }
         });
     }
@@ -210,6 +215,7 @@ const EditProfileForm = (props) => {
         backgroundPicture: props.profile.background_picture,
         username: props.profile.username,
         email: props.profile.email,
+        password: '',
       }}
       onSubmit={formSubmitHandler}
       validationSchema={EditProfileSchema}
@@ -322,6 +328,18 @@ const EditProfileForm = (props) => {
               username, you will be logged out, you should log in again after
               that.
             </small>
+            <div className={classes["form-section"]}>
+              <Field
+                type="password"
+                name="password"
+                placeholder="Change password..."
+              />
+              <ErrorMessage
+                name="password"
+                component="div"
+                className={classes["err-msg"]}
+              />
+            </div>
             {success && (
               <small
                 style={{
