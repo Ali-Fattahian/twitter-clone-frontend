@@ -22,6 +22,9 @@ const ProfilePage = React.lazy(() => import("./pages/ProfilePage"));
 const Bookmarks = React.lazy(() => import("./pages/Bookmarks"));
 const Login = React.lazy(() => import("./pages/Auth/Login"));
 const Signup = React.lazy(() => import("./pages/Auth/Signup"));
+const ActivateAccount = React.lazy(() =>
+  import("./pages/Auth/ActivateAccountPage")
+);
 const TweetDetailPage = React.lazy(() => import("./pages/TweetDetailPage"));
 const UserFollowers = React.lazy(() => import("./pages/UserFollowers"));
 const UserFollowings = React.lazy(() => import("./pages/UserFollowings"));
@@ -43,70 +46,140 @@ function App() {
 
   return (
     <>
-    <AuthContextProvider>
-    <ServerContextProvider>
-      <Router>
-        <Overlay
-          isVisible={isAddTweetVisible}
-          onOverlayClick={closeAddTweetHandler}
-        />
-        <Navigation onAddTweetFormClick={showAddTweetHandler} />
-        {isAddTweetVisible && <AddTweetOverlay closeAddTweetHandler={closeAddTweetHandler} />}
-        <Suspense fallback={<Spinner />}>
-          <Routes>
-            <Route
-              path="home"
-              element={
-                <HomePage pageName="Home" />
-              }
+      <AuthContextProvider>
+        <ServerContextProvider>
+          <Router>
+            <Overlay
+              isVisible={isAddTweetVisible}
+              onOverlayClick={closeAddTweetHandler}
             />
-            <Route
-              path="/"
-              element={
-                shouldRedirect ? <Navigate replace to="/login" /> : <Login onMenuClick={clickMenuHandler} isMenuOpen={isMenuOpen} />
-              }
-            />
-            <Route
-              path="explore"
-              element={
-                <Explore pageName="Explore" onMenuClick={clickMenuHandler} isMenuOpen={isMenuOpen} />
-              }
-            />
-            <Route
-              path="bookmarks"
-              element={<Bookmarks pageName="Bookmarks" onMenuClick={clickMenuHandler} isMenuOpen={isMenuOpen} />}
-            />
-            <Route path="login" element={<Login />}/>
-            <Route path="signup" element={<Signup onMenuClick={clickMenuHandler} isMenuOpen={isMenuOpen} />} />
-            <Route
-              path="tweets/:tweetId"
-              element={<TweetDetailPage onMenuClick={clickMenuHandler} isMenuOpen={isMenuOpen} />}
-            />
-            <Route path=":username" element={<ProfilePage pageName="Profile" onMenuClick={clickMenuHandler} isMenuOpen={isMenuOpen} />} />
-            <Route
-              path="edit/:username"
-              element={
-                <PrivateRoute>
-                <EditProfilePage
-                  pageName="Edit Profile"
-                  onMenuClick={clickMenuHandler}
-                  isMenuOpen={isMenuOpen}
+            <Navigation onAddTweetFormClick={showAddTweetHandler} />
+            {isAddTweetVisible && (
+              <AddTweetOverlay closeAddTweetHandler={closeAddTweetHandler} />
+            )}
+            <Suspense fallback={<Spinner />}>
+              <Routes>
+                <Route
+                  path="home"
+                  element={
+                    <HomePage
+                      pageName="Home"
+                      onMenuClick={clickMenuHandler}
+                      setIsMenuOpen={setIsMenuOpen}
+                    />
+                  }
                 />
-                </PrivateRoute>
-              }
+                <Route
+                  path="/"
+                  element={
+                    shouldRedirect ? (
+                      <Navigate replace to="/login" />
+                    ) : (
+                      <Login
+                        onMenuClick={clickMenuHandler}
+                        isMenuOpen={isMenuOpen}
+                      />
+                    )
+                  }
+                />
+                <Route
+                  path="explore"
+                  element={
+                    <Explore
+                      pageName="Explore"
+                      onMenuClick={clickMenuHandler}
+                      isMenuOpen={isMenuOpen}
+                    />
+                  }
+                />
+                <Route
+                  path="bookmarks"
+                  element={
+                    <Bookmarks
+                      pageName="Bookmarks"
+                      onMenuClick={clickMenuHandler}
+                      isMenuOpen={isMenuOpen}
+                    />
+                  }
+                />
+                <Route path="login" element={<Login />} />
+                <Route
+                  path="signup"
+                  element={
+                    <Signup
+                      onMenuClick={clickMenuHandler}
+                      isMenuOpen={isMenuOpen}
+                    />
+                  }
+                />
+                <Route path="activate-account" element={<ActivateAccount />} />
+                <Route
+                  path="tweets/:tweetId"
+                  element={
+                    <TweetDetailPage
+                      onMenuClick={clickMenuHandler}
+                      isMenuOpen={isMenuOpen}
+                    />
+                  }
+                />
+                <Route
+                  path=":username"
+                  element={
+                    <ProfilePage
+                      pageName="Profile"
+                      onMenuClick={clickMenuHandler}
+                      isMenuOpen={isMenuOpen}
+                    />
+                  }
+                />
+                <Route
+                  path="edit/:username"
+                  element={
+                    <PrivateRoute>
+                      <EditProfilePage
+                        pageName="Edit Profile"
+                        onMenuClick={clickMenuHandler}
+                        isMenuOpen={isMenuOpen}
+                      />
+                    </PrivateRoute>
+                  }
+                />
+                <Route
+                  path=":username/followers"
+                  element={
+                    <UserFollowers
+                      onMenuClick={clickMenuHandler}
+                      isMenuOpen={isMenuOpen}
+                    />
+                  }
+                />
+                <Route
+                  path=":username/followings"
+                  element={
+                    <UserFollowings
+                      onMenuClick={clickMenuHandler}
+                      isMenuOpen={isMenuOpen}
+                    />
+                  }
+                />
+                <Route
+                  path="*"
+                  element={
+                    <NoMatch
+                      onMenuClick={clickMenuHandler}
+                      isMenuOpen={isMenuOpen}
+                    />
+                  }
+                />
+              </Routes>
+            </Suspense>
+            <SmallScreenNav
+              isMenuOpen={isMenuOpen}
+              onCloseBtnClick={closeMenuHandler}
             />
-            <Route path=":username/followers" element={<UserFollowers onMenuClick={clickMenuHandler} isMenuOpen={isMenuOpen} />} />
-            <Route path=":username/followings" element={<UserFollowings onMenuClick={clickMenuHandler} isMenuOpen={isMenuOpen} />} />
-            <Route path="*" element={<NoMatch onMenuClick={clickMenuHandler} isMenuOpen={isMenuOpen} />} />
-          </Routes>
-        </Suspense>
-        <SmallScreenNav
-          isMenuOpen={isMenuOpen}
-          onCloseBtnClick={closeMenuHandler}
-        />
-      </Router>
-    </ServerContextProvider>
-    </AuthContextProvider>
+          </Router>
+        </ServerContextProvider>
+      </AuthContextProvider>
     </>
   );
 }

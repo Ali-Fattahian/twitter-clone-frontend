@@ -76,7 +76,7 @@ const EditProfileForm = (props) => {
         }
       ),
     bio: Yup.string().max(300, "Too Long!"),
-    password: Yup.string().min(4, "Your password is too short."),
+    password: Yup.string().min(8, "Your password is too short."),
   });
 
   const formSubmitHandler = async (values) => {

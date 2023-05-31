@@ -15,7 +15,7 @@ const HomePage = (props) => {
   const [errorMessage, setErrorMessage] = useState(null);
   const { serverURL } = useContext(ServerContext);
   const { userData } = useContext(AuthContext);
-  const [isOverlayVisible, setIsOverlayVisible] = useState(false)
+  const [isOverlayVisible, setIsOverlayVisible] = useState(false);
 
   const getTweets = async () => {
     const response = await axios.get(`${serverURL}home`);
@@ -35,13 +35,14 @@ const HomePage = (props) => {
   const errorMessageCloseHandler = () => {
     setErrorMessage(null);
     setHasError(false);
-    setIsOverlayVisible(false)
+    setIsOverlayVisible(false);
   };
 
   const onOverlayClick = () => {
-    setIsOverlayVisible(false)
-    setHasError(false)
-    setErrorMessage(false)
+    setIsOverlayVisible(false);
+    setHasError(false);
+    setErrorMessage(false);
+    props.setIsMenuOpen(false)
   };
 
   return (
@@ -58,17 +59,29 @@ const HomePage = (props) => {
           <img
             src={!!userData ? userData.picture : ProfilePicture}
             alt="Profile"
-            onClick={props.onMenuClick}
+            onClick={() => {
+              setIsOverlayVisible(true);
+              props.onMenuClick();
+            }}
             style={{ objectFit: "cover" }}
           />
-          <div className="ham-menu__btn" onClick={props.onMenuClick}>
+          <div
+            className="ham-menu__btn"
+            onClick={() => {
+              setIsOverlayVisible(true);
+              props.onMenuClick();
+            }}
+          >
             <div></div>
             <div></div>
             <div></div>
           </div>
           <p>{props.pageName}</p>
         </section>
-        <AddTweet onError={showErrorMessageHandler} setIsOverlayVisible={setIsOverlayVisible} />
+        <AddTweet
+          onError={showErrorMessageHandler}
+          setIsOverlayVisible={setIsOverlayVisible}
+        />
         <TweetList tweetList={tweetList} isBookmarkPage={false} />
       </div>
       <div className="main__right-side">
