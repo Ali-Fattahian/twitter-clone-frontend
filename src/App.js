@@ -1,7 +1,7 @@
 import React, { useState, Suspense } from "react";
 import "./App.css";
 import {
-  BrowserRouter as Router,
+  HashRouter as Router,
   Route,
   Routes,
   Navigate,
@@ -60,26 +60,13 @@ function App() {
             <Suspense fallback={<Spinner />}>
               <Routes>
                 <Route
-                  path="home"
+                  path="/"
                   element={
                     <HomePage
                       pageName="Home"
                       onMenuClick={clickMenuHandler}
                       setIsMenuOpen={setIsMenuOpen}
                     />
-                  }
-                />
-                <Route
-                  path="/"
-                  element={
-                    shouldRedirect ? (
-                      <Navigate replace to="/login" />
-                    ) : (
-                      <Login
-                        onMenuClick={clickMenuHandler}
-                        isMenuOpen={isMenuOpen}
-                      />
-                    )
                   }
                 />
                 <Route
@@ -112,7 +99,7 @@ function App() {
                     />
                   }
                 />
-                <Route path="activate-account" element={<ActivateAccount />} />
+                <Route path="activate-account/:token" element={<ActivateAccount />} />
                 <Route
                   path="tweets/:tweetId"
                   element={
@@ -123,7 +110,7 @@ function App() {
                   }
                 />
                 <Route
-                  path=":username"
+                  path="get-profile/:username"
                   element={
                     <ProfilePage
                       pageName="Profile"

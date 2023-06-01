@@ -2,7 +2,7 @@ import classes from "./Searchbar.module.css";
 
 const SearchResult = (props) => {
   return (
-    <a className={classes["profile"]} href={`/${props.username}`}>
+    <a className={classes["profile"]} href={`#/get-profile/${props.username}`}>
       <img
         className={classes["profile__img"]}
         src={props.picture}

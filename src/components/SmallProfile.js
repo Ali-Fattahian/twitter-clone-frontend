@@ -29,7 +29,7 @@ const SmallProfile = (props) => {
     <div
       className={classes["small-profile__section"]}
       onClick={() => {
-        navigate(`/${props.username}`);
+        navigate(`/get-profile/${props.username}`);
       }}
       style={{ cursor: "pointer" }}
     >

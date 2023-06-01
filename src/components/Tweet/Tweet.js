@@ -10,7 +10,7 @@ import Overlay from "../Modal/Overlay";
 import SaveTweet from "../SaveTweet";
 
 const Tweet = (props) => {
-  const userLink = `/${props.username}`;
+  const userLink = `#/get-profile/${props.username}`;
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [hasStarted, setHasStarted] = useState(false);

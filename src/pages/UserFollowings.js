@@ -71,7 +71,7 @@ const UserFollowings = (props) => {
                 <div></div>
               </div>
               <div className={classes["top-navigation__username"]}>
-                <a href={`/${username}`}>{username}</a>
+                <NavLink to={`/get-profile/${username}`}>{username}</NavLink>
               </div>
             </section>
           </div>

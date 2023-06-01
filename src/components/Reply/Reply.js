@@ -4,7 +4,7 @@ import classes from "./Reply.module.css";
 
 const Reply = (props) => {
   const navigate = useNavigate();
-  const navigateToProfileHandler = () => navigate(`/${props.username}`);
+  const navigateToProfileHandler = () => navigate(`/get-profile/${props.username}`);
 
   return (
     <div className={classes["reply"]}>

@@ -27,7 +27,7 @@ const YouMightLike = () => {
 
   useEffect(() => {
     getSuggestedUsers()
-  }, [getSuggestedUsers, followWasSuc])
+  }, [followWasSuc])
 
   return (
     <section className={classes["you-might-like"]}>

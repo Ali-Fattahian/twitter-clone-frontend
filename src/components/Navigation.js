@@ -10,7 +10,7 @@ const Navigation = (props) => {
 
   const profileClickHandler = () => {
     if (!!localStorage.getItem('authTokens')) {
-      navigate(`/${user.username}`)
+      navigate(`get-profile/${user.username}`)
     } else {
       navigate('/login');
     }
@@ -19,18 +19,18 @@ const Navigation = (props) => {
   return (
     <section className={`${classes["nav-container"]} main__left-side`}>
       <nav className={classes.nav}>
-        <NavLink to="/home" className={classes["nav__item"]} id={classes['twitter-icon']}>
+        <NavLink to="/" className={classes["nav__item"]} id={classes['twitter-icon']}>
           <i className="fa fa-twitter"></i>
         </NavLink>
         <NavLink
-          to="/home"
+          to="/"
           className={classes['nav__item']}
           >
           <i className="fa fa-home" title="Home page"></i>
           <p>Home</p>
         </NavLink>
         <NavLink
-          to="/explore"
+          to="explore"
           className={classes['nav__item']}
         >
           <i className="fa fa-hashtag" title="Explore page"></i>
@@ -48,7 +48,7 @@ const Navigation = (props) => {
         </NavLink>
         <div
           onClick={profileClickHandler}
-          to="/:username"
+          to="/get-profile/:username"
           className={classes['nav__item']}
         >
           <i className="far fa-user-circle" title="Profile page"></i>

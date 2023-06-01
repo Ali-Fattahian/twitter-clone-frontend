@@ -7,7 +7,7 @@ const SuggestedUser = (props) => {
     <div className={classes["suggested-user"]}>
       <div className={classes["suggested-user__left"]}>
         <img src={ProfilePicture} alt="profile" />
-        <a className={classes["user-info"]} href={`/${props.user.username}`}>
+        <a className={classes["user-info"]}  href={`#/get-profile/${props.user.username}`}>
           <p
             id={classes["fullname"]}
           >{`${props.user.firstname} ${props.user.lastname}`}</p>

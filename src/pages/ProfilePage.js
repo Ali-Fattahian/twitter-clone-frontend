@@ -51,7 +51,7 @@ const ProfilePage = (props) => {
     setTweetHasStarted(true);
     setTweetsIsLoading(true);
     await axios
-      .get(`http://127.0.0.1:8000/api/profiles/${username}/tweets`)
+      .get(`${serverURL}profiles/${username}/tweets`)
       .then((res) => {
         if (res.status === 200) {
           setProfileTweets(res.data);
@@ -64,7 +64,7 @@ const ProfilePage = (props) => {
   useEffect(() => {
     getProfile();
     getTweets();
-  }, [follow]);
+  }, [follow, username]);
 
   return (
     <React.Fragment>
