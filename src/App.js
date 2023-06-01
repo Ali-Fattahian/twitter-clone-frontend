@@ -4,7 +4,6 @@ import {
   HashRouter as Router,
   Route,
   Routes,
-  Navigate,
 } from "react-router-dom";
 import Navigation from "./components/Navigation";
 import SmallScreenNav from "./components/Modal/SmallScreenNav";
@@ -31,7 +30,6 @@ const UserFollowings = React.lazy(() => import("./pages/UserFollowings"));
 const NoMatch = React.lazy(() => import("./pages/NoMatch"));
 
 function App() {
-  const shouldRedirect = true;
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isAddTweetVisible, setIsAddTweetVisible] = useState(false);
 

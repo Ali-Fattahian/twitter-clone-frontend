@@ -35,9 +35,9 @@ const useAxios = () => {
     return req;
   });
   axiosInstance.interceptors.response.use(res => res, function (err) {
-    if (err.response.status === 404) {
-      void(0);
-    }
+    // if (err.response.status === 404) {
+    //   return;
+    // }
     return Promise.reject(err);
   })
   return axiosInstance;

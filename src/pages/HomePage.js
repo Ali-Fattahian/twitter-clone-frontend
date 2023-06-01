@@ -16,7 +16,7 @@ const HomePage = (props) => {
   const { serverURL } = useContext(ServerContext);
   const { userData } = useContext(AuthContext);
   const [isOverlayVisible, setIsOverlayVisible] = useState(false);
-
+  
   const getTweets = async () => {
     const response = await axios.get(`${serverURL}home`);
 

@@ -1,41 +1,60 @@
-import React, { useState, useEffect } from 'react';
-import axiosInstance from '../axios';
-import { parseJwt } from '../utils';
+import React, { useState, useEffect } from "react";
+import useAxios from "../useAxios";
+import { parseJwt } from "../utils";
 
-export const AuthContext = React.createContext()
+export const AuthContext = React.createContext({
+  authTokens: null,
+  setAuthTokens: () => {},
+  login: () => {},
+  user: null,
+  logout: () => {},
+  setUser: () => {},
+  userData: null,
+  loginHasError: false,
+  setLoginHasError: () => {},
+});
 
 export const AuthContextProvider = ({ children }) => {
-  const baseURL = 'http://localhost:8000/api/'
-  const [authTokens, setAuthTokens] = useState(() => localStorage.getItem('authTokens') ? JSON.parse(localStorage.getItem('authTokens')) : null)
-  const [user, setUser] = useState(() => localStorage.getItem('authTokens') ? parseJwt(JSON.parse(localStorage.getItem('authTokens')).access) : null)
-  const [userData, setUserData] = useState(null)
-  const [loading, setIsLoading] = useState(true) // First Load
-  const [loginHasError, setLoginHasError] = useState(false)
+  const baseURL = "http://localhost:8000/api/";
+  const [authTokens, setAuthTokens] = useState(() =>
+    localStorage.getItem("authTokens")
+      ? JSON.parse(localStorage.getItem("authTokens"))
+      : null
+  );
+  const [user, setUser] = useState(() =>
+    localStorage.getItem("authTokens")
+      ? parseJwt(JSON.parse(localStorage.getItem("authTokens")).access)
+      : null
+  );
+  const [userData, setUserData] = useState(null);
+  const [loading, setIsLoading] = useState(true); // First Load
+  const [loginHasError, setLoginHasError] = useState(false);
+  const api = useAxios();
 
   const login = async (email, password) => {
     const response = await fetch(`${baseURL}token/`, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify({'email': email, 'password': password})
-    })
+      body: JSON.stringify({ email: email, password: password }),
+    });
 
-    const data = await response.json()
+    const data = await response.json();
     if (response.status === 200) {
-      setAuthTokens(data)
-      setUser(parseJwt(data.access).username)
-      localStorage.setItem('authTokens', JSON.stringify(data))
-      window.location.replace('/home')
+      setAuthTokens(data);
+      setUser(parseJwt(data.access).username);
+      localStorage.setItem("authTokens", JSON.stringify(data));
+      window.location.replace("/home");
     } else {
-      setLoginHasError(true)
+      setLoginHasError(true);
     }
-  }
+  };
 
   const fetchCurrentUserData = async () => {
     const username = parseJwt(authTokens.access).username;
 
-    axiosInstance.get(`profiles/${username}`).then((res) => {
+    await api.get(`profiles/${username}`).then((res) => {
       if (res.status === 200) {
         setUserData(res.data);
       }
@@ -43,13 +62,12 @@ export const AuthContextProvider = ({ children }) => {
   };
 
   const logout = () => {
-    setAuthTokens(null)
-    setUser(null)
-    localStorage.removeItem('authTokens')
-    window.location.reload()
-  }
+    setAuthTokens(null);
+    setUser(null);
+    localStorage.removeItem("authTokens");
+    window.location.reload();
+  };
 
- 
   const contextData = {
     authTokens,
     setAuthTokens,
@@ -60,17 +78,19 @@ export const AuthContextProvider = ({ children }) => {
     userData,
     loginHasError,
     setLoginHasError,
-  }
+  };
 
   useEffect(() => {
     if (authTokens) {
-      setUser(parseJwt(authTokens.access))
-      fetchCurrentUserData()
+      setUser(parseJwt(authTokens.access));
+      fetchCurrentUserData();
     }
-    setIsLoading(false)
-  }, [authTokens, loading])
+    setIsLoading(false);
+  }, [authTokens, loading]);
 
-  return <AuthContext.Provider value={contextData}>
-    {loading ? null : children}
-  </AuthContext.Provider>
-}
+  return (
+    <AuthContext.Provider value={contextData}>
+      {loading ? null : children}
+    </AuthContext.Provider>
+  );
+};
