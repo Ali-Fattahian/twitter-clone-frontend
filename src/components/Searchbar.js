@@ -77,7 +77,7 @@ const Searchbar = () => {
             <p style={{ textAlign: "center" }}>
               {input.length > 0 && users.length === 0
                 ? `No results for '${input}'`
-                : "Try searching for people, topics, or keywords"}
+                : "Try searching for people ..."}
             </p>
           )}
         </div>

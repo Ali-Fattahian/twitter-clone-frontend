@@ -35,7 +35,7 @@ const Bookmarks = (props) => {
 
   useEffect(() => {
     getTweets();
-  }, [needRefresh, getTweets]);
+  }, [needRefresh]);
 
   return (
     <React.Fragment>
