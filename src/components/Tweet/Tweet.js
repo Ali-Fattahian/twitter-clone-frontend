@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import useAxios from "../../useAxios";
 import LikeButton from "../LikeButton";
 import UnlikeButton from "../UnlikeButton";
 import classes from "./TweetStyle.module.css";
@@ -8,6 +7,7 @@ import AddReply from "../Reply/AddReply";
 import ErrorMessage from "../Modal/ErrorMessage";
 import Overlay from "../Modal/Overlay";
 import SaveTweet from "../SaveTweet";
+import axiosInstance from "../../axiosInstance";
 
 const Tweet = (props) => {
   const userLink = `#/get-profile/${props.username}`;
@@ -22,7 +22,6 @@ const Tweet = (props) => {
   const [hasError, setHasError] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
   const [, setNewReply] = useState(null);
-  const api = useAxios()
 
   const showReply = () => {
     setIsAddReplyVisible(true);
@@ -48,7 +47,7 @@ const Tweet = (props) => {
     setHasStarted(true);
     setIsLoading(true);
     if (isLoggedIn) {
-      await api
+      await axiosInstance
         .get(`like/${props.tweetId}/check`)
         .then((res) => {
           if (res.status === 200) {

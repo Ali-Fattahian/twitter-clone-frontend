@@ -2,9 +2,9 @@ import { useRef, useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import classes from "./TweetStyle.module.css";
 import ProfilePicture from "./default_profile.png";
-import useAxios from "../../useAxios";
 import { ServerContext } from "../../store/server-context";
 import { AuthContext } from "../../store/auth-context";
+import axiosInstance from "../../axiosInstance";
 
 const AddTweet = (props) => {
   const tweetContent = useRef("");
@@ -12,7 +12,6 @@ const AddTweet = (props) => {
   const { userData } = useContext(AuthContext)
   const { serverURL } = useContext(ServerContext);
   const [needToRefresh, setNeedToRefresh] = useState(null);
-  const api = useAxios();
 
   useEffect(() => {}, [needToRefresh])
 
@@ -35,7 +34,7 @@ const AddTweet = (props) => {
   };
 
   async function sendData() {
-    const response = await api.post(`${serverURL}compose/tweet`, {
+    const response = await axiosInstance.post(`${serverURL}compose/tweet`, {
       content: tweetContent.current.value,
     });
 

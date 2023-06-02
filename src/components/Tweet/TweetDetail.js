@@ -4,9 +4,9 @@ import { useNavigate, Link } from "react-router-dom";
 import classes from "./TweetStyle.module.css";
 import LikeButton from "../LikeButton";
 import UnlikeButton from "../UnlikeButton";
-import useAxios from "../../useAxios";
 import SaveTweet from "../SaveTweet";
 import ErrorMessage from "../Modal/ErrorMessage";
+import axiosInstance from "../../axiosInstance";
 
 const TweetDetail = (props) => {
   const userLink = `/${props.username}`;
@@ -20,13 +20,12 @@ const TweetDetail = (props) => {
   const replyContent = useRef("");
   const [hasError, setHasError] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
-  const api = useAxios();
 
   const checkForLikeButton = async () => {
     setHasStarted(true);
     setIsLoading(true);
     if (isLoggedIn) {
-      await api
+      await axiosInstance
         .get(`like/${props.tweetId}/check`)
         .then((res) => {
           if (res.status === 200) {
@@ -87,7 +86,7 @@ const TweetDetail = (props) => {
   };
 
   async function sendData() {
-    const response = await api.post(`tweets/${props.tweetId}/reply`, {
+    const response = await axiosInstance.post(`tweets/${props.tweetId}/reply`, {
       text: replyContent.current.value,
     });
 

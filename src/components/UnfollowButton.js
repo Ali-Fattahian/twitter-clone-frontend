@@ -1,10 +1,9 @@
 import { useNavigate } from "react-router-dom";
-import useAxios from "../useAxios";
+import axiosInstance from "../axiosInstance";
 
 const UnfollowButton = (props) => {
   const navigate = useNavigate();
   const isLoggedIn = !!localStorage.getItem("authTokens");
-  const api = useAxios()
 
   const unfollowHandler = async (e) => {
     let response;
@@ -13,9 +12,9 @@ const UnfollowButton = (props) => {
       navigate("/login");
     } else {
       if (props.pageName === 'followings' || props.pageName==='followers') {
-        response = await api.delete(`unfollow/${props.username}`)
+        response = await axiosInstance.delete(`unfollow/${props.username}`)
       } else {
-        response = await api.delete(
+        response = await axiosInstance.delete(
           `profiles/${props.unfollowId}/follow/delete`
         );
       }

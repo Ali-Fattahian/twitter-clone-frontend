@@ -6,8 +6,8 @@ import Profile from "../components/Profile";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import useAxios from "../useAxios";
 import { ServerContext } from "../store/server-context";
+import axiosInstance from "../axiosInstance";
 
 const ProfilePage = (props) => {
   const [user, setUser] = useState(null);
@@ -22,7 +22,6 @@ const ProfilePage = (props) => {
   const [tweetsHasStarted, setTweetHasStarted] = useState(false);
   const [tweetsHasError, setTweetsHasError] = useState(false);
   const { serverURL } = useContext(ServerContext)
-  const api = useAxios()
 
   const getProfile = async () => {
     setHasStarted(true);
@@ -35,7 +34,7 @@ const ProfilePage = (props) => {
     }
 
     if (isLoggedIn) {
-      await api
+      await axiosInstance
         .get(`profiles/${username}`)
         .then((res) => setUser(res.data))
         .catch((err) => setError(err));

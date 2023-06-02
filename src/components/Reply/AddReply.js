@@ -2,13 +2,12 @@ import React, { useContext, useRef } from "react";
 import { Link } from "react-router-dom";
 import classes from "./Reply.module.css";
 import Profile from "../Tweet/default_profile.png";
-import useAxios from "../../useAxios";
 import { AuthContext } from "../../store/auth-context";
+import axiosInstance from "../../axiosInstance";
 
 const AddReply = (props) => {
   const replyContent = useRef("");
   const { userData } = useContext(AuthContext)
-  const api = useAxios()
 
   const formSubmitHandler = (e) => {
     e.preventDefault();
@@ -27,7 +26,7 @@ const AddReply = (props) => {
   };
 
   async function sendData() {
-    const response = await api.post(`tweets/${props.tweetId}/reply`, {
+    const response = await axiosInstance.post(`tweets/${props.tweetId}/reply`, {
       text: replyContent.current.value,
     });
 

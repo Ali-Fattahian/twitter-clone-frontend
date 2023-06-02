@@ -7,8 +7,8 @@ import ProfileList from "../components/ProfileList";
 import Searchbar from "../components/Searchbar";
 import Overlay from "../components/Modal/Overlay";
 import axios from "axios";
-import useAxios from "../useAxios";
 import { ServerContext } from "../store/server-context";
+import axiosInstance from "../axiosInstance";
 
 const UserFollowings = (props) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -20,7 +20,6 @@ const UserFollowings = (props) => {
   const isLoggedIn = !!localStorage.getItem("authTokens");
   const { username } = useParams();
   const [refreshFollow, setRefreshFollow] = useState(null);
-  const api = useAxios();
 
   const getProfile = async () => {
     setHasStarted(true);
@@ -33,7 +32,7 @@ const UserFollowings = (props) => {
     }
 
     if (isLoggedIn) {
-      await api
+      await axiosInstance
         .get(`profiles/${username}/followers`)
         .then((res) => setProfiles(res.data))
         .catch((err) => setError(err));

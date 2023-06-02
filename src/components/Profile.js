@@ -7,7 +7,7 @@ import dateTimeGenerator from "../utils";
 import UnfollowButton from "./UnfollowButton";
 import Overlay from "./Modal/Overlay";
 import { AuthContext } from "../store/auth-context";
-import useAxios from "../useAxios";
+import axiosInstance from "../axiosInstance";
 
 const Profile = (props) => {
   const navigate = useNavigate();
@@ -15,7 +15,6 @@ const Profile = (props) => {
   const [hasStarted, setHasStarted] = useState(false);
   const [followOrEdit, setFollowOrEdit] = useState(null);
   const { user } = useContext(AuthContext);
-  const api = useAxios()
 
   const checkForButton = async () => {
     setHasStarted(true);
@@ -31,7 +30,7 @@ const Profile = (props) => {
           </button>
         );
       } else {
-        await api
+        await axiosInstance
           .get(`follow/${props.user.username}/check`)
           .then((res) => {
             if (res.status === 200) {

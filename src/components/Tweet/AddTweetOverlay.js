@@ -2,9 +2,9 @@ import { useRef, useContext, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import classes from "./TweetStyle.module.css";
 import ProfilePicture from "./default_profile.png";
-import useAxios from '../../useAxios';
 import { ServerContext } from "../../store/server-context";
 import { AuthContext } from "../../store/auth-context";
+import axiosInstance from "../../axiosInstance";
 
 const AddTweetOverlay = (props) => {
   const tweetContent = useRef("");
@@ -12,7 +12,6 @@ const AddTweetOverlay = (props) => {
   const { userData } = useContext(AuthContext)
   const [error, setError] = useState(null)
   const { serverURL } = useContext(ServerContext)
-  const api = useAxios()
 
   useEffect(() => {
   }, [error])
@@ -34,7 +33,7 @@ const AddTweetOverlay = (props) => {
   };
 
   async function sendData() {
-    const response = await api.post(
+    const response = await axiosInstance.post(
       `${serverURL}compose/tweet`,
       {
         content: tweetContent.current.value,

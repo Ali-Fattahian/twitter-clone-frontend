@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import useAxios from "../useAxios";
 import { parseJwt } from "../utils";
+import axios from "axios";
+import axiosInstance from "../axiosInstance";
 
 export const AuthContext = React.createContext({
   authTokens: null,
@@ -29,32 +30,36 @@ export const AuthContextProvider = ({ children }) => {
   const [userData, setUserData] = useState(null);
   const [loading, setIsLoading] = useState(true); // First Load
   const [loginHasError, setLoginHasError] = useState(false);
-  const api = useAxios();
 
   const login = async (email, password) => {
-    const response = await fetch(`${baseURL}token/`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email: email, password: password }),
-    });
-
-    const data = await response.json();
-    if (response.status === 200) {
-      setAuthTokens(data);
-      setUser(parseJwt(data.access).username);
-      localStorage.setItem("authTokens", JSON.stringify(data));
-      window.location.replace("/home");
-    } else {
-      setLoginHasError(true);
+    try {
+      const response = await axios.post(
+        `${baseURL}token/`,
+        { email: email, password: password },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (response.status === 200) {
+        setAuthTokens(response.data);
+        setUser(parseJwt(response.data.access).username);
+        localStorage.setItem("authTokens", JSON.stringify(response.data));
+        window.location.replace("/");
+      } else {
+        setLoginHasError(true);
+      }
+    } catch (err) {
+      console.log(err)
+      setLoginHasError(true)
     }
   };
 
   const fetchCurrentUserData = async () => {
     const username = parseJwt(authTokens.access).username;
 
-    await api.get(`profiles/${username}`).then((res) => {
+    await axiosInstance.get(`profiles/${username}`).then((res) => {
       if (res.status === 200) {
         setUserData(res.data);
       }

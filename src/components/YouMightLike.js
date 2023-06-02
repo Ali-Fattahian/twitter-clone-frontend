@@ -1,9 +1,9 @@
 import { useEffect, useState, useCallback, useContext } from "react";
 import classes from "./YouMightLike.module.css";
-import useAxios from "../useAxios";
 import axios from "axios";
 import SuggestedUser from "./SuggestedUser";
 import { ServerContext } from "../store/server-context";
+import axiosInstance from "../axiosInstance";
 
 const YouMightLike = () => {
   const [suggestedUsers, setSuggestedUsers] = useState([]);
@@ -11,19 +11,18 @@ const YouMightLike = () => {
   const [followWasSuc, setFollowWasSuc] = useState(null);
   const [follow, setFollow] = useState(null) // Completely useless, i have to make it, pass it down to follow btn because i did it in profile page and it is expected in follow btn component
   const { serverURL } = useContext(ServerContext)
-  const api = useAxios()
 
   const getSuggestedUsers = useCallback(async () => {
     let response;
     if (!isLoggedIn) {
       response = await axios.get(`${serverURL}suggested-users`);
     } else {
-      response = await api.get(
+      response = await axiosInstance.get(
         `${serverURL}suggested-users`
       );
     }
     if (response.status === 200) setSuggestedUsers(response.data);
-  }, [isLoggedIn, api, serverURL]);
+  }, [isLoggedIn, serverURL]);
 
   useEffect(() => {
     getSuggestedUsers()

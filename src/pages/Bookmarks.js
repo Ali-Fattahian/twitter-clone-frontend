@@ -3,9 +3,9 @@ import React, { useState, useEffect, useCallback, useContext } from "react";
 import Searchbar from "../components/Searchbar";
 import TweetList from "../components/Tweet/TweetList";
 import Overlay from "../components/Modal/Overlay";
-import useAxios from "../useAxios";
 import { useNavigate } from "react-router-dom";
 import { ServerContext } from "../store/server-context";
+import axiosInstance from "../axiosInstance";
 
 const Bookmarks = (props) => {
   const [tweetList, setTweetList] = useState([]);
@@ -13,11 +13,10 @@ const Bookmarks = (props) => {
   const navigate = useNavigate();
   const [needRefresh, setNeedRefresh] = useState(null);
   const { serverURL } = useContext(ServerContext)
-  const api = useAxios()
 
   const getTweets = useCallback(async () => {
     if (isLoggedIn) {
-      const response = await api.get(
+      const response = await axiosInstance.get(
         `${serverURL}bookmarks`
       );
       if (response.status === 200) {
@@ -27,7 +26,7 @@ const Bookmarks = (props) => {
     } else {
       navigate("/login");
     }
-  }, [isLoggedIn, navigate, api, serverURL]);
+  }, [isLoggedIn, navigate, serverURL]);
 
   const onOverlayClick = () => {
     props.onMenuClick();
