@@ -86,6 +86,7 @@ const AddReply = (props) => {
             className={classes["add-reply__input"]}
             placeholder="Tweet your reply"
             ref={replyContent}
+            name="reply"
           />
         </div>
         <div className={classes["add-reply__lower"]}>
