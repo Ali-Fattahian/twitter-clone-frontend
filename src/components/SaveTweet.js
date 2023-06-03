@@ -15,6 +15,7 @@ const SaveTweet = (props) => {
       const response = await axiosInstance.get(`bookmarks/${props.tweetId}/check`)
       if (response.status === 200) setIsSaved(true)
     } catch(err) {
+      console.clear()
       if (err.response.status === 404)
       setIsSaved(false)
     }

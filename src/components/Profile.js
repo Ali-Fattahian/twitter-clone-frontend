@@ -48,6 +48,7 @@ const Profile = (props) => {
             setFollowOrEdit(
               <FollowButton user={props.user} setFollow={props.setFollow} />
             );
+            console.clear()
           });
       }
     }

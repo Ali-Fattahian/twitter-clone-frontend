@@ -64,6 +64,7 @@ const Tweet = (props) => {
           }
         })
         .catch(() => {
+          console.clear()
           setLikeOrDislike(
             <LikeButton
               tweetId={props.tweetId}
