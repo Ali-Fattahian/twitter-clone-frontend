@@ -67,7 +67,7 @@ const SmallScreenNav = (props) => {
         </div>
       )}
       <div id={classes["nav__links"]}>
-        <NavLink to="/home" className={classes["nav__link"]}>
+        <NavLink to="/" className={classes["nav__link"]}>
           <i className="fa fa-home" title="Home page"></i>
           <p>Home</p>
         </NavLink>
