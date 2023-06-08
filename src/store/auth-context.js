@@ -16,7 +16,8 @@ export const AuthContext = React.createContext({
 });
 
 export const AuthContextProvider = ({ children }) => {
-  const baseURL = "http://localhost:8000/api/";
+  // const baseURL = "http://localhost:8000/api/";
+  const baseURL = "https://twitter-clone-oo6z.onrender.com/api/";
   const [authTokens, setAuthTokens] = useState(() =>
     localStorage.getItem("authTokens")
       ? JSON.parse(localStorage.getItem("authTokens"))

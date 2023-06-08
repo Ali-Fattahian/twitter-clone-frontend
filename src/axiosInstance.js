@@ -1,7 +1,8 @@
 import axios from "axios";
 import createAuthRefreshInterceptor from "axios-auth-refresh";
 
-const baseURL = "http://localhost:8000/api/";
+// const baseURL = "http://localhost:8000/api/";
+const baseURL = "https://twitter-clone-oo6z.onrender.com/api/";
 
 const axiosInstance = axios.create({
   baseURL: baseURL,
