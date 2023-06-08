@@ -46,7 +46,7 @@ const Login = () => {
             autoComplete='on'
           />
           <p id={classes['not-have-account']}>Don't have an account? <Link to='/signup'>Sign up</Link></p>
-          <p id={classes['not-have-account']}>Don't have an account? <a href='/home'>Enter as a guest</a></p>
+          <p id={classes['not-have-account']}>Don't have an account? <a href='/'>Enter as a guest</a></p>
           <button type="submit" className="btn">
             Next
           </button>
