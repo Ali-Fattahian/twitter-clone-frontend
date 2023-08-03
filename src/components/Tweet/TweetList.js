@@ -30,7 +30,7 @@ const TweetList = (props) => {
           isBookmarkPage={props.isBookmarkPage}
           setNeedRefresh={props.setNeedRefresh}
         />
-      )) : <p className="p-info--center">No posts yet!</p>}
+      )) : <p className="p-info--center">No tweets yet!</p>}
     </section>
   );
 };
